@@ -40,7 +40,7 @@
                 <input type="email" class="input-custome pl-3" name="email" id="email"  value="" required>
               </div>
               @if ($errors->has('email'))
-                <div id="email-error" class="error text-danger pl-3" for="email" style="display: block; position:absolut; font-size:10px;">
+                <div id="email-error" class="error text-danger pl-3" for="email" style="display: block; position:absolute; font-size:10px;">
                   <strong>{{ $errors->first('email') }}</strong>
                 </div>
               @endif
@@ -51,7 +51,7 @@
                 <input type="password" name="password" id="password" class="input-custome pl-3" value="" required>
               </div>
               @if ($errors->has('password'))
-                <div id="password-error" class="error text-danger pl-3" for="password" style="display: block; position:absolut; font-size:10px;">
+                <div id="password-error" class="error text-danger pl-3" for="password" style="display: block; position:absolute; font-size:10px;">
                   <strong>{{ $errors->first('password') }}</strong>
                 </div>
               @endif
