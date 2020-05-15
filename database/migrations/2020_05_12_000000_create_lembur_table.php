@@ -19,7 +19,10 @@ class CreateLemburTable extends Migration
             $table->timestamp('time_from')->nullable();
             $table->timestamp('time_until')->nullable();
             $table->string('description');
+            $table->integer('duration')->nullable();
             $table->string('status',1);
+            $table->date('insertDate');
+            $table->string('location')->nullable();
             $table->string('approved_by',8);
             $table->timestamps();
         });

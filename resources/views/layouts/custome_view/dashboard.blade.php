@@ -23,6 +23,26 @@
   width:70px;
   height:70px;
 }
+.color-th {
+  background: #D7D6FF;
+}
+.row-color {
+  border-bottom: 1px solid #32EAAC;
+}
+.bullet-process {
+  width:10px;
+  height:10px;
+  display:inline-block;
+  background: #35339D;
+  border-radius:50%;
+}
+.bullet-process-grey {
+  width:10px;
+  height:10px;
+  display:inline-block;
+  background: #C4C4C4;
+  border-radius:50%;
+}
 .sign-btn-add {
   font-size: 40px;
   position: absolute;
@@ -61,7 +81,34 @@
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
           <div class="wrapper-tab bg-white">
             <div>
-                <p style="font-size:40px; color: rgba(19, 17, 17, 0.62);">Riwayat</p>
+            <table id="table_id" class="row-border">
+              <thead>
+                  <tr>
+                      <th class="color-th">Aktivitas</th>
+                      <th class="color-th">Status</th>
+                      <th class="color-th">Review</th>
+                      <th class="color-th">Superiors</th>
+                  </tr>
+              </thead>
+              <tbody>
+              @foreach ($lembur as $row)
+                <tr>
+                      <td class="row-color">{{$row->description}}</td>
+                      <td class="row-color">
+                          <div class="bullet-process mr-3"></div>
+                          <div class="bullet-process mr-3"></div>
+                          <div class="bullet-process mr-3"></div>
+                      </td>
+                      <td class="row-color">
+                      <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                      <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                      <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                      </td>
+                      <td class="row-color">{{$row->approved_by}}</td>
+                  </tr>
+              @endforeach
+              </tbody>
+            </table>
                 
             </div>
           </div>
@@ -87,6 +134,10 @@
           $(".profile-hover").css('display', 'none');
           setting = false; 
         }
+      });
+      $('#table_id').DataTable({
+        "searching": false,
+        "paging":   false,
       });
     });
   </script>

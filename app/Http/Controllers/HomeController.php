@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -21,6 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('layouts.custome_view.dashboard');
+        $lembur = DB::table('lembur')->get();
+        return view('layouts.custome_view.dashboard', ['lembur' => $lembur]);
     }
 }

@@ -4,22 +4,22 @@
     <nav class="navbar navbar-expand-lg navbar-light px-5 fixed-top" style="background:#31EAAB;">
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item mx-3 active">
                         <a class="nav-link font-weight-bold" href="#">About Us <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mx-3">
                         <a class="nav-link font-weight-bold text-dark" href="#">Help Centre</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mx-3">
                         <a class="nav-link font-weight-bold text-dark" href="#">Service</a>
                     </li>
                 </ul>
                 <div class="navbar-text">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
+                        <li class="nav-item mx-3">
                             <a class="nav-link font-weight-bold text-dark" href="{{ route('login') }}">SigIn</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mx-3">
                             <a class="nav-link font-weight-bold text-dark" href="#">Sign Up</a>
                         </li>
                     </ul>

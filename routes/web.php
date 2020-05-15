@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('lembur', 'LemburController@index')->name('lembur')->middleware('auth');
 	Route::get('lembur/request', ['as' => 'lembur.request', 'uses' => 'LemburController@request']);
+	Route::post('lembur/add', ['as' => 'lembur.add', 'uses' => 'LemburController@add']);
 	Route::get('lembur/history', ['as' => 'lembur.history', 'uses' => 'LemburController@history']);
 
 	// Route::get('typography', function () {
