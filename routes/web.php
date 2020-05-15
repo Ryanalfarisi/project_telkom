@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-	//return view('welcome');
-	return redirect('login');
+	return view('welcome');
+	//return redirect('login');
 });
 
 Auth::routes();
@@ -30,30 +30,33 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('pages.table_list');
 	})->name('table');
 
-	//Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-	Route::get('typography', function () {
-		return view('pages.typography');
-	})->name('typography');
+	Route::get('lembur', 'LemburController@index')->name('lembur')->middleware('auth');
+	Route::get('lembur/request', ['as' => 'lembur.request', 'uses' => 'LemburController@request']);
+	Route::get('lembur/history', ['as' => 'lembur.history', 'uses' => 'LemburController@history']);
 
-	Route::get('icons', function () {
-		return view('pages.icons');
-	})->name('icons');
+	// Route::get('typography', function () {
+	// 	return view('pages.typography');
+	// })->name('typography');
 
-	Route::get('map', function () {
-		return view('pages.map');
-	})->name('map');
+	// Route::get('icons', function () {
+	// 	return view('pages.icons');
+	// })->name('icons');
 
-	Route::get('notifications', function () {
-		return view('pages.notifications');
-	})->name('notifications');
+	// Route::get('map', function () {
+	// 	return view('pages.map');
+	// })->name('map');
 
-	Route::get('rtl-support', function () {
-		return view('pages.language');
-	})->name('language');
+	// Route::get('notifications', function () {
+	// 	return view('pages.notifications');
+	// })->name('notifications');
 
-	Route::get('upgrade', function () {
-		return view('pages.upgrade');
-	})->name('upgrade');
+	// Route::get('rtl-support', function () {
+	// 	return view('pages.language');
+	// })->name('language');
+
+	// Route::get('upgrade', function () {
+	// 	return view('pages.upgrade');
+	// })->name('upgrade');
 });
 
 Route::group(['middleware' => 'auth'], function () {

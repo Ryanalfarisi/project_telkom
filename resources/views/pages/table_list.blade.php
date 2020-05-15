@@ -6,13 +6,13 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary" style="background: #76ebac !important;">
+          <!-- <div class="card-header card-header-primary" style="background: #76ebac !important;">
             <h4 class="card-title font-weight-bold">List pengajuan lembur</h4>
-          </div>
+          </div> -->
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
+              <table class="table" id="table_lembur">
+                <thead class="">
                   <th>
                     ID
                   </th>
@@ -274,3 +274,12 @@
   </div>
 </div>
 @endsection
+@push('js')
+  <script>
+    $(document).ready(function() {
+      $(document).ready( function () {
+    $('#table_lembur').DataTable();
+} );
+    });
+  </script>
+@endpush

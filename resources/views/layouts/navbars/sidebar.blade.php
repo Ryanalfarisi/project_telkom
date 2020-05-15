@@ -5,7 +5,7 @@
       Tip 2: you can also add an image using data-image tag
   -->
   <div class="logo py-0">
-    <a href="https://creative-tim.com/" class="simple-text logo-normal">
+    <a href="/home" class="simple-text logo-normal">
     <img style="width:200px" src="{{ asset('material') }}/img/goodpeople.png">
     </a>
   </div>
@@ -17,7 +17,7 @@
             <p>{{ __('Dashboard') }}</p>
         </a>
       </li>
-      <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
+      <li class="nav-item {{ ($activePage == 'lembur' || $activePage == 'request-lembur') ? ' active' : '' }}">
         <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
           <i class="material-icons">content_paste</i>
           <p>{{ __('Overtime') }}
@@ -26,27 +26,27 @@
         </a>
         <div class="collapse show" id="laravelExample">
           <ul class="nav">
-            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('profile.edit') }}">
+            <li class="nav-item{{ $activePage == 'request-lembur' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('lembur.request') }}">
                 <span class="sidebar-mini"> RO </span>
                 <span class="sidebar-normal">{{ __('Request overtime') }} </span>
               </a>
             </li>
-            <!-- <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
-              <a class="nav-link" href="{{ route('user.index') }}">
-                <span class="sidebar-mini"> UM </span>
-                <span class="sidebar-normal"> {{ __('User Management') }} </span>
+            <li class="nav-item{{ $activePage == 'history' ? ' active' : '' }}">
+              <a class="nav-link" href="{{ route('lembur.history') }}">
+                <span class="sidebar-mini"> HO </span>
+                <span class="sidebar-normal"> {{ __('History overtime') }} </span>
               </a>
-            </li> -->
+            </li>
           </ul>
         </div>
       </li>
-      <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
-        <a class="nav-link" href="{{ route('table') }}">
+      <!-- <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('lembur') }}">
           <i class="material-icons">content_paste</i>
             <p>{{ __('Table List') }}</p>
         </a>
-      </li>
+      </li> -->
       <!-- <li class="nav-item{{ $activePage == 'typography' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('typography') }}">
           <i class="material-icons">library_books</i>
