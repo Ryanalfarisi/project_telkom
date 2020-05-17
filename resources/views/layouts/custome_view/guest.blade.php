@@ -1,35 +1,38 @@
-<div class="row">
-    <div class="col-md-12">
-    <div class="container px-0">
-    <nav class="navbar navbar-expand-lg navbar-light px-5 fixed-top" style="background:#31EAAB;">
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item mx-3 active">
-                        <a class="nav-link font-weight-bold" href="#">About Us <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link font-weight-bold text-dark" href="#">Help Centre</a>
-                    </li>
-                    <li class="nav-item mx-3">
-                        <a class="nav-link font-weight-bold text-dark" href="#">Service</a>
-                    </li>
-                </ul>
-                <div class="navbar-text">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item mx-3">
-                            <a class="nav-link font-weight-bold text-dark" href="{{ route('login') }}">SigIn</a>
-                        </li>
-                        <li class="nav-item mx-3">
-                            <a class="nav-link font-weight-bold text-dark" href="#">Sign Up</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<style>
+.navbar-default .navbar-nav>.active>a {
+    background: transparent;
+}
+.navbar-default .navbar-nav>.active>a:hover{
+    background: transparent;
+}
+</style>
+<nav class="navbar navbar-default bg-green-primary navbar-fixed-top" style="height:80px;">
+<div class="container">
+  <div class="container-fluid pt-4">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- <a class="navbar-brand" href="#">Brand</a> -->
     </div>
-        
-    </div>
-  <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
-    @yield('content')
 
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav nav-menus text-dark">
+            <li class="active"><a href="#">About Us <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Help Centre</a></li>
+            <li><a href="#">Service</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right nav-menus text-dark">
+            <li><a href="{{ route('login') }}">SigIn</a></li>
+            <li><a href="#">Sign Up</a></li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</div>
+</nav>
+    @yield('content')
 </div>

@@ -11,8 +11,14 @@
   color:black;
   padding: .5rem 2rem !important;
 }
-.active {
-  background-color: #31EAAB !important;
+.nav-tabs>li>a {
+  border: 1px solid #32EAAC;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin: 0px;
+}
+.nav-tabs>li.active>a {
+  background:#31EAAB !important;
 }
 .wrapper-tab {
   width:100%;
@@ -56,7 +62,62 @@
 </style>
   @include('layouts.partials.head', array('extra'=> false))
   <div class="col-md-12 mt-4 pl-5">
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Formulir</a></li>
+    <li><a data-toggle="tab" href="#menu1">Riwayat</a></li>
+    <li><a data-toggle="tab" href="#menu2">Inbox</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <div class="wrapper-tab bg-white text-center">
+        <div style="width:300px;" class="mx-auto mt-5">
+          <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
+          <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
+              <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <table id="table_id" class="row-border">
+        <thead>
+            <tr>
+                <th class="color-th">Aktivitas</th>
+                <th class="color-th">Status</th>
+                <th class="color-th">Review</th>
+                <th class="color-th">Superiors</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach ($lembur as $row)
+          <tr>
+                <td class="row-color">{{$row->description}}</td>
+                <td class="row-color">
+                    <div class="bullet-process mr-3"></div>
+                    <div class="bullet-process mr-3"></div>
+                    <div class="bullet-process mr-3"></div>
+                </td>
+                <td class="row-color">
+                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                </td>
+                <td class="row-color">{{$row->approved_by}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+      </table>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+      <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="border-top-rl-radius link-primary nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Formulir</a>
         </li>
@@ -118,7 +179,7 @@
             <p style="font-size:40px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
           </div>
         </div>
-      </div>
+      </div> -->
   </div>
 @endsection
 
