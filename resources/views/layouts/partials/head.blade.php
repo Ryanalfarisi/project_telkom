@@ -38,8 +38,9 @@
   font-weight:bold;
 }
 </style>
-<div class="col-md-6 pl-5" style="height:auto;padding:20px;">
-    <h2>GoodPeople</h2>
+<div style="margin-top:45px;">
+  <div class="col-md-6 pl-5" style="height:auto;padding:20px;">
+    <h2 class="font-weight-bold">GoodPeople</h2>
   </div>
   <div class="col-md-6 pr-5" style="height:auto; padding:20px;">
     <div class="wrapper-img pointer float-right position-relative">
@@ -50,9 +51,10 @@
         <li>Switch Account</li>
         <li>Help</li>
         <li> <a href="{{ route('logout') }}" style="color:black;" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Keluar') }}</a></li>
-      </ul>
+    </ul>
     </div>
   </div>
+</div>
   @push('js')
   <script>
     $(document).ready(function() {

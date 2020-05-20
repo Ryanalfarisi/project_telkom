@@ -21,6 +21,18 @@
   font-size:18px;
   color: black;
 }
+.btn-register {
+  background: #FFFFFF;
+  border: 2px solid #31EAAB;
+  box-sizing: border-box;
+  border-radius: 29px;
+  color: black;
+}
+.wrapper-login {
+  background:#76ebac;
+  padding:100px 75px;
+  height:100%;
+}
 </style>
 <div class="container">
     <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top:80px;">
@@ -51,8 +63,8 @@
         @csrf
 
         <div class="card card-login card-hidden mb-3">
-          <div class="card-body row px-0 py-0 mx-0">
-            <div class="col-md-8" style="background:#76ebac; padding:80px 120px;">
+          <div class="card-body row px-0 py-0 mx-0"  style="height:600px;">
+            <div class="col-md-8 wrapper-login">
               <h2 class="font-weight-bold mb-4">Berkerja Extra</h2>
               <h2 class="font-weight-bold mb-4"> Aperesiasi Pasti</h2>
               <h2 class="font-weight-bold mb-4">Terjamin Nyaman</h2>
@@ -62,32 +74,52 @@
             </div>
             <div class="col-md-4 text-center">
               <img src="{{ asset('material') }}/img/goodpeople.png" width="250px">
-            </img>
-            <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-              <div class="text-left">
-                <label for="email" class="font-weight-bold input-basic">Username</label>
-                <input type="email" class="input-custome pl-3" name="email" id="email"  value="" required>
-              </div>
-              @if ($errors->has('email'))
-                <div id="email-error" class="error text-danger pl-3" for="email" style="display: block; position:absolute; font-size:10px;">
-                  <strong>{{ $errors->first('email') }}</strong>
+              <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                <div class="text-left">
+                  <label for="email" class="font-weight-bold input-basic">Username</label>
+                  <input type="email" class="input-custome pl-3" name="email" id="email"  value="" required>
                 </div>
-              @endif
-            </div>
-            <div class="bmd-form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
-              <div class="text-left">
-                <label for="email" class="font-weight-bold input-basic">Password</label> 
-                <input type="password" name="password" id="password" class="input-custome pl-3" value="" required>
+                @if ($errors->has('email'))
+                  <div id="email-error" class="error text-danger pl-3" for="email" style="display: block; position:absolute; font-size:10px;">
+                    <strong>{{ $errors->first('email') }}</strong>
+                  </div>
+                @endif
               </div>
-              @if ($errors->has('password'))
-                <div id="password-error" class="error text-danger pl-3" for="password" style="display: block; position:absolute; font-size:10px;">
-                  <strong>{{ $errors->first('password') }}</strong>
+              <div class="bmd-form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
+                <div class="text-left">
+                  <label for="email" class="font-weight-bold input-basic">Password</label> 
+                  <input type="password" name="password" id="password" class="input-custome pl-3" value="" required>
                 </div>
-              @endif
-            </div>
-            <div class="text-center mt-5">
-              <button type="submit" class="btn btn-primary btn-dark">Masuk</button>
-            </div>
+                @if ($errors->has('password'))
+                  <div id="password-error" class="error text-danger pl-3" for="password" style="display: block; position:absolute; font-size:10px;">
+                    <strong>{{ $errors->first('password') }}</strong>
+                  </div>
+                @endif
+              </div>
+              <div class="mt-5 col-md-12 px-0" style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
+                <div class="col-md-6 px-0 text-left">
+                  <div class="form-check mr-auto ml-3 mt-3">
+                    <label class="form-check-label" style="color:grey; font-weight:normal;">
+                      <input class="form-check-input" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember me') }}
+                      <span class="form-check-sign">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6 px-0 mb-5">
+                  <button type="submit" class="btn btn-primary btn-dark">Masuk</button>
+                </div>
+                <div>
+                  <p class="cl-green">Forgot Password ?</p>
+                </div>
+              </div>
+              <div class="col-md-12 px-0 mt-5">
+                <p class="fs-18">Belum punya akun?</p>
+                <a class="btn-register fs-20 px-5 py-2" href="{{ route('register') }}">
+                  <small>{{ __('Daftar GoodPeople') }}</small>
+                </a>
+              </div>
             </div>
           </div>
         </div>

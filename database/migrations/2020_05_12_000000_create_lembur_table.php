@@ -16,6 +16,7 @@ class CreateLemburTable extends Migration
         Schema::create('lembur', function (Blueprint $table) {
             $table->id();
             $table->string('entry_by')->nullable();
+            $table->string('nik')->nullable();
             $table->timestamp('time_from')->nullable();
             $table->timestamp('time_until')->nullable();
             $table->string('description');

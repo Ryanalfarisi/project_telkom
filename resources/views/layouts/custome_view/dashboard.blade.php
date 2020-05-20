@@ -17,8 +17,18 @@
   border-top-right-radius: 15px;
   margin: 0px;
 }
+.list-menu {
+  padding: 7px 25px !important;
+  color: black;
+  font-weight:bold;
+}
 .nav-tabs>li.active>a {
   background:#31EAAB !important;
+  color:black;
+}
+.nav-tabs>li>a:hover {
+  background:#31EAAB !important;
+  color:black;
 }
 .wrapper-tab {
   width:100%;
@@ -59,13 +69,33 @@
   margin: auto;
   color:black;
 }
+.bottom-formulir {
+  width: 128.21px;
+  height: 28px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  line-height:25px;
+}
+.list-menu-extra >li:nth-child(1) {
+  border-bottom: 1px solid rgba(30, 250, 237, 0.2);
+  font-weight:bold;
+}
 </style>
   @include('layouts.partials.head', array('extra'=> false))
   <div class="col-md-12 mt-4 pl-5">
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">Formulir</a></li>
-    <li><a data-toggle="tab" href="#menu1">Riwayat</a></li>
-    <li><a data-toggle="tab" href="#menu2">Inbox</a></li>
+    <li class="active position-relative">
+      <a data-toggle="tab" class="list-menu" href="#home">Extra</a>
+      <div class="extra-menu position-absolute">
+        <ul class="list-menu-extra px-0 list-none py-4 text-center">
+          <li class="py-1">Extra</li>
+          <li class="py-1" style="color:#594C4C">Formulir Baru</li>
+          <li class="py-1" style="color:#594C4C">Tracking</li>
+          <li class="py-1" style="color:#594C4C">Draft</li>
+        </ul>
+      </div>
+    </li>
+    <li><a data-toggle="tab" class="list-menu" href="#menu1">Riwayat<div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div></a></li>
+    <li><a data-toggle="tab" class="list-menu" href="#menu2">To Do <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div></a></li>
   </ul>
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
@@ -75,6 +105,8 @@
           <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
               <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
           </div>
+          <div class="bottom-formulir d-inline-block mr-5 mt-5 align-middle">DRAFT</div>
+          <div class="bottom-formulir d-inline-block mt-5 align-middle">TRACKING</div>
         </div>
       </div>
     </div>
