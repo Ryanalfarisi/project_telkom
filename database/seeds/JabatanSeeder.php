@@ -27,7 +27,7 @@ class JabatanSeeder extends Seeder
 
         DB::table('jabatan')->insert([
             'jabatan' => 'Staff',
-            'code_jabatan' => 'staff',
+            'code_jabatan' => 'STAFF',
             'created_at' => now(),
             'updated_at' => now()
         ]);

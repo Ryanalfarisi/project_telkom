@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class ProfileController extends Controller
+class MyProfileController extends Controller
 {
     /**
      * Show the form for editing the profile.
@@ -15,7 +17,13 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('profile.index');
+        $user = Auth::user();
+        $user = DB::table('users')
+            ->join('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
+            ->where('users.id', $user->id)
+            ->select('users.*', 'jabatan.jabatan')
+            ->get()->toArray();
+        return view('profile.index', ["user" => $user[0]]); 
     }
     public function edit()
     {

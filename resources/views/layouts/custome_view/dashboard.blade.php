@@ -79,155 +79,94 @@
   border-bottom: 1px solid rgba(30, 250, 237, 0.2);
   font-weight:bold;
 }
+.list-menu-extra > li {
+  cursor:pointer;
+}
+.extra-menu {
+  display:none;
+}
+.extra-menu:hover {
+  display: block;
+}
+.list-menu:hover + .extra-menu {
+  display: block !important;
+}
 </style>
   @include('layouts.partials.head', array('extra'=> false))
   <div class="col-md-12 mt-4 pl-5">
-  <ul class="nav nav-tabs">
-    <li class="active position-relative">
-      <a data-toggle="tab" class="list-menu" href="#home">Extra</a>
-      <div class="extra-menu position-absolute">
-        <ul class="list-menu-extra px-0 list-none py-4 text-center">
-          <li class="py-1">Extra</li>
-          <li class="py-1" style="color:#594C4C">Formulir Baru</li>
-          <li class="py-1" style="color:#594C4C">Tracking</li>
-          <li class="py-1" style="color:#594C4C">Draft</li>
-        </ul>
-      </div>
-    </li>
-    <li><a data-toggle="tab" class="list-menu" href="#menu1">Riwayat<div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div></a></li>
-    <li><a data-toggle="tab" class="list-menu" href="#menu2">To Do <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div></a></li>
-  </ul>
-  <div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
-      <div class="wrapper-tab bg-white text-center">
-        <div style="width:300px;" class="mx-auto mt-5">
-          <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
-          <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
-              <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
+    <ul class="nav nav-tabs">
+      <li class="active position-relative">
+        <a data-toggle="tab" class="list-menu" href="">Extra</a>
+        <div class="extra-menu position-absolute">
+          <ul class="list-menu-extra px-0 list-none py-4 text-center">
+            <li class="py-1">Extra</li>
+            <li class="py-1" style="color:#594C4C">Formulir Baru</li>
+            <li class="py-1" style="color:#594C4C">Tracking</li>
+            <li class="py-1" style="color:#594C4C">Draft</li>
+          </ul>
+        </div>
+      </li>
+      <li><a data-toggle="tab" class="list-menu" href="#menu1">Riwayat<div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div></a></li>
+      <li><a data-toggle="tab" class="list-menu" href="#menu2">To Do <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div></a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="home" class="tab-pane fade in active">
+        <div class="wrapper-tab bg-white text-center">
+          <div style="width:300px;" class="mx-auto mt-5">
+            <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
+            <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
+                <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
+            </div>
+            <div class="bottom-formulir d-inline-block mr-5 mt-5 align-middle">DRAFT</div>
+            <div class="bottom-formulir d-inline-block mt-5 align-middle">TRACKING</div>
           </div>
-          <div class="bottom-formulir d-inline-block mr-5 mt-5 align-middle">DRAFT</div>
-          <div class="bottom-formulir d-inline-block mt-5 align-middle">TRACKING</div>
         </div>
       </div>
-    </div>
-    <div id="menu1" class="tab-pane fade">
-      <table id="table_id" class="row-border">
-        <thead>
+      <div id="menu1" class="tab-pane fade">
+        <table id="table_id" class="row-border">
+          <thead>
+              <tr>
+                  <th class="color-th">Aktivitas</th>
+                  <th class="color-th">Status</th>
+                  <th class="color-th">Review</th>
+                  <th class="color-th">Superiors</th>
+              </tr>
+          </thead>
+          <tbody>
+          @foreach ($lembur as $row)
             <tr>
-                <th class="color-th">Aktivitas</th>
-                <th class="color-th">Status</th>
-                <th class="color-th">Review</th>
-                <th class="color-th">Superiors</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach ($lembur as $row)
-          <tr>
-                <td class="row-color">{{$row->description}}</td>
-                <td class="row-color">
-                    <div class="bullet-process mr-3"></div>
-                    <div class="bullet-process mr-3"></div>
-                    <div class="bullet-process mr-3"></div>
-                </td>
-                <td class="row-color">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                </td>
-                <td class="row-color">{{$row->approved_by}}</td>
-            </tr>
-        @endforeach
-        </tbody>
-      </table>
+                  <td class="row-color">{{$row->description}}</td>
+                  <td class="row-color">
+                      <div class="bullet-process mr-3"></div>
+                      <div class="bullet-process mr-3"></div>
+                      <div class="bullet-process mr-3"></div>
+                  </td>
+                  <td class="row-color">
+                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  </td>
+                  <td class="row-color">{{$row->approved_by}}</td>
+              </tr>
+          @endforeach
+          </tbody>
+        </table>
+      </div>
+      <div id="menu2" class="tab-pane fade">
+        <h3>Menu 2</h3>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+      </div>
+      <div id="menu3" class="tab-pane fade">
+        <h3>Menu 3</h3>
+        <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      </div>
     </div>
-    <div id="menu2" class="tab-pane fade">
-      <h3>Menu 2</h3>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-    </div>
-    <div id="menu3" class="tab-pane fade">
-      <h3>Menu 3</h3>
-      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    </div>
-  </div>
-      <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-          <a class="border-top-rl-radius link-primary nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Formulir</a>
-        </li>
-        <li class="nav-item">
-          <a class="border-top-rl-radius link-primary nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Riwayat</a>
-        </li>
-        <li class="nav-item">
-          <a class="border-top-rl-radius link-primary nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Inbox</a>
-        </li>
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <div class="wrapper-tab bg-white text-center">
-            <div style="width:300px;" class="mx-auto mt-5">
-              <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
-              <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
-                  <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <div class="wrapper-tab bg-white">
-            <div>
-            <table id="table_id" class="row-border">
-              <thead>
-                  <tr>
-                      <th class="color-th">Aktivitas</th>
-                      <th class="color-th">Status</th>
-                      <th class="color-th">Review</th>
-                      <th class="color-th">Superiors</th>
-                  </tr>
-              </thead>
-              <tbody>
-              @foreach ($lembur as $row)
-                <tr>
-                      <td class="row-color">{{$row->description}}</td>
-                      <td class="row-color">
-                          <div class="bullet-process mr-3"></div>
-                          <div class="bullet-process mr-3"></div>
-                          <div class="bullet-process mr-3"></div>
-                      </td>
-                      <td class="row-color">
-                      <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                      <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                      <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                      </td>
-                      <td class="row-color">{{$row->approved_by}}</td>
-                  </tr>
-              @endforeach
-              </tbody>
-            </table>
-                
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-          <div class="wrapper-tab bg-white">
-            <p style="font-size:40px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
-          </div>
-        </div>
-      </div> -->
   </div>
 @endsection
 
 @push('js')
   <script>
     $(document).ready(function() {
-      var setting = false;
-      $( ".wrapper-img" ).click(function() {
-        if(!setting) {
-          $(".profile-hover").css('display', 'block');
-          setting = true;
-        } else {
-          $(".profile-hover").css('display', 'none');
-          setting = false; 
-        }
-      });
       $('#table_id').DataTable({
         "searching": false,
         "paging":   false,

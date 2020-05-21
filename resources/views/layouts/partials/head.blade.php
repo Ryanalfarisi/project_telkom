@@ -25,7 +25,7 @@
   color:white;
   font-style: italic;
   z-index:1;
-  top:95px;
+  top:84px;
 }
 .profile-hover li {
   padding:5px 0px;
@@ -37,6 +37,12 @@
   font-style:normal;
   font-weight:bold;
 }
+.wrapper-img img:hover + .profile-hover {
+  display: block !important;
+}
+.profile-hover:hover {
+  display: block !important;
+}
 </style>
 <div style="margin-top:45px;">
   <div class="col-md-6 pl-5" style="height:auto;padding:20px;">
@@ -44,9 +50,9 @@
   </div>
   <div class="col-md-6 pr-5" style="height:auto; padding:20px;">
     <div class="wrapper-img pointer float-right position-relative">
-      <img src="{{ asset('material') }}/img/bagus.jpeg" alt="">
+      <img class="" src="{{ asset('material') }}/img/bagus.jpeg" alt="">
       <ul class="position-absolute profile-hover">
-        <li>Profile</li>
+        <li><a style="color:white !important;" href="{{ route('home.my_profile') }}">Profile</a></li>
         <li>Change Password</li>
         <li>Switch Account</li>
         <li>Help</li>
@@ -58,16 +64,6 @@
   @push('js')
   <script>
     $(document).ready(function() {
-      var setting = false;
-      $( ".wrapper-img" ).click(function() {
-        if(!setting) {
-          $(".profile-hover").css('display', 'block');
-          setting = true;
-        } else {
-          $(".profile-hover").css('display', 'none');
-          setting = false; 
-        }
-      });
     });
   </script>
 @endpush

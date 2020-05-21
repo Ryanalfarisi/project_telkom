@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('lembur/add', ['as' => 'lembur.add', 'uses' => 'LemburController@add']);
 	Route::get('lembur/history', ['as' => 'lembur.history', 'uses' => 'LemburController@history']);
 
+	Route::get('home/my-profile', ['as' => 'home.my_profile', 'uses' => 'MyProfileController@index']);
+
 	// Route::get('typography', function () {
 	// 	return view('pages.typography');
 	// })->name('typography');
@@ -47,9 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
 	// 	return view('pages.map');
 	// })->name('map');
 
-	Route::get('notifications', function () {
-		return view('pages.notifications');
-	})->name('notifications');
+	// Route::get('notifications', function () {
+	// 	return view('pages.notifications');
+	// })->name('notifications');
 
 	// Route::get('upgrade', function () {
 	// 	return view('pages.upgrade');
