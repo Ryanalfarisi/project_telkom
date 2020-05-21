@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Hashing\BcryptHasher;
 
 class MyProfileController extends Controller
 {
@@ -31,6 +33,29 @@ class MyProfileController extends Controller
     {
         $ask = DB::table('pertanyaan')->get();
         return view('profile.reset', ['ask' =>$ask]);
+    }
+
+    public function changePass(Request $request)
+    {
+        $input = $request->input();
+        $user = User::find($input['userId']);
+        if (Hash::check($input['current'], $user->password)) {
+            if(strlen($input['password']) < 8) {
+                return back()->withErrors(['Password  min-length 8']);
+            }
+            if($input['password'] != $input['repassword']) {
+                return back()->withErrors(['Re-type Password not match']);
+            }
+            DB::table('users')
+              ->where('username', $input['username'])
+              ->where('id', $input['userId'])
+              ->update(['password' => Hash::make($input['password'])]);
+
+            Auth::logout();
+            return redirect('/login')->with('status', 'Password successfully updated. Please login with that credentials');
+        } else {
+            return back()->withErrors(['Your current password incorrect']);
+        }
     }
 
     public function doReset(Request $request)

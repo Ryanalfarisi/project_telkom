@@ -78,6 +78,17 @@ body {
   border-bottom: 3px solid #76ebac;
 }
 
+.input-custome{
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 20px;
+  height:45px;
+}
+.input-basic {
+  font-size:18px;
+  color: black;
+}
+
 *:focus {
   outline: none !important;
 }
@@ -151,7 +162,7 @@ text.dark {
 .fs-15 { font-size: 15px;}
 .fs-16 { font-size: 16px;}
 .fs-18 { font-size: 18px;}
-.fs-20 { font-size: 20px;}
+.fs-20 { font-size: 20px !important;}
 .fs-22 { font-size: 22px;}
 .fs-24 { font-size: 24px;}
 .fs-26 { font-size: 26px;}

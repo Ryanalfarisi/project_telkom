@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('lembur/history', ['as' => 'lembur.history', 'uses' => 'LemburController@history']);
 
 	Route::get('home/my-profile', ['as' => 'home.my_profile', 'uses' => 'MyProfileController@index']);
+	Route::post('my-profile/change-password', ['as' => 'my-profile.changepass', 'uses' => 'MyProfileController@changePass']);
 
 	// Route::get('typography', function () {
 	// 	return view('pages.typography');

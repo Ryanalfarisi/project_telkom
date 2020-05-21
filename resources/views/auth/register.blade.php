@@ -2,12 +2,6 @@
 
 @section('content')
 <style>
-.input-custome{
-  width: 100%;
-  border: 2px solid black;
-  border-radius: 20px;
-  height:45px;
-}
 .btn-dark {
   width: 100%;
   border-radius: 25px;
@@ -16,10 +10,6 @@
   color:#76ebac !important;
   font-size: 16px;
   font-weight: bold;
-}
-.input-basic {
-  font-size:18px;
-  color: black;
 }
 .btn-register {
   background: #FFFFFF;

@@ -25,7 +25,8 @@
   color:white;
   font-style: italic;
   z-index:1;
-  top:84px;
+  /* top:84px; */
+  top:100px;
 }
 .profile-hover li {
   padding:5px 0px;
@@ -37,12 +38,12 @@
   font-style:normal;
   font-weight:bold;
 }
-.wrapper-img img:hover + .profile-hover {
+/* .wrapper-img img:hover + .profile-hover {
   display: block !important;
-}
-.profile-hover:hover {
+} */
+/* .profile-hover:hover {
   display: block !important;
-}
+} */
 </style>
 <div style="margin-top:45px;">
   <div class="col-md-6 pl-5" style="height:auto;padding:20px;">
@@ -64,6 +65,16 @@
   @push('js')
   <script>
     $(document).ready(function() {
+      var setting = false;
+      $( ".wrapper-img" ).click(function() {
+        if(!setting) {
+          $(".profile-hover").css('display', 'block');
+            setting = true;
+          } else {
+            $(".profile-hover").css('display', 'none');
+            setting = false; 
+          }
+      });
     });
   </script>
 @endpush
