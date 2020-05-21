@@ -17,7 +17,8 @@ Route::get('/', function () {
 	return view('welcome');
 	//return redirect('login');
 });
-
+Route::get('my-profile/password', ['as' => 'my-profile.reset', 'uses' => 'MyProfileController@reset']);
+Route::post('my-profile/password', ['as' => 'my-profile.doreset', 'uses' => 'MyProfileController@doReset']);	
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

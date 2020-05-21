@@ -7,6 +7,7 @@ use App\Http\Requests\PasswordRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class MyProfileController extends Controller
 {
@@ -25,9 +26,42 @@ class MyProfileController extends Controller
             ->get()->toArray();
         return view('profile.index', ["user" => $user[0]]); 
     }
+
+    public function reset()
+    {
+        $ask = DB::table('pertanyaan')->get();
+        return view('profile.reset', ['ask' =>$ask]);
+    }
+
+    public function doReset(Request $request)
+    {
+        $input = $request->input();
+        $username = DB::table('users')->where('username', $input['username'])->first();
+        if(!$username) {
+            return back()->withErrors(['Username dont exist']);
+        }
+        if(strlen($input['password']) <8) {
+            return back()->withErrors(['Password min-length 8']);
+        }
+        $user = DB::table('users')
+            ->join('pertanyaan', 'users.pertanyaan_id', '=', 'pertanyaan.id')
+            ->where('users.username', $input['username'])
+            ->where('users.pertanyaan_id', $input['ask'])
+            ->where('users.jawaban', $input['jawaban'])
+            ->get()->toArray();
+        if(!$user) {
+            return back()->withErrors(['Your question and answer did not match, failed password reset']);
+        }
+        DB::table('users')
+              ->where('username', $input['username'])
+              ->update(['password' => Hash::make($input['password'])]);
+        return redirect()->back()->with('success', 'Password successfully updated. Please login with that credentials');
+    }
+
     public function edit()
     {
-        return view('profile.edit');
+        $ask = DB::table('pertanyaan')->get();
+        return view('profile.edit', ['ask' => $ask]);
     }
 
     /**

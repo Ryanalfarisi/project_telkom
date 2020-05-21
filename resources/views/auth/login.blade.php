@@ -74,7 +74,7 @@
             </div>
             <div class="col-md-4 text-center">
               <img src="{{ asset('material') }}/img/goodpeople.png" width="250px">
-              <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+              <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                 <div class="text-left">
                   <label for="username" class="font-weight-bold input-basic">Username</label>
                   <input type="text" class="input-custome pl-3" name="username" id="username"  value="" required>
@@ -85,7 +85,7 @@
                   </div>
                 @endif
               </div>
-              <div class="bmd-form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
+              <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
                 <div class="text-left">
                   <label for="email" class="font-weight-bold input-basic">Password</label> 
                   <input type="password" name="password" id="password" class="input-custome pl-3" value="" required>
@@ -111,7 +111,9 @@
                   <button type="submit" class="btn btn-primary btn-dark">Masuk</button>
                 </div>
                 <div>
-                  <p class="cl-green">Forgot Password ?</p>
+                    <a class="cl-green" href="{{ route('my-profile.reset') }}" >
+                      {{ __('Forgot password?') }}
+                    </a>
                 </div>
               </div>
               <div class="col-md-12 px-0 mt-5">
