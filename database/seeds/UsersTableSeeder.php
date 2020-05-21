@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'ADMIN GOODPEOPLE',
+            'username' => 'ADMIN123',
             'email' => 'admin@goodpeople.com',
             'nik' => '123456789',
             'jabatan' => 'Human Capital Management',

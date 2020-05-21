@@ -45,6 +45,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $jabatan = DB::table('jabatan')->get();
+        $ask = DB::table('pertanyaan')->get();
         $grade = [
             "I" =>"I",
             "II" => "II",
@@ -53,7 +54,7 @@ class RegisterController extends Controller
             "V" => "V",
             "VI" => "VI"
         ];
-        return view('auth.register', ['jabatan' => $jabatan, 'grade' => $grade]);
+        return view('auth.register', ['jabatan' => $jabatan, 'grade' => $grade, 'ask' => $ask]);
     }
     /**
      * Get a validator for an incoming registration request.
@@ -64,8 +65,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'nik' => ['required', 'string', 'max:255', 'unique:users'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -78,9 +80,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $trimJawaban = strtolower($data['jawaban']);
+        $realJawaban = preg_replace('/\s+/', '', $trimJawaban);
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'username' => $data['username'],
+            'pertanyaan_id' => $data['ask'],
+            'jawaban' => $realJawaban,
             'nik' => $data['nik'],
             'code_jabatan' => $data['jabatan'],
             'grade' => $data['grade'],

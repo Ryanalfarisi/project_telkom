@@ -26,7 +26,7 @@
     <table class="table-profile">
       <tr>
         <td class="font-weight-bold fs-16">Nama / NIK</td>
-      <td class="fs-15">{{$user->name}} / {{$user->nik}}</td>
+      <td class="fs-15">{{$user->username}} / {{$user->nik}}</td>
       </tr>
       <tr>
         <td class="font-weight-bold fs-16">Jabatan / Band Posisi</td>

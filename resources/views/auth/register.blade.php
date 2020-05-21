@@ -41,7 +41,7 @@
 
         <div class="card card-login card-hidden mb-3">
           <div class="card-body row px-0 py-0 mx-0"  style="height:715px;">
-            <div class="col-md-8 wrapper-login">
+            <div class="col-md-7 wrapper-login">
               <h2 class="font-weight-bold mb-4">Berkerja Extra</h2>
               <h2 class="font-weight-bold mb-4"> Aperesiasi Pasti</h2>
               <h2 class="font-weight-bold mb-4">Terjamin Nyaman</h2>
@@ -49,53 +49,58 @@
                 <p class="font-weight-bold mt-5" style="font-size: 16px;">Apresisasi dan kompensasi yang terkelola dengan baik dan sistematis akan selalu hadir berperan menciptakan budaya Fun, Productive, Blessed</p>
               </div>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-5 text-center">
               <img src="{{ asset('material') }}/img/goodpeople.png" width="250px">
               <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                 <div class="text-left">
-                  <label for="name" class="font-weight-bold input-basic">Username</label>
-                  <input type="text" name="name" class="input-custome pl-3" placeholder="{{ __('Username...') }}" value="{{ old('name') }}" required>
+                  <label for="username" class="font-weight-bold input-basic">Username</label>
+                  <input type="text" name="username" class="input-custome pl-3" placeholder="{{ __('Username...') }}" value="{{ old('name') }}" required>
                 </div>
-                @if ($errors->has('name'))
-                  <div id="name-error" class="error text-danger pl-3" for="name" style="display: block;">
-                    <strong>{{ $errors->first('name') }}</strong>
+                @if ($errors->has('username'))
+                  <div id="name-error" class="error text-danger pl-3" for="username" style="display: block;">
+                    <strong>{{ $errors->first('username') }}</strong>
                   </div>
                 @endif
               </div>
               <div class="form-group{{ $errors->has('nik') ? ' has-danger' : '' }}">
                 <div class="text-left">
                   <label for="nik" class="font-weight-bold input-basic">NIK</label>
-                  <input type="text" name="nik" class="input-custome pl-3" placeholder="{{ __('Username...') }}" value="{{ old('nik') }}" required>
+                  <input type="text" name="nik" class="input-custome pl-3" placeholder="{{ __('NIK') }}" value="{{ old('nik') }}" required>
                 </div>
                 @if ($errors->has('name'))
                   <div id="name-error" class="error text-danger pl-3" for="name" style="display: block;">
-                    <strong>{{ $errors->first('name') }}</strong>
-                  </div>
-                @endif
-              </div>
-              <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                <div class="text-left">
-                  <label for="email" class="font-weight-bold input-basic">Email</label>
-                  <input type="email" class="input-custome pl-3" name="email" id="email" placeholder="{{ __('Email...') }}" value="{{ old('email') }}" required>
-                </div>
-                @if ($errors->has('email'))
-                  <div id="email-error" class="error text-danger pl-3" for="email" style="display: block; position:absolute; font-size:10px;">
-                    <strong>{{ $errors->first('email') }}</strong>
+                    <strong>{{ $errors->first('nik') }}</strong>
                   </div>
                 @endif
               </div>
               <div class="form-group row">
-                <div class="col-md-9">
+                <div class="col-md-8 text-left">
+                  <label for="email" class="font-weight-bold input-basic">Pertanyaan Keamanan</label>
+                  <select class="form-control" name="ask">
+                    @foreach ($ask as $item)
+                      <option value="{{ $item->id}}">{{ $item->pertanyaan}}</option> 
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="jawaban" class="font-weight-bold input-basic">Isi</label>
+                  <input type="text" name="jawaban" id="jawaban" class="form-control" placeholder="{{ __('Isi...') }}" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-9 text-left">
+                  <label for="email" class="font-weight-bold input-basic">Jabatan</label>
                   <select class="form-control" name="jabatan">
                     @foreach ($jabatan as $item)
                       <option value="{{ $item->code_jabatan}}">{{ $item->jabatan}}</option> 
                     @endforeach
                   </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 text-left">
+                  <label for="email" class="font-weight-bold input-basic">Band</label>
                   <select class="form-control" name="grade">
                     @foreach ($grade as $item)
-                      <option value="{{ $item}}">{{ $item}}</option> 
+                      <option value="{{$item}}">{{$item}}</option>
                     @endforeach
                   </select>
                 </div>
@@ -123,7 +128,7 @@
                 @endif
               </div>
               <div class="mt-5 px-0 mb-5 text-center">
-                <button type="submit" class="btn btn-primary btn-dark">Masuk</button>
+                <button type="submit" class="btn btn-primary btn-dark">Daftar</button>
               </div>
               <!-- <div class="mt-5 col-md-12 px-0" style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
                 <div class="col-md-6 px-0 text-left">

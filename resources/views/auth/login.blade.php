@@ -76,12 +76,12 @@
               <img src="{{ asset('material') }}/img/goodpeople.png" width="250px">
               <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                 <div class="text-left">
-                  <label for="email" class="font-weight-bold input-basic">Username</label>
-                  <input type="email" class="input-custome pl-3" name="email" id="email"  value="" required>
+                  <label for="username" class="font-weight-bold input-basic">Username</label>
+                  <input type="text" class="input-custome pl-3" name="username" id="username"  value="" required>
                 </div>
-                @if ($errors->has('email'))
-                  <div id="email-error" class="error text-danger pl-3" for="email" style="display: block; position:absolute; font-size:10px;">
-                    <strong>{{ $errors->first('email') }}</strong>
+                @if ($errors->has('username'))
+                  <div id="email-error" class="error text-danger pl-3" for="name" style="display: block; position:absolute; font-size:10px;">
+                    <strong>{{ $errors->first('username') }}</strong>
                   </div>
                 @endif
               </div>
