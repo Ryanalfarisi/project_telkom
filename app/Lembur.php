@@ -10,6 +10,8 @@ class Lembur extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'entry_by', 'time_from', 'time_until', 'description', 'status', 'approved_by'
+        'username', 'time_from', 'time_until','user_id',
+        'description', 'status', 'approved_id',
+        'duration', 'insert_date', 'location'
     ];
 }

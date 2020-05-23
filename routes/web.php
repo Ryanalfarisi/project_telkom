@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('home/my-profile', ['as' => 'home.my_profile', 'uses' => 'MyProfileController@index']);
 	Route::post('my-profile/change-password', ['as' => 'my-profile.changepass', 'uses' => 'MyProfileController@changePass']);
+	Route::post('my-profile/edit-profile', ['as' => 'my-profile.editprofile', 'uses' => 'MyProfileController@editProfile']);
 
 	// Route::get('typography', function () {
 	// 	return view('pages.typography');

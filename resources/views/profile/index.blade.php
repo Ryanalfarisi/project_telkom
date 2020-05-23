@@ -36,12 +36,20 @@
   #content_change {
     display: none;
   }
+  #content_edit {
+    display: none;
+  }
 </style>
 <div class="col-md-12">
   <ol class="breadcrumb">
     <li><a href="{{ route('home')}}" class="cl-orange fs-20">Home</a></li>
     <li class="active fs-20">Profile</li>
   </ol>
+  <div class="col-md-12">
+    @if (session('status'))
+      <div class="fs-14 error text-success">{{ session('status') }}</div>
+    @endif
+  </div>
   <div class="col-md-8">
     <table class="table-profile">
       <tr>
@@ -54,12 +62,12 @@
       </tr>
       <tr>
         <td class="font-weight-bold fs-16">Lokasi Dinas / Unit</td>
-        <td class="fs-15">Kota Medan / Consumer Marketing</td>
+      <td class="fs-15">{{$user->lokasi ?:'-'}} / {{$user->unit ?: '-'}}</td>
       </tr>
     </table>
   </div>
   <div class="col-md-4">
-    <div class="btn-profile mb-5">
+    <div class="btn-profile mb-5 pointer" id="editProfile">
       Edit Profile
     </div>
     <div class="btn-profile mt-5 pointer" id="changePass">
@@ -100,35 +108,83 @@
           Submit
         </button>
       </form>
-
+  </div>
+  <div class="col-md-12 py-5" id="content_edit" style="border-top: 1px solid #76ebac;">
+    <p class="fs-20 font-weight-bold">Edit Profile</p>
+    <small><i> Silahkan ganti profile anda.</i></small>
+    {{-- @if ($errors->any())
+      @foreach ($errors->all() as $error)
+          <div class="fs-12 error text-danger">{{$error}}</div>
+      @endforeach
+    @endif --}}
+      <form class="form" method="POST" action="{{ route('my-profile.editprofile') }}">
+        @csrf
+        <div class="form-group row mt-5">
+          <div class="col-md-4 text-left">
+            <label for="username" class="font-weight-bold input-basic fs-14">Username</label>
+            <input value="{{$user->username}}" readonly type="text" name="username" id="username" class="input-custome pl-3" placeholder="Username.." required>
+          </div>
+          <div class="col-md-3 text-left">
+            <label for="username" class="font-weight-bold input-basic fs-14">NIK</label>
+            <input value="{{$user->nik}}" type="text" name="nik" id="nik" class="input-custome pl-3" placeholder="NIK.." required>
+          </div>
+        </div>
+        <div class="form-group row mt-3">
+          <div class="col-md-4 text-left">
+            <label for="jabatan" class="font-weight-bold input-basic">Jabatan</label>
+            <select class="form-control" name="jabatan">
+              @foreach ($jabatan as $item)
+                <option value="{{$item->code_jabatan}}"
+                  @if ($item->code_jabatan == $user->code_jabatan)
+                      selected="selected"
+                  @endif
+                >{{ $item->jabatan}}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="col-md-3 text-left">
+            <label for="email" class="font-weight-bold input-basic">Band</label>
+            <select class="form-control" name="grade">
+              @foreach ($grade as $item)
+                <option value="{{$item}}"
+                @if ($item == $user->grade)
+                      selected="selected"
+                @endif
+                >{{$item}}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="form-group row mt-3">
+          <div class="col-md-4 text-left">
+            <label for="lokasi" class="font-weight-bold input-basic">Lokasi</label>
+          <input value="{{$user->lokasi}}" type="text" name="lokasi" id="lokasi" class="input-custome pl-3" placeholder="Lokasi.." required>
+          </div>
+          <div class="col-md-3 text-left">
+            <label for="unit" class="font-weight-bold input-basic">Unit</label>
+            <input value="{{$user->unit}}" type="text" name="unit" id="unit" class="input-custome pl-3" placeholder="Unit.." required>
+          </div>
+        </div>
+        <input type="hidden" name="userId" value="{{$user->id}}">
+        <input type="hidden" name="username" value="{{$user->username}}">
+        <button type="submit" class="btn-profile mb-5">
+          Submit
+        </button>
+      </form>
   </div>
 </div>
 @endsection
 @push('js')
   <script>
     $(document).ready(function() {
-  //     if ( $( "div" ).first().is( ":hidden" ) ) {
-  //   $( "div" ).slideDown( "slow" );
-  // } else {
-  //   $( "div" ).hide();
-  // }
-//   $( "#changePass" ).click(function() {
-//   $( "#content_change" ).slideDown( "slow", function() {
-//     // Animation complete.
-//   });
-// });
-// $( "#changePass" ).click(function() {
-//   $( "#content_change" ).slideToggle( "slow" );
-// });
-      var open = false;
-      $( "#changePass" ).click(function() {
-        if(!open) {
-          $( "#content_change").css('display', 'block');
-            open = true
-        } else {
-          $("#content_change").css('display', 'none');
-          open = false;
-        }
+      $("#changePass").click(function() {
+        console.log("oke");
+          $("#content_change").css('display', 'block');
+          $("#content_edit").css('display', 'none');
+      });
+      $("#editProfile").click(function() {
+        $("#content_edit").css('display', 'block');
+        $("#content_change").css('display', 'none');
       });
     });
   </script>

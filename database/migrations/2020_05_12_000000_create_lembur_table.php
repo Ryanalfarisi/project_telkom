@@ -15,16 +15,19 @@ class CreateLemburTable extends Migration
     {
         Schema::create('lembur', function (Blueprint $table) {
             $table->id();
-            $table->string('entry_by')->nullable();
-            $table->string('nik')->nullable();
+            $table->string('username')->nullable();
+            $table->string('user_id')->nullable();
             $table->timestamp('time_from')->nullable();
             $table->timestamp('time_until')->nullable();
             $table->string('description');
-            $table->integer('duration')->nullable();
+            $table->date('duration')->nullable();
             $table->string('status',1);
-            $table->date('insertDate');
+            $table->date('insert_date');
             $table->string('location')->nullable();
-            $table->string('approved_by',8);
+            $table->string('approved_id',5);
+            $table->string('kpi',5)->nullable();
+            $table->string('result',250)->nullable();
+            $table->string('approved_user',50)->nullable();
             $table->timestamps();
         });
     }

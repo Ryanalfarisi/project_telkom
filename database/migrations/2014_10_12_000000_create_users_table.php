@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('jawaban', 255)->nullable();
             $table->string('nik', 255);
             $table->string('jabatan',100)->nullable();
+            $table->string('lokasi',200)->nullable();
+            $table->string('unit',200)->nullable();
             $table->string('code_jabatan', 5)->nullable();
             $table->string('grade', 5)->nullable();
             $table->timestamp('email_verified_at')->nullable();

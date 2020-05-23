@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class LemburController extends Controller
 {
@@ -23,7 +24,8 @@ class LemburController extends Controller
 
     public function request()
     {
-        return view('lembur.request');
+        $assigned = DB::table('users')->where('code_jabatan', '!=', 'STAFF')->get();
+        return view('lembur.request', ['assigned' => $assigned]);
     }
     public function history()
     {
@@ -34,18 +36,25 @@ class LemburController extends Controller
     {
         $body = $request->input();
         $dateNow = date("Y-m-d H:i:s");
-        DB::table('lembur')->insert(
-            [
-                'entry_by' => "admin",
-                'time_from' => $dateNow,
-                'time_until' => $dateNow,
-                'description' => $body['activity'],
-                'insertDate' => $dateNow,
-                'status' => '0',
-                'approved_by' => $body['assigned'],
-                'updated_at' => $dateNow
-            ]
-        );
+        $user = Auth::user();
+        foreach ($body['activity'] as $activity) {
+            if(is_null($activity) || trim($activity) == '') continue;
+            DB::table('lembur')->insert(
+                [
+                    'username' => $user->username,
+                    'user_id' => $user->id,
+                    'time_from' => $body['insert_date'].' '.$body['startTime'],
+                    'time_until' => $body['insert_date'].' '.$body['endTime'],
+                    'description' => $activity,
+                    'insert_date' => $body['insert_date'],
+                    'status' => '0',
+                    'result' => $body['result'],
+                    'kpi' => $body['kpi'],
+                    'created_at' => $dateNow,
+                    'approved_id' => $body['assigned'],
+                ]
+            );
+        }
         return redirect('home');
     }
 }

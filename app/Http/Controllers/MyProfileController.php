@@ -21,18 +21,45 @@ class MyProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $jabatan = DB::table('jabatan')->get();
+        $grade = [
+            "I" =>"I",
+            "II" => "II",
+            "III" => "III",
+            "IV" => "IV",
+            "V" => "V",
+            "VI" => "VI"
+        ];
+
         $user = DB::table('users')
             ->join('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
             ->where('users.id', $user->id)
             ->select('users.*', 'jabatan.jabatan')
             ->get()->toArray();
-        return view('profile.index', ["user" => $user[0]]); 
+
+        return view('profile.index', ["user" => $user[0], "jabatan" => $jabatan, "grade" => $grade]);
     }
 
     public function reset()
     {
         $ask = DB::table('pertanyaan')->get();
         return view('profile.reset', ['ask' =>$ask]);
+    }
+
+    public function editProfile(Request $request)
+    {
+        $input = $request->input();
+        DB::table('users')
+              ->where('username', $input['username'])
+              ->where('id', $input['userId'])
+              ->update([
+                  'nik' => $input['nik'],
+                  'code_jabatan' => $input['jabatan'],
+                  'grade' => $input['grade'],
+                  'lokasi' => $input['lokasi'],
+                  'unit' => $input['unit'],
+                ]);
+        return redirect()->route('home.my_profile')->with('status', 'Profile has been updated');;
     }
 
     public function changePass(Request $request)
