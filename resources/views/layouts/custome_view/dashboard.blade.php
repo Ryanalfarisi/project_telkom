@@ -44,6 +44,8 @@
 }
 .row-color {
   border-bottom: 1px solid #32EAAC;
+  font-family: 'Poppins', sans-serif;
+  font-size:16px;
 }
 .bullet-process {
   width:10px;
@@ -98,7 +100,7 @@
 #formulir {
   display: block;
 }
-#traking {
+#tracking {
   display: none;
 }
 #draf {
@@ -132,50 +134,79 @@
               <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
                   <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
               </div>
-              <div class="bottom-formulir d-inline-block mr-5 mt-5 align-middle">DRAFT</div>
-              <div class="bottom-formulir d-inline-block mt-5 align-middle">TRACKING</div>
+              <div class="bottom-formulir d-inline-block mr-5 mt-5 align-middle pointer" onclick="where_open('draf')">DRAFT</div>
+              <div class="bottom-formulir d-inline-block mt-5 align-middle pointer" onclick="where_open('tracking')">TRACKING</div>
             </div>
           </div>
         </div>
         <div id="tracking">
-          <table id="table_id" class="row-border">
+          <table id="table_tracking" class="row-border">
             <thead>
                 <tr>
-                    <th class="color-th">Tracking formulir</th>
+                    <th class="color-th">Tracking Formulir</th>
                     <th class="color-th">Status</th>
-                    <th class="color-th">Review</th>
-                    <th class="color-th">Superiors</th>
+                    <th class="color-th">Insert date</th>
+                    <th class="color-th">Type of work</th>
+                    <th class="color-th">Assigned By</th>
                 </tr>
             </thead>
             <tbody>
             @foreach ($lembur as $row)
-              <tr>
-                    <td class="row-color">{{$row->description}}</td>
-                    <td class="row-color">
-                        <div class="bullet-process mr-3"></div>
-                        <div class="bullet-process mr-3"></div>
-                        <div class="bullet-process mr-3"></div>
-                    </td>
-                    <td class="row-color">
-                    <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                    <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                    <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                    </td>
-                    <td class="row-color">{{$row->approved_id}}</td>
+              @if ($row->type == '1')
+                <tr>
+                  <td class="row-color">{{$row->description}}</td>
+                  <td class="row-color">
+                    @if ($row->status == '1')
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @endif
+                  </td>
+                  <td class="row-color">{{$row->insert_date}}</td>
+                  <td class="row-color">{{$row->jobs_name}}</td>
+                  <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
                 </tr>
+              @endif
             @endforeach
             </tbody>
           </table>
         </div>
         <div id="draf">
-draf
+          <table id="table_draf" class="row-border">
+            <thead>
+                <tr>
+                    <th class="color-th">Draft formulir</th>
+                    <th class="color-th">Status</th>
+                    <th class="color-th">Type of work</th>
+                    <th class="color-th">Assign by</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach ($lembur as $row)
+              @if ($row->type == '0')
+                <tr>
+                  <td class="row-color fs-16">{{$row->description}}</td>
+                  <td class="row-color fs-16">
+                      @if ($row->created_at)
+                          <p>Created at : {{$row->created_at}}</p>
+                      @else
+                          <p>Last update :{{$row->updated_at}}</p>
+                      @endif
+                  </td>
+                  <td class="row-color fs-16">
+                      <p>{{$row->jobs_name}}</p>
+                  </td>
+                  <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+              </tr>
+              @endif
+            @endforeach
+            </tbody>
+          </table>
         </div>
       </div>
       <div id="riwayat" class="tab-pane fade">
-        <table id="table_tracking" class="row-border">
+        <table id="table_riwayat" class="row-border">
           <thead>
               <tr>
-                  <th class="color-th">Aktivitas</th>
+                  <th class="color-th">Tracking formulir</th>
                   <th class="color-th">Status</th>
                   <th class="color-th">Review</th>
                   <th class="color-th">Superiors</th>
@@ -202,8 +233,35 @@ draf
         </table>
       </div>
       <div id="todo" class="tab-pane fade">
-        <h3>Menu 2</h3>
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+        <table id="table_todo" class="row-border">
+          <thead>
+              <tr>
+                  <th class="color-th">Aktivitas</th>
+                  <th class="color-th">Superiors</th>
+                  <th class="color-th">Status</th>
+                  <th></th>
+                  <th class="color-th">Challenge</th>
+              </tr>
+          </thead>
+          <tbody>
+          @foreach ($lembur as $row)
+            <tr>
+                  <td class="row-color">{{$row->description}}</td>
+                  <td class="row-color">
+                      <div class="bullet-process mr-3"></div>
+                      <div class="bullet-process mr-3"></div>
+                      <div class="bullet-process mr-3"></div>
+                  </td>
+                  <td class="row-color">
+                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  </td>
+                  <td class="row-color">{{$row->approved_id}}</td>
+              </tr>
+          @endforeach
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -212,7 +270,7 @@ draf
 @push('js')
   <script>
     $(document).ready(function() {
-      $('#table_id').DataTable({
+      $('#table_riwayat').DataTable({
         "searching": false,
         "paging":   false,
       });
@@ -223,6 +281,11 @@ draf
       });
 
       $('#table_draf').DataTable({
+        "searching": false,
+        "paging":   false,
+      });
+
+      $('#table_todo').DataTable({
         "searching": false,
         "paging":   false,
       });

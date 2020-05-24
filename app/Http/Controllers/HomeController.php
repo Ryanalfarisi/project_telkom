@@ -22,7 +22,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $lembur = DB::table('lembur')->get();
+        $lembur = DB::table('lembur')
+                  ->leftJoin('jobs_extra', 'lembur.job', '=', 'jobs_extra.id')
+                  ->leftJoin('status_task', 'lembur.status', '=', 'status_task.id')
+                  ->leftJoin('users', 'lembur.approved_id', '=', 'users.id')->get();
         return view('layouts.custome_view.dashboard', ['lembur' => $lembur]);
     }
 }

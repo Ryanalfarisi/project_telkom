@@ -7,7 +7,14 @@ body {
   position: relative;
   width: 100%;
 }
-
+.dataTables_wrapper {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  position: relative;
+  clear: both;
+  *zoom: 1;
+  zoom: 1;
+}
 .tim-typo .tim-note {
   bottom: 5px;
   color: #c0c1c2;
@@ -97,6 +104,21 @@ body {
 
 .bg-green-primary {
   background: #31EAAB;
+}
+.bg-status-1 {
+  background: #F3AF00;
+  padding: 4px 5px;
+  border-radius: 6px;
+}
+.bg-status-4 {
+  background: #D80000;
+  padding: 4px 5px;
+  border-radius: 6px;
+}
+.bg-status-5 {
+  background: #0023D8;
+  padding: 4px 5px;
+  border-radius: 6px;
 }
 .pointer {
   cursor: pointer;

@@ -12,6 +12,6 @@ class Lembur extends Model
     protected $fillable = [
         'username', 'time_from', 'time_until','user_id',
         'description', 'status', 'approved_id',
-        'duration', 'insert_date', 'location'
+        'duration', 'insert_date', 'location', 'job', 'job_name'
     ];
 }

@@ -67,13 +67,13 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="type" class="col-sm-4 col-form-label font-weight-bold">Type Of Work <span class="cl-orange float-right">*</span></label>
+          <label for="jobs" class="col-sm-4 col-form-label font-weight-bold">Type Of Work <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-8">
-          <select name="type" class="form-control-plaintext fs-style fs-14" id="type" required>
+          <select name="job" class="form-control-plaintext fs-style fs-14" id="job" required>
               <option value="">Pilih kategori Aktivitas</option>
-              <option value="1">Pengolahan Data dan Pelaporan</option>
-              <option value="2">Sales Operational</option>
-              <option value="3">Teknis Operational</option>
+              @foreach ($jobs as $job)
+                <option value="{{$job->id}}">{{$job->jobs_name}}</option>
+              @endforeach
           </select>
           </div>
         </div>
@@ -115,7 +115,7 @@
         <div class="form-group row">
           <label for="duration" class="col-sm-4 col-form-label font-weight-bold">Duration  <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-3">
-            <input type="text" readonly class="form-control input-staff" style="height:30px;" id="duration" value="" required>
+            <input type="text" readonly name="duration" class="form-control input-staff" style="height:30px;" id="duration" value="" required>
           </div>
         </div>
         <div class="form-group row">
@@ -131,12 +131,13 @@
         </div>
         <div class="form-group row">
           <label for="location" class="col-sm-4 col-form-label font-weight-bold">Location</label>
-          <div class="col-sm-8">
+          <div class="col-sm-8 position-relative">
+            <img class="position-absolute pointer" onclick="openGoogleMap()" style="width: 27px;right: 15px;" src="{{ asset('material') }}/img/map.png" alt="">
             <input type="text" name="location" placeholder="Pilih lokasi (opsional)" class="form-control-plaintext input-staff" id="location" value="">
           </div>
         </div>
         <div class="form-group row">
-          <label for="duration" class="col-sm-4 col-form-label font-weight-bold">Result</label>
+          <label for="result" class="col-sm-4 col-form-label font-weight-bold">Result</label>
           <div class="col-sm-8">
             <input type="text" name="result" placeholder="Sebutkan target (opsional)" class="form-control-plaintext input-staff" style="height:30px;" value="">
           </div>
@@ -149,9 +150,12 @@
             <input type="text" disabled name="kpi" id="kpi" class="form-control d-inline-block" style="width:80px; height:30px; border-radius:10px;">
           </div>
         </div>
+        <input type="hidden" name="draft" id="is_draft" value="1">
   </div>
-  <div class="">
-    <button type="submit" class="btn-send">Send</button>
+  <div class="col-md-12 text-center">
+    <button type="submit" id="to_draft" class="btn-send mx-5">Save</button>
+    <button type="submit" id="to_submit" class="btn-send mx-5">Submit</button>
+    <button type="button" id="to_cancel" class="btn-send mx-5">Cancel</button>
   </div>
 </div>
 </form>
@@ -159,6 +163,18 @@
 @push('js')
   <script>
     $(document).ready(function() {
+      $("#to_draft").click(function() {
+        $("#is_draft").val('0');
+        $("#form_lembur").trigger('click');
+      });
+      $("#to_submit").click(function() {
+        $("#is_draft").val('1');
+        $("#form_lembur").trigger('click');
+      });
+      $("#to_cancel").click(function() {
+        window.location.href()
+      });
+
       $('#kpi_checkbox').change(function () {
         if($(this).prop("checked")) {
           $("#kpi").prop("disabled", false);
@@ -166,17 +182,6 @@
           $("#kpi").prop("disabled", true);
         }
       });
-      // function formatState (state) {
-      //   if (!state.id) {
-      //     return state.text;
-      //   }
-      //   var $state = $(
-      //     '<span><img src="vendor/images/flags/' +  state.element.value.toLowerCase() + 
-      // '.png" class="img-flag" /> ' + 
-      //   state.text +     '</span>'
-      // );
-      // return $state;
-      // };
       $('#startTime, #endTime').on('dp.change', function(e) {
         var start = $("input[name='startTime']").val();
         var end = $("input[name='endTime']").val();
@@ -209,6 +214,10 @@
       var counter = $("#activity_counter").find(':input');
       var html = `<input type="text" name="activity[`+counter.length+`]" class="form-control-plaintext input-staff" value="" placeholder=". . .">`;
       $("#activity_counter").append(html);
+    }
+    function openGoogleMap()
+    {
+      newWindow = window.open("/googlemaps", "gmaps", "status=0,scrollbars=1,width=800,height=500,left=200,top=100", 0)
     }
   </script>
 @endpush

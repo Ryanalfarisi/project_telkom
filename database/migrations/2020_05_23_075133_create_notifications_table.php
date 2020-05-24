@@ -16,11 +16,11 @@ class CreateNotificationsTable extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('task_id');
-            $table->string('category');
-            $table->string('from_user');
-            $table->string('to_user');
+            $table->string('category')->nullable();
+            $table->string('from_user_id');
+            $table->string('to_user_id');
             $table->integer('read');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->string('descriptions');
             $table->timestamps();
         });

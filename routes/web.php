@@ -22,6 +22,7 @@ Route::post('my-profile/password', ['as' => 'my-profile.doreset', 'uses' => 'MyP
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/googlemaps', 'GoogleMapsController@index')->name('google_maps');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

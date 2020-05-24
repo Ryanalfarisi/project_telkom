@@ -178,7 +178,6 @@
   <script>
     $(document).ready(function() {
       $("#changePass").click(function() {
-        console.log("oke");
           $("#content_change").css('display', 'block');
           $("#content_edit").css('display', 'none');
       });
