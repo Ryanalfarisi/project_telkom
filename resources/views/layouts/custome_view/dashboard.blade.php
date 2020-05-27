@@ -244,7 +244,7 @@
           </thead>
           <tbody>
           @foreach ($lembur as $row)
-            @if ($row->type == '0')
+            @if ($row->type == '1')
               <tr>
                 <td class="row-color">{{$row->description}}</td>
                 <td class="row-color">
