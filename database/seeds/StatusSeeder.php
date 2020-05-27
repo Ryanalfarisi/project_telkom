@@ -36,5 +36,10 @@ class StatusSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        DB::table('status_task')->insert([
+            'label' => 'Done',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

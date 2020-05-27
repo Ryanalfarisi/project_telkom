@@ -19,20 +19,6 @@
     font-weight: bold;
     text-align: center;
   }
-  .breadcrumb > li + li:before {
-    color: #000000;
-    content: "> ";
-    padding: 0 5px;
-  }
-  .breadcrumb {
-    background: white !important;
-  }
-  .breadcrumb > .active {
-    color:black;
-  }
-  .breadcrumb > li:hover {
-    color: #FF7E07 !important;
-  }
   #content_change {
     display: none;
   }

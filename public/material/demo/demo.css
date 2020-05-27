@@ -15,6 +15,11 @@ body {
   *zoom: 1;
   zoom: 1;
 }
+.row-color {
+  border-bottom: 1px solid #32EAAC;
+  font-family: 'Poppins', sans-serif;
+  font-size:18px;
+}
 .tim-typo .tim-note {
   bottom: 5px;
   color: #c0c1c2;
@@ -26,6 +31,20 @@ body {
   margin-left: 20px;
   position: absolute;
   width: 260px;
+}
+.breadcrumb > li + li:before {
+  color: #000000;
+  content: "> ";
+  padding: 0 5px;
+}
+.breadcrumb {
+  background: white !important;
+}
+.breadcrumb > .active {
+  color:black;
+}
+.breadcrumb > li:hover {
+  color: #FF7E07 !important;
 }
 
 /* offline-doc */

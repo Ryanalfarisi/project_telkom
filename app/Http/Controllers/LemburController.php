@@ -24,7 +24,9 @@ class LemburController extends Controller
 
     public function request()
     {
-        $assigned = DB::table('users')->where('code_jabatan', '!=', 'STAFF')->get();
+        $assigned = DB::table('users')
+                    ->leftJoin('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
+                    ->whereIn('users.grade', ['I', 'II', 'III'])->get();
         $jobs = DB::table('jobs_extra')->get();
         return view('lembur.request', ['assigned' => $assigned, 'jobs' => $jobs]);
     }

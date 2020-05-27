@@ -17,6 +17,7 @@ class CreateJabatanTable extends Migration
             $table->id();
             $table->string('jabatan', 50);
             $table->string('code_jabatan', 50);
+            $table->string('grade', 5);
             $table->timestamps();
         });
     }

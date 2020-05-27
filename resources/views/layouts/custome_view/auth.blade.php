@@ -171,11 +171,11 @@ top: 10px;
                 </li>
                 <li class="pl-4">
                     <div class="bullet-notif rounded-black d-inline-block align-middle">3</div>
-                    <a href="#" class="d-inline-block align-middle">Riwayat<i class="fa fa-fw fa-angle-down pull-right"></i></a> 
+                    <a href="{{route('home', ['content' => 'riwayat'])}}" class="d-inline-block align-middle">Riwayat<i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 </li>
                 <li class="pl-4">
                     <div class="bullet-notif rounded-black d-inline-block align-middle">2</div>
-                    <a href="#" class="d-inline-block align-middle">Inbox<i class="fa fa-fw fa-angle-down pull-right"></i></a> 
+                    <a href="{{route('home', ['content' => 'todo'])}}" class="d-inline-block align-middle">To Do<i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 </li>
             </ul>
         </div>

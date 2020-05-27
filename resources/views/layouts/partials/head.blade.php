@@ -46,8 +46,11 @@
 } */
 </style>
 <div style="margin-top:45px;">
-  <div class="col-md-6 pl-5" style="height:auto;padding:20px;">
+  <div class="col-md-6 pl-5 position-relative" style="height:auto;padding:20px;">
     <h2 class="font-weight-bold">GoodPeople</h2>
+    @if ($extra)
+      <span class="cl-orange fs-18 position-absolute" style="left: 210px;top: 30px;">Extra</span>
+    @endif
   </div>
   <div class="col-md-6 pr-5" style="height:auto; padding:20px;">
     <div class="wrapper-img pointer float-right position-relative">

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['activePage' => 'request-lembur', 'titlePage' => __('Request Overtime')])
 
 @section('content')
-@include('layouts.partials.head', array('extra'=> false))
+@include('layouts.partials.head', array('extra'=> true))
 <style>
   .wrapper-staff {
     width: 100%;
@@ -56,6 +56,10 @@
   }
 </style>
 <div class="col-md-8 px-5">
+  <ol class="breadcrumb">
+    <li><a href="{{ route('home')}}" class="cl-orange fs-20">Home</a></li>
+    <li class="active fs-20">Formulir baru</li>
+  </ol>
   <div class="wrapper-staff py-5 px-5">
       <form id="form_lembur" method="POST" action="{{ route('lembur.add') }}">
       @csrf
@@ -83,7 +87,7 @@
             <select name="assigned" class="form-control-plaintext fs-style assigned" required>
               <option></option>
               @foreach ($assigned as $item)
-                <option value="{{$item->id}}">{{$item->username}}</option>
+                <option value="{{$item->id}}">{{$item->username}} <b>({{$item->jabatan}})</b></option>
               @endforeach
             </select>
           </div>
@@ -212,7 +216,7 @@
     });
     function addRow() {
       var counter = $("#activity_counter").find(':input');
-      var html = `<input type="text" name="activity[`+counter.length+`]" class="form-control-plaintext input-staff" value="" placeholder=". . .">`;
+      var html = `<input type="text" name="activity[`+counter.length+`]" class="form-control-plaintext input-staff" value="" placeholder="`+(counter.length +1) +`. . .">`;
       $("#activity_counter").append(html);
     }
     function openGoogleMap()

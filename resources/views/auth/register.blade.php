@@ -78,19 +78,19 @@
                 </div>
               </div>
               <div class="form-group row">
-                <div class="col-md-9 text-left">
-                  <label for="email" class="font-weight-bold input-basic">Jabatan</label>
-                  <select class="form-control" name="jabatan">
-                    @foreach ($jabatan as $item)
-                      <option value="{{ $item->code_jabatan}}">{{ $item->jabatan}}</option> 
-                    @endforeach
-                  </select>
-                </div>
                 <div class="col-md-3 text-left">
                   <label for="email" class="font-weight-bold input-basic">Band</label>
                   <select class="form-control" name="grade">
                     @foreach ($grade as $item)
                       <option value="{{$item}}">{{$item}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-md-9 text-left">
+                  <label for="email" class="font-weight-bold input-basic">Jabatan</label>
+                  <select class="form-control" name="jabatan">
+                    @foreach ($jabatan as $item)
+                      <option value="{{ $item->code_jabatan}}">{{ $item->jabatan}}</option> 
                     @endforeach
                   </select>
                 </div>

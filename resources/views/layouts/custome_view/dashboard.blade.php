@@ -41,11 +41,8 @@
 }
 .color-th {
   background: #D7D6FF;
-}
-.row-color {
-  border-bottom: 1px solid #32EAAC;
-  font-family: 'Poppins', sans-serif;
-  font-size:16px;
+  font-size:18px;
+  font-weight: bold;
 }
 .bullet-process {
   width:10px;
@@ -130,7 +127,7 @@
         <div id="formulir">
           <div class="wrapper-tab bg-white text-center">
             <div style="width:300px;" class="mx-auto mt-5">
-              <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
+            <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
               <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
                   <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
               </div>
@@ -160,7 +157,7 @@
                       <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                     @endif
                   </td>
-                  <td class="row-color">{{$row->insert_date}}</td>
+                  <td class="row-color">{{$row->created_at}}</td>
                   <td class="row-color">{{$row->jobs_name}}</td>
                   <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
                 </tr>
@@ -183,18 +180,18 @@
             @foreach ($lembur as $row)
               @if ($row->type == '0')
                 <tr>
-                  <td class="row-color fs-16">{{$row->description}}</td>
-                  <td class="row-color fs-16">
+                  <td class="row-color">{{$row->description}}</td>
+                  <td class="row-color">
                       @if ($row->created_at)
                           <p>Created at : {{$row->created_at}}</p>
                       @else
                           <p>Last update :{{$row->updated_at}}</p>
                       @endif
                   </td>
-                  <td class="row-color fs-16">
+                  <td class="row-color">
                       <p>{{$row->jobs_name}}</p>
                   </td>
-                  <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                  <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
               </tr>
               @endif
             @endforeach
@@ -206,7 +203,7 @@
         <table id="table_riwayat" class="row-border">
           <thead>
               <tr>
-                  <th class="color-th">Tracking formulir</th>
+                  <th class="color-th">Aktivitas</th>
                   <th class="color-th">Status</th>
                   <th class="color-th">Review</th>
                   <th class="color-th">Superiors</th>
@@ -214,20 +211,22 @@
           </thead>
           <tbody>
           @foreach ($lembur as $row)
-            <tr>
-                  <td class="row-color">{{$row->description}}</td>
-                  <td class="row-color">
-                      <div class="bullet-process mr-3"></div>
-                      <div class="bullet-process mr-3"></div>
-                      <div class="bullet-process mr-3"></div>
-                  </td>
-                  <td class="row-color">
-                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                  </td>
-                  <td class="row-color">{{$row->approved_id}}</td>
+            @if ($row->status == '6')
+              <tr>
+                <td class="row-color">{{$row->description}}</td>
+                <td class="row-color">
+                    <div class="bullet-process mr-3"></div>
+                    <div class="bullet-process mr-3"></div>
+                    <div class="bullet-process mr-3"></div>
+                </td>
+                <td class="row-color">
+                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                </td>
+                <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
               </tr>
+            @endif
           @endforeach
           </tbody>
         </table>
@@ -239,26 +238,27 @@
                   <th class="color-th">Aktivitas</th>
                   <th class="color-th">Superiors</th>
                   <th class="color-th">Status</th>
-                  <th></th>
+                  <th class="color-th">Waktu</th>
                   <th class="color-th">Challenge</th>
               </tr>
           </thead>
           <tbody>
           @foreach ($lembur as $row)
-            <tr>
-                  <td class="row-color">{{$row->description}}</td>
-                  <td class="row-color">
-                      <div class="bullet-process mr-3"></div>
-                      <div class="bullet-process mr-3"></div>
-                      <div class="bullet-process mr-3"></div>
-                  </td>
-                  <td class="row-color">
-                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                  <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                  </td>
-                  <td class="row-color">{{$row->approved_id}}</td>
+            @if ($row->type == '0')
+              <tr>
+                <td class="row-color">{{$row->description}}</td>
+                <td class="row-color">
+                  {{$row->username}} <b>({{$row->code_jabatan}})</b>
+                </td>
+                <td class="row-color">
+                  @if ($row->status_id == '1')
+                    <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                  @endif
+                </td>
+                <td class="row-color timer" data-id="{{$row->id}}">Sisah waktu <span id="timer-{{$row->id}}"></span></td>
+                <td class="row-color">{{$row->duration}} Extra hours</td>
               </tr>
+            @endif
           @endforeach
           </tbody>
         </table>
@@ -270,6 +270,12 @@
 @push('js')
   <script>
     $(document).ready(function() {
+      $( ".timer" ).each(function( i, el ) {
+        row_id = $(el).attr('data-id');
+        countdownTimeStart(row_id);
+      });
+      var content = {!! json_encode($content) !!}
+      activaTab(content);
       $('#table_riwayat').DataTable({
         "searching": false,
         "paging":   false,
@@ -304,5 +310,33 @@
           $("#formulir, #tracking").css('display', 'none');
         }
     }
+    function activaTab(tab){
+  $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+};
+function countdownTimeStart(row_id){
+
+    var countDownDate = new Date("Sep 25, 2025 15:00:00").getTime();
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+    // Get todays date and time
+    var now = new Date().getTime();
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+    // Time calculations for days, hours, minutes and seconds
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // Output the result in an element with id="demo"
+    document.getElementById("timer-"+row_id).innerHTML = hours + "h "
+    + minutes + "m " + seconds + "s ";
+    // If the count down is over, write some text
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+    }
+}, 1000);
+}
   </script>
 @endpush
