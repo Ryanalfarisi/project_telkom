@@ -27,7 +27,7 @@
             <li><a href="#">Service</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right nav-menus text-dark">
-            <li><a href="{{ route('login') }}">SigIn</a></li>
+            <li><a href="{{ route('login') }}">Sign In</a></li>
             <li><a href="{{ route('register') }}">Sign Up</a></li>
         </ul>
     </div><!-- /.navbar-collapse -->
