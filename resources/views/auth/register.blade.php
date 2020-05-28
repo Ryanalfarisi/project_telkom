@@ -55,7 +55,7 @@
               <div class="form-group{{ $errors->has('nik') ? ' has-danger' : '' }}">
                 <div class="text-left">
                   <label for="nik" class="font-weight-bold input-basic">NIK</label>
-                  <input type="text" name="nik" class="input-custome pl-3" placeholder="{{ __('NIK') }}" value="{{ old('nik') }}" required>
+                  <input type="text" name="nik" class="input-custome pl-3" placeholder="{{ __('NIK') }}" value="{{ old('nik') }}" maxlength="6" required>
                 </div>
                 @if ($errors->has('name'))
                   <div id="name-error" class="error text-danger pl-3" for="name" style="display: block;">
@@ -87,12 +87,8 @@
                   </select>
                 </div>
                 <div class="col-md-9 text-left">
-                  <label for="email" class="font-weight-bold input-basic">Jabatan</label>
-                  <select class="form-control" name="jabatan">
-                    @foreach ($jabatan as $item)
-                      <option value="{{ $item->code_jabatan}}">{{ $item->jabatan}}</option> 
-                    @endforeach
-                  </select>
+                  <label for="jabatan" class="font-weight-bold input-basic">Jabatan</label>
+                  <input type="text" name="jabatan" id="jabatan" class="input-custome pl-3" placeholder="Jabatan">
                 </div>
               </div>
               <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
@@ -120,24 +116,6 @@
               <div class="mt-5 px-0 mb-5 text-center">
                 <button type="submit" class="btn btn-primary btn-dark">Daftar</button>
               </div>
-              <!-- <div class="mt-5 col-md-12 px-0" style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
-                <div class="col-md-6 px-0 text-left">
-                  <div class="form-check mr-auto ml-3 mt-3">
-                    <label class="form-check-label" style="color:grey; font-weight:normal;">
-                      <input class="form-check-input" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember me') }}
-                      <span class="form-check-sign">
-                        <span class="check"></span>
-                      </span>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-6 px-0 mb-5">
-                  <button type="submit" class="btn btn-primary btn-dark">Masuk</button>
-                </div>
-                <div>
-                  <p class="cl-green">Forgot Password ?</p>
-                </div>
-              </div> -->
             </div>
           </div>
         </div>

@@ -80,16 +80,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $grade_staff = config('global.grade_staff');
+        $grade_manager = config('global.grade_manager');
         $trimJawaban = strtolower($data['jawaban']);
         $realJawaban = preg_replace('/\s+/', '', $trimJawaban);
-        return User::create([
+        if(in_array($data['grade'], $grade_staff)) {
+            $code_jabatan = "SM";
+        } elseif(in_array($data['grade'], $grade_manager)) {
+            $code_jabatan = "OFF_1";
+        }
+        $created = [
             'username' => $data['username'],
             'pertanyaan_id' => $data['ask'],
             'jawaban' => $realJawaban,
             'nik' => $data['nik'],
-            'code_jabatan' => $data['jabatan'],
+            'code_jabatan' => $code_jabatan,
+            'jabatan' => $data['jabatan'],
             'grade' => $data['grade'],
             'password' => Hash::make($data['password']),
-        ]);
+        ];
+        return User::create($created);
     }
 }
