@@ -61,11 +61,71 @@ class LemburController extends Controller
             ];
             $lastId = DB::table('lembur')->insertGetId($payload);
             $desc = "Pengajuan lembur dari ". $user->username;
-            $this->sendNotifications($payload, $desc, $lastId);
+            if($body['draft'] == 1) {
+                $this->sendNotifications($payload, $desc, $lastId);
+            }
         }
         return redirect('home');
     }
 
+    public function edit($id)
+    {
+        $lembur = DB::table('lembur')->find($id);
+        $assigned = DB::table('users')
+                    ->leftJoin('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
+                    ->whereIn('users.grade', ['I', 'II', 'III'])->get();
+        $jobs = DB::table('jobs_extra')->get();
+        return view('lembur.edit', ['assigned' => $assigned, 'jobs' => $jobs, 'lembur' => $lembur]);
+
+    }
+
+    public function doEdit(Request $request)
+    {
+        $user = Auth::user();
+        $body = $request->input();
+        $dateNow = date("Y-m-d H:i:s");
+        foreach ($body['activity'] as $key => $activity) {
+            if(is_null($activity) || trim($activity) == '') continue;
+            if($key == 0) {
+                $payload = [
+                    'username' => $user->username,
+                    'user_id' => $user->id,
+                    'time_from' => $body['insert_date'].' '.$body['startTime'],
+                    'time_until' => $body['insert_date'].' '.$body['endTime'],
+                    'description' => $activity,
+                    'insert_date' => $body['insert_date'],
+                    'status' => '1', // inprogress
+                    'result' => $body['result'],
+                    'kpi' => isset($body['kpi']) ? $body['kpi']: '',
+                    'type'=> $body['draft'],
+                    'updated_at' => $dateNow,
+                    'job' => $body['job'],
+                    'duration' => $body['duration'],
+                    'approved_id' => $body['assigned'],
+                ];
+                DB::table('lembur')->where('id' , $body['lembur_id'])->update($payload);
+            } else {
+                $payload = [
+                    'username' => $user->username,
+                    'user_id' => $user->id,
+                    'time_from' => $body['insert_date'].' '.$body['startTime'],
+                    'time_until' => $body['insert_date'].' '.$body['endTime'],
+                    'description' => $activity,
+                    'insert_date' => $body['insert_date'],
+                    'status' => '1', // inprogress
+                    'result' => $body['result'],
+                    'kpi' => isset($body['kpi']) ? $body['kpi']: '',
+                    'type'=> $body['draft'],
+                    'job' => $body['job'],
+                    'created_at' => $dateNow,
+                    'duration' => $body['duration'],
+                    'approved_id' => $body['assigned'],
+                ];
+                DB::table('lembur')->insert($payload);
+            }
+        }
+        return redirect('home');
+    }
     public function sendNotifications($payload, $desc, $lastId)
     {
         DB::table('notifications')->insert(

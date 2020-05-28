@@ -173,18 +173,19 @@
                     <th class="color-th">Draft formulir</th>
                     <th class="color-th">Status</th>
                     <th class="color-th">Type of work</th>
-                    <th class="color-th">Assign by</th>
+                    <th class="color-th">Assigned by</th>
                 </tr>
             </thead>
             <tbody>
             @foreach ($lembur as $row)
               @if ($row->type == '0')
-                <tr>
+                <tr onclick="toEditDraft({{$row->id}})" class="pointer">
                   <td class="row-color">{{$row->description}}</td>
                   <td class="row-color">
                       @if ($row->created_at)
                           <p>Created at : {{$row->created_at}}</p>
-                      @else
+                      @endif
+                      @if ($row->updated_at)
                           <p>Last update :{{$row->updated_at}}</p>
                       @endif
                   </td>
@@ -310,9 +311,12 @@
           $("#formulir, #tracking").css('display', 'none');
         }
     }
-    function activaTab(tab){
-  $('.nav-tabs a[href="#' + tab + '"]').tab('show');
-};
+    function toEditDraft(id) {
+      window.location.href = '/lembur/request/'+id;
+    }
+    function activaTab(tab) {
+      $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+    };
 function countdownTimeStart(row_id){
 
     var countDownDate = new Date("Sep 25, 2025 15:00:00").getTime();

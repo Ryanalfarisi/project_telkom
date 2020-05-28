@@ -34,7 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('lembur', 'LemburController@index')->name('lembur')->middleware('auth');
 	Route::get('lembur/request', ['as' => 'lembur.request', 'uses' => 'LemburController@request']);
+	Route::get('lembur/request/{id}', ['as' => 'lembur.edit', 'uses' => 'LemburController@edit']);
 	Route::post('lembur/add', ['as' => 'lembur.add', 'uses' => 'LemburController@add']);
+	Route::post('lembur/edit', ['as' => 'lembur.doedit', 'uses' => 'LemburController@doEdit']);
 	Route::get('lembur/history', ['as' => 'lembur.history', 'uses' => 'LemburController@history']);
 
 	Route::get('home/my-profile', ['as' => 'home.my_profile', 'uses' => 'MyProfileController@index']);

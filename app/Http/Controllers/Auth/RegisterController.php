@@ -85,9 +85,9 @@ class RegisterController extends Controller
         $trimJawaban = strtolower($data['jawaban']);
         $realJawaban = preg_replace('/\s+/', '', $trimJawaban);
         if(in_array($data['grade'], $grade_staff)) {
-            $code_jabatan = "SM";
-        } elseif(in_array($data['grade'], $grade_manager)) {
             $code_jabatan = "OFF_1";
+        } elseif(in_array($data['grade'], $grade_manager)) {
+            $code_jabatan = "SM";
         }
         $created = [
             'username' => $data['username'],
