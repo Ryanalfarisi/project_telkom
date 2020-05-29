@@ -54,15 +54,93 @@
     right: 16px;
     top: 0;
   }
+  .modal-dialog {
+    width: 300px;
+    height: 95px;
+  }
+  .modal-header {
+      border:none;
+  }
+  .wrapper-choosen {
+    width: 150px;
+    margin: auto;
+    border-top: 1px solid rgba(30, 250, 237, 0.25);
+  }
 </style>
-<div class="col-md-8 px-5">
-  <ol class="breadcrumb">
+<div class="col-md-9 px-5">
+  <!-- Modal -->
+<div id="modalDraft" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title fs-14 font-weight-bold">Apakah anda ingin menyimpan nya sebagai draft ?</h4>
+      </div>
+      <div class="modal-body pt-0">
+        <div class="wrapper-choosen pt-2">
+            <span class="fs-14 pointer" id="to_draft" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{-- End modal --}}
+<!-- Modal -->
+<div id="modalSubmit" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title fs-14 font-weight-bold">Apakah anda ingin submit formulir ini ?</h4>
+      </div>
+      <div class="modal-body pt-0">
+        <div class="wrapper-choosen pt-2">
+            <span class="fs-14 pointer" id="to_submit" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{-- End modal --}}
+<div id="modalCancel" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title fs-14 font-weight-bold">Perubahan belum tersimpan, apakah Anda yakin ingin keluar?</h4>
+      </div>
+      <div class="modal-body pt-0">
+        <div class="wrapper-choosen pt-2">
+            <span class="fs-14 pointer" id="to_cancel" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
+            <p class="fs-14 pointer text-center mt-2" style="color: #594C4C;" id="to_draft">Simpan ke draft</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{-- End modal --}}
+  <ol class="breadcrumb d-inline-block">
     <li><a href="{{ route('home')}}" class="cl-orange fs-20">Home</a></li>
     <li class="active fs-20">Formulir baru</li>
   </ol>
   <div class="wrapper-staff py-5 px-5">
       <form id="form_lembur" method="POST" action="{{ route('lembur.add') }}">
       @csrf
+      <div class="form-group row">
+        <label for="asigned" class="col-sm-4 col-form-label font-weight-bold">Assigned By <span class="cl-orange float-right">*</span></label>
+        <div class="col-sm-8">
+          <select name="assigned" class="form-control-plaintext fs-style assigned" required>
+            <option></option>
+            @foreach ($assigned as $item)
+              <option value="{{$item->id}}">{{$item->username}} <b>({{$item->jabatan}})</b></option>
+            @endforeach
+          </select>
+        </div>
+      </div>
         <div class="form-group row">
           <label for="activity" class="col-sm-4 col-form-label font-weight-bold">Detail Activity <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-8 position-relative" id="activity_counter">
@@ -79,17 +157,6 @@
                 <option value="{{$job->id}}">{{$job->jobs_name}}</option>
               @endforeach
           </select>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="asigned" class="col-sm-4 col-form-label font-weight-bold">Assigned By <span class="cl-orange float-right">*</span></label>
-          <div class="col-sm-8">
-            <select name="assigned" class="form-control-plaintext fs-style assigned" required>
-              <option></option>
-              @foreach ($assigned as $item)
-                <option value="{{$item->id}}">{{$item->username}} <b>({{$item->jabatan}})</b></option>
-              @endforeach
-            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -118,9 +185,10 @@
         </div>
         <div class="form-group row">
           <label for="duration" class="col-sm-4 col-form-label font-weight-bold">Duration  <span class="cl-orange float-right">*</span></label>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <input type="text" readonly name="duration" class="form-control input-staff" style="height:30px;" id="duration" value="" required>
           </div>
+          <span style="line-height: 30px; color:#8E7E7E;" class="fs-12"><i>* Hour/Jam</i></span>
         </div>
         <div class="form-group row">
           <label for="date" class="col-sm-4 col-form-label font-weight-bold">Date  <span class="cl-orange float-right">*</span></label>
@@ -155,11 +223,12 @@
           </div>
         </div>
         <input type="hidden" name="draft" id="is_draft" value="1">
+        <input type="hidden" name="is_overtime" id="is_overtime" value="0">
   </div>
   <div class="col-md-12 text-center">
-    <button type="submit" id="to_draft" class="btn-send mx-5">Save</button>
-    <button type="submit" id="to_submit" class="btn-send mx-5">Submit</button>
-    <button type="button" id="to_cancel" class="btn-send mx-5">Cancel</button>
+    <button type="button" data-toggle="modal" data-target="#modalDraft" class="btn-send mx-5">Save</button>
+    <button type="button" data-toggle="modal" data-target="#modalSubmit" class="btn-send mx-5">Submit</button>
+    <button type="button" data-toggle="modal" data-target="#modalCancel" class="btn-send mx-5">Cancel</button>
   </div>
 </div>
 </form>
@@ -169,14 +238,22 @@
     $(document).ready(function() {
       $("#to_draft").click(function() {
         $("#is_draft").val('0');
-        $("#form_lembur").trigger('click');
+        if($("#duration").val() == '00:00') {
+          alert("Duration tidak valid");
+        } else {
+          $("#form_lembur").submit();
+        }
       });
       $("#to_submit").click(function() {
         $("#is_draft").val('1');
-        $("#form_lembur").trigger('click');
+        if($("#duration").val() == '00:00') {
+          alert("Duration tidak valid");
+        } else {
+          $("#form_lembur").submit();
+        }
       });
       $("#to_cancel").click(function() {
-        window.location.href()
+        window.location.href = "/home"
       });
 
       $('#kpi_checkbox').change(function () {
@@ -190,18 +267,18 @@
         var start = $("input[name='startTime']").val();
         var end = $("input[name='endTime']").val();
         if(start && end) {
+          var time = moment.utc(moment(end,"HH:mm").diff(moment(start,"HH:mm"))).format("HH:mm");
+          $("#duration").val(time);
           if(end < start) {
-            alert("waktu tidak valid");
-            $("#duration").val("");
+            $("#is_overtime").val("1");
           } else {
-            var time = moment.utc(moment(end,"HH:mm").diff(moment(start,"HH:mm"))).format("HH:mm");
-            $("#duration").val(time);
+            $("#is_overtime").val("0");
           }
-
         }
       })
       $('#datetimepicker2').datetimepicker({
-        format: 'YYYY-MM-DD'
+        format: 'YYYY-MM-DD',
+        minDate:new Date()
       });
       $('#startTime').datetimepicker({
         format: 'HH:mm'

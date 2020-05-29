@@ -27,7 +27,7 @@
   }
 </style>
 <div class="col-md-12">
-  <ol class="breadcrumb">
+  <ol class="breadcrumb d-inline-block">
     <li><a href="{{ route('home')}}" class="cl-orange fs-20">Home</a></li>
     <li class="active fs-20">Profile</li>
   </ol>

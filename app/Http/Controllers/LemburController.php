@@ -42,12 +42,17 @@ class LemburController extends Controller
         $user = Auth::user();
         foreach ($body['activity'] as $activity) {
             if(is_null($activity) || trim($activity) == '') continue;
-
+            $newDate = $body['insert_date'];
+            if($body['is_overtime']) {
+                $newDate = date('Y-m-d', strtotime($newDate . ' +1 day'));
+            }
+            $time_from = $body['insert_date'].' '.$body['startTime'];
+            $time_until = $newDate.' '.$body['endTime'];
             $payload = [
                 'username' => $user->username,
                 'user_id' => $user->id,
-                'time_from' => $body['insert_date'].' '.$body['startTime'],
-                'time_until' => $body['insert_date'].' '.$body['endTime'],
+                'time_from' => $time_from,
+                'time_until' => $time_until,
                 'description' => $activity,
                 'insert_date' => $body['insert_date'],
                 'status' => '1',
@@ -86,12 +91,18 @@ class LemburController extends Controller
         $dateNow = date("Y-m-d H:i:s");
         foreach ($body['activity'] as $key => $activity) {
             if(is_null($activity) || trim($activity) == '') continue;
+            $newDate = $body['insert_date'];
+            if($body['is_overtime']) {
+                $newDate = date('Y-m-d', strtotime($newDate . ' +1 day'));
+            }
+            $time_from = $body['insert_date'].' '.$body['startTime'];
+            $time_until = $newDate.' '.$body['endTime'];
             if($key == 0) {
                 $payload = [
                     'username' => $user->username,
                     'user_id' => $user->id,
-                    'time_from' => $body['insert_date'].' '.$body['startTime'],
-                    'time_until' => $body['insert_date'].' '.$body['endTime'],
+                    'time_from' => $time_from,
+                    'time_until' => $time_until,
                     'description' => $activity,
                     'insert_date' => $body['insert_date'],
                     'status' => '1', // inprogress
@@ -108,8 +119,8 @@ class LemburController extends Controller
                 $payload = [
                     'username' => $user->username,
                     'user_id' => $user->id,
-                    'time_from' => $body['insert_date'].' '.$body['startTime'],
-                    'time_until' => $body['insert_date'].' '.$body['endTime'],
+                    'time_from' => $time_from,
+                    'time_until' => $time_until,
                     'description' => $activity,
                     'insert_date' => $body['insert_date'],
                     'status' => '1', // inprogress
