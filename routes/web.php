@@ -21,17 +21,13 @@ Route::get('my-profile/password', ['as' => 'my-profile.reset', 'uses' => 'MyProf
 Route::post('my-profile/password', ['as' => 'my-profile.doreset', 'uses' => 'MyProfileController@doReset']);	
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/googlemaps', 'GoogleMapsController@index')->name('google_maps');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('table-list', function () {
-		return view('pages.table_list');
-	})->name('table');
-
 	Route::get('lembur', 'LemburController@index')->name('lembur')->middleware('auth');
 	Route::get('lembur/request', ['as' => 'lembur.request', 'uses' => 'LemburController@request']);
 	Route::get('lembur/request/{id}', ['as' => 'lembur.edit', 'uses' => 'LemburController@edit']);
@@ -42,26 +38,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('home/my-profile', ['as' => 'home.my_profile', 'uses' => 'MyProfileController@index']);
 	Route::post('my-profile/change-password', ['as' => 'my-profile.changepass', 'uses' => 'MyProfileController@changePass']);
 	Route::post('my-profile/edit-profile', ['as' => 'my-profile.editprofile', 'uses' => 'MyProfileController@editProfile']);
-
-	// Route::get('typography', function () {
-	// 	return view('pages.typography');
-	// })->name('typography');
-
-	// Route::get('icons', function () {
-	// 	return view('pages.icons');
-	// })->name('icons');
-
-	// Route::get('map', function () {
-	// 	return view('pages.map');
-	// })->name('map');
-
-	// Route::get('notifications', function () {
-	// 	return view('pages.notifications');
-	// })->name('notifications');
-
-	// Route::get('upgrade', function () {
-	// 	return view('pages.upgrade');
-	// })->name('upgrade');
 });
 
 Route::group(['middleware' => 'auth'], function () {

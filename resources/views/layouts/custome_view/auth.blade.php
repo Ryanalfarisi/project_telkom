@@ -160,7 +160,7 @@ top: 10px;
                 <a href="#" class="font-weight-bold">Home</a>
                 </li>
                 <li class="pl-4">
-                    <div class="bullet-notif d-inline-block align-middle"></div>
+                    {{-- <div class="bullet-notif d-inline-block align-middle"></div> --}}
                     <a href="{{route('home')}}" class="d-inline-block align-middle">Extra<i class="fa fa-fw fa-angle-down pull-right"></i></a>
                     <!-- <a href="#" data-toggle="collapse" data-target="#submenu-1"><i class="fa fa-fw fa-search"></i> MENU 1 <i class="fa fa-fw fa-angle-down pull-right"></i></a>
                     <ul id="submenu-1" class="collapse">
@@ -170,11 +170,11 @@ top: 10px;
                     </ul> -->
                 </li>
                 <li class="pl-4">
-                    <div class="bullet-notif rounded-black d-inline-block align-middle">3</div>
+                    {{-- <div class="bullet-notif rounded-black d-inline-block align-middle"></div> --}}
                     <a href="{{route('home', ['content' => 'riwayat'])}}" class="d-inline-block align-middle">Riwayat<i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 </li>
                 <li class="pl-4">
-                    <div class="bullet-notif rounded-black d-inline-block align-middle">2</div>
+                    {{-- <div class="bullet-notif rounded-black d-inline-block align-middle"></div> --}}
                     <a href="{{route('home', ['content' => 'todo'])}}" class="d-inline-block align-middle">To Do<i class="fa fa-fw fa-angle-down pull-right"></i></a>
                 </li>
             </ul>

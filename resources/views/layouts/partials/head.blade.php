@@ -54,7 +54,11 @@
   </div>
   <div class="col-md-6 pr-5" style="height:auto; padding:20px;">
     <div class="wrapper-img pointer float-right position-relative">
-      <img class="" src="{{ asset('material') }}/img/bagus.jpeg" alt="">
+      @if ($super ?? '')
+        <img src="{{ asset('material') }}/img/kasali.jpeg" alt="">
+      @else
+        <img src="{{ asset('material') }}/img/bagus.jpeg" alt="">
+      @endif
       <ul class="position-absolute profile-hover">
         <li><a style="color:white !important;" href="{{ route('home.my_profile') }}">Profile</a></li>
         <li>Change Password</li>

@@ -151,7 +151,7 @@
         <div class="form-group row">
           <label for="jobs" class="col-sm-4 col-form-label font-weight-bold">Type Of Work <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-8">
-          <select name="job" class="form-control-plaintext fs-style fs-14" id="job" required>
+          <select name="job" class="form-control-plaintext fs-style fs-14 select-am" id="job" required>
               <option value="">Pilih kategori Aktivitas</option>
               @foreach ($jobs as $job)
                 <option value="{{$job->id}}">{{$job->jobs_name}}</option>
@@ -194,7 +194,7 @@
           <label for="date" class="col-sm-4 col-form-label font-weight-bold">Date  <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-8">
             <div class='input-group date' id='datetimepicker2'>
-                <input type='text' name="insert_date" class="form-control" placeholder="Pilih tanggal"/>
+                <input type='text' name="insert_date" class="form-control" placeholder="Pilih tanggal" required/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -226,8 +226,10 @@
         <input type="hidden" name="is_overtime" id="is_overtime" value="0">
   </div>
   <div class="col-md-12 text-center">
-    <button type="button" data-toggle="modal" data-target="#modalDraft" class="btn-send mx-5">Save</button>
-    <button type="button" data-toggle="modal" data-target="#modalSubmit" class="btn-send mx-5">Submit</button>
+    <button type="submit" id="checkSubmitDraft" class="btn-send mx-5">Save</button>
+    <button type="submit" id="checkSubmitSave" class="btn-send mx-5">Submit</button>
+    <button id="shadowDraft" type="button" style="display: none;" data-toggle="modal" data-target="#modalDraft">Submit_shadow</button>
+    <button id="shadowSubmit" type="button" style="display: none;" data-toggle="modal" data-target="#modalSubmit">Submit_shadow</button>
     <button type="button" data-toggle="modal" data-target="#modalCancel" class="btn-send mx-5">Cancel</button>
   </div>
 </div>
@@ -236,6 +238,18 @@
 @push('js')
   <script>
     $(document).ready(function() {
+        var shadow = '';
+        $("#form_lembur").submit(function(e) {
+          $("#"+shadow).click();
+          event.preventDefault();
+        });
+      $("#checkSubmitDraft").click(function() {
+          shadow = 'shadowDraft';
+      });
+      $("#checkSubmitSave").click(function() {
+          shadow = 'shadowSubmit';
+      });
+
       $("#to_draft").click(function() {
         $("#is_draft").val('0');
         if($("#duration").val() == '00:00') {
@@ -278,7 +292,7 @@
       })
       $('#datetimepicker2').datetimepicker({
         format: 'YYYY-MM-DD',
-        minDate:new Date()
+        minDate:new Date(new Date().getTime() - 86400000)
       });
       $('#startTime').datetimepicker({
         format: 'HH:mm'

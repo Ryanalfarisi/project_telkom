@@ -1,7 +1,7 @@
 @extends('layouts.app', ['activePage' => 'request-lembur', 'titlePage' => __('Request Overtime')])
 
 @section('content')
-@include('layouts.partials.head', array('extra'=> true))
+@include('layouts.partials.head', array('extra'=> true, 'super'=> $super))
 <style>
   .wrapper-staff {
     width: 100%;
@@ -67,68 +67,127 @@
     border-top: 1px solid rgba(30, 250, 237, 0.25);
   }
 </style>
-<div class="col-md-9 px-5">
-<!-- Modal -->
-<div id="modalDraft" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title fs-14 font-weight-bold">Apakah anda ingin menyimpan nya sebagai draft ?</h4>
-      </div>
-      <div class="modal-body pt-0">
-        <div class="wrapper-choosen pt-2">
-            <span class="fs-14 pointer" id="to_draft" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
+<div class="col-md-8 px-0">
+  <!-- Modal -->
+  <div id="modalDraft" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title fs-14 font-weight-bold">Apakah anda ingin menyimpan nya sebagai draft ?</h4>
+        </div>
+        <div class="modal-body pt-0">
+          <div class="wrapper-choosen pt-2">
+              <span class="fs-14 pointer" id="to_draft" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-{{-- End modal --}}
+  {{-- End modal --}}
 
-<!-- Modal -->
-<div id="modalSubmit" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title fs-14 font-weight-bold">Apakah anda ingin submit formulir ini ?</h4>
-      </div>
-      <div class="modal-body pt-0">
-        <div class="wrapper-choosen pt-2">
-            <span class="fs-14 pointer" id="to_submit" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
+  <!-- Modal -->
+  <div id="modalSubmit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title fs-14 font-weight-bold">Apakah anda ingin submit formulir ini ?</h4>
+        </div>
+        <div class="modal-body pt-0">
+          <div class="wrapper-choosen pt-2">
+              <span class="fs-14 pointer" id="to_submit" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-{{-- End modal --}}
-<div id="modalCancel" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title fs-14 font-weight-bold">Perubahan belum tersimpan, apakah Anda yakin ingin keluar?</h4>
-      </div>
-      <div class="modal-body pt-0">
-        <div class="wrapper-choosen pt-2">
-            <span class="fs-14 pointer" id="to_cancel" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
-            <p class="fs-14 pointer text-center mt-2" style="color: #594C4C;" id="to_draft">Simpan ke draft</p>
+  {{-- End modal --}}
+  <div id="modalCancel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title fs-14 font-weight-bold">Perubahan belum tersimpan, apakah Anda yakin ingin keluar?</h4>
+        </div>
+        <div class="modal-body pt-0">
+          <div class="wrapper-choosen pt-2">
+              <span class="fs-14 pointer" id="to_cancel" style="color: #594C4C;">Ya, tentu</span> <span class="float-right pointer" style="color:#08C484; font-weight:500;" data-dismiss="modal">Batal</span>
+              <p class="fs-14 pointer text-center mt-2" style="color: #594C4C;" id="to_draft">Simpan ke draft</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-{{-- End modal --}}
-  <ol class="breadcrumb d-inline-block">
-    <li><a href="{{ route('home')}}" class="cl-orange fs-20">Home</a></li>
-    <li class="active fs-20">Formulir baru</li>
-  </ol>
+  {{-- End modal --}}
+  @if ($super)
+    <ol class="breadcrumb d-inline-block">
+      <li><a href="{{ route('home')}}" class="cl-orange fs-20">To Do</a></li>
+      <li class="fs-20">Incoming</li>
+      <li class="active fs-20">Follow up</li>
+    </ol>
+  @else
+    <ol class="breadcrumb d-inline-block">
+      <li><a href="{{ route('home')}}" class="cl-orange fs-20">Home</a></li>
+      <li class="active fs-20">Formulir baru</li>
+    </ol>
+  @endif
   <div class="wrapper-staff py-5 px-5">
       <form id="form_lembur" method="POST" action="{{ route('lembur.doedit') }}">
+        <div id="modalApp" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title fs-14 font-weight-bold">Apakah anda sudah yakin?</h4>
+              </div>
+              <div class="modal-body pt-0">
+                <div class="wrapper-choosen pt-2">
+                    <span id="to_approve" class="fs-14 pointer cl-green font-weight-bold">Approve</span>
+                    <span class="float-right pointer" data-dismiss="modal">Batal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="modalReturn" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title fs-14 font-weight-bold">Apakah anda sudah yakin?</h4>
+              </div>
+              <div class="modal-body pt-0">
+                <div class="wrapper-choosen pt-2">
+                    <span id="to_return" class="fs-14 pointer cl-orange font-weight-bold">Return</span>
+                    <span class="float-right pointer" data-dismiss="modal">Batal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="modalReject" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title fs-14 font-weight-bold">Apakah anda sudah yakin?</h4>
+              </div>
+              <div class="modal-body pt-0">
+                <div class="wrapper-choosen pt-2">
+                    <span id="to_reject" class="fs-14 pointer cl-red font-weight-bold">Reject</span>
+                    <span class="float-right pointer" data-dismiss="modal">Batal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       @csrf
       <div class="form-group row">
         <label for="asigned" class="col-sm-4 col-form-label font-weight-bold">Assigned By <span class="cl-orange float-right">*</span></label>
@@ -193,7 +252,7 @@
           <label for="date" class="col-sm-4 col-form-label font-weight-bold">Date  <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-8">
             <div class='input-group date' id='datetimepicker2'>
-                <input type='text' name="insert_date" value="{{$lembur->insert_date}}" class="form-control" placeholder="Pilih tanggal"/>
+                <input type='text' name="insert_date" value="{{$lembur->insert_date}}" class="form-control" placeholder="Pilih tanggal" required/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -224,18 +283,86 @@
         <input type="hidden" name="draft" id="is_draft" value="1">
         <input type="hidden" name="lembur_id" value="{{$lembur->id}}">
         <input type="hidden" name="is_overtime" id="is_overtime" value="0">
+        <input type="hidden" name="user_id"  value="{{$lembur->user_id}}">
   </div>
-  <div class="col-md-12 text-center">
-    <button type="button" data-toggle="modal" data-target="#modalDraft" class="btn-send mx-5">Save</button>
-    <button type="button" data-toggle="modal" data-target="#modalSubmit" class="btn-send mx-5">Submit</button>
-    <button type="button" data-toggle="modal" data-target="#modalCancel" class="btn-send mx-5">Cancel</button>
-  </div>
+  @if (!$super)
+    <div class="col-md-12 text-center">
+      {{-- <button type="button" data-toggle="modal" data-target="#modalDraft" class="btn-send mx-5">Save</button>
+      <button type="button" data-toggle="modal" data-target="#modalSubmit" class="btn-send mx-5">Submit</button>
+      <button type="button" data-toggle="modal" data-target="#modalCancel" class="btn-send mx-5">Cancel</button> --}}
+      <button type="submit" id="checkSubmitDraft" class="btn-send mx-5">Save</button>
+      <button type="submit" id="checkSubmitSave" class="btn-send mx-5">Submit</button>
+      <button id="shadowDraft" type="button" style="display: none;" data-toggle="modal" data-target="#modalDraft">Submit_shadow</button>
+      <button id="shadowSubmit" type="button" style="display: none;" data-toggle="modal" data-target="#modalSubmit">Submit_shadow</button>
+      <button type="button" data-toggle="modal" data-target="#modalCancel" class="btn-send mx-5">Cancel</button>
+    </div>
+  @endif
 </div>
+
+@if ($super)
+  <div class="col-md-4 px-0 position-relative" style="height:500px;">
+    <div class="position-absolute" style="width: 100%; height:250px; bottom:0;">
+
+      {{-- Approve --}}
+      <button type="submit" id="btn_app" class="cl-border-green col-md-3 mx-3 text-center cl-grey py-2 pointer">
+        Approve
+      </button>
+      <button data-toggle="modal" data-target="#modalApp" style="display: none;" id="shadowApp"></button>
+      {{-- End approve --}}
+      {{-- Return --}}
+      <button type="submit" id="btn_return" class="cl-border-yellow col-md-3 mx-3 text-center cl-grey py-2 pointer">
+        Return
+      </button>
+      <button data-toggle="modal" data-target="#modalReturn" type="button" id="shadowReturn" style="display: none;"></button>
+      {{-- end return --}}
+
+      {{-- Reject --}}
+      <button  type="submit" id="btn_reject" class="cl-border-red col-md-3 mx-3 text-center cl-grey py-2 pointer">
+        Reject
+      </button>
+      <button data-toggle="modal" data-target="#modalReject" type="button" id="shadowReject" style="display: none;"></button>
+      {{-- End reject --}}
+
+      <div class="col-md-12" style="margin-top:125px;">
+        <button type="button" data-toggle="modal" data-target="#modalDraft"
+          style="border-radius:20px;"
+          class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Edit</button>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="super_user" value="{{$super}}">
+  <input type="hidden" name="status_lembur" id="status_lembur" value="">
+@endif
 </form>
 @endsection
 @push('js')
   <script>
     $(document).ready(function() {
+
+      var shadow = '';
+      $("#form_lembur").submit(function(e) {
+        $("#"+shadow).click();
+        event.preventDefault();
+      });
+      $("#checkSubmitDraft").click(function() {
+          shadow = 'shadowDraft';
+      });
+      $("#checkSubmitSave").click(function() {
+          shadow = 'shadowSubmit';
+      });
+
+      //Supervisior
+      $("#btn_return").click(function() {
+          shadow = 'shadowReturn';
+      });
+      $("#btn_reject").click(function() {
+          shadow = 'shadowReject';
+      });
+
+      $("#btn_app").click(function() {
+          shadow = 'shadowApp';
+      });
+
 
       $("#to_draft").click(function() {
         $("#is_draft").val('0');
@@ -255,6 +382,20 @@
       });
       $("#to_cancel").click(function() {
         window.location.href = "/home"
+      });
+
+      $("#to_approve").click(function() {
+        $("#status_lembur").val("3");
+        $("#form_lembur").submit();
+      });
+
+      $("#to_return").click(function() {
+        $("#status_lembur").val("7");
+        $("#form_lembur").submit();
+      });
+      $("#to_reject").click(function() {
+        $("#status_lembur").val("4");
+        $("#form_lembur").submit();
       });
 
       $('#kpi_checkbox').change(function () {
@@ -279,7 +420,7 @@
       })
       $('#datetimepicker2').datetimepicker({
         format: 'YYYY-MM-DD',
-        minDate:new Date()
+        minDate:new Date(new Date().getTime() - 86400000),
       });
       $('#startTime').datetimepicker({
         format: 'HH:mm'

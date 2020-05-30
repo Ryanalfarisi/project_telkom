@@ -105,19 +105,21 @@
 }
 
 </style>
-  @include('layouts.partials.head', array('extra'=> false, 'super'=> false))
+  @include('layouts.partials.head', array('extra'=> false, 'super' => true))
   <div class="col-md-12 mt-4 pl-5">
     <ul class="nav nav-tabs">
       <li class="active position-relative">
-        <a data-toggle="tab" class="list-menu" href="#home">Extra
-          {{-- <div class="bullet-notif rounded-black d-inline-block align-middle ml-2"></div> --}}
+        <a data-toggle="tab" class="list-menu" href="#home">To do
+          @if ($todo)
+            <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$todo}}</div>
+          @endif
         </a>
         <div class="extra-menu position-absolute">
           <ul class="list-menu-extra px-0 list-none py-4 text-center">
             <li class="py-1">Extra</li>
-            <li class="py-1 grey-list" onclick="where_open('formulir')">Formulir Baru</li>
+            <li class="py-1 grey-list" onclick="where_open('formulir')">Incoming formulir</li>
             <li class="py-1 grey-list" onclick="where_open('tracking')">Tracking</li>
-            <li class="py-1 grey-list" onclick="where_open('draf')">Draft</li>
+            {{-- <li class="py-1 grey-list" onclick="where_open('draf')">Assign</li> --}}
           </ul>
         </div>
       </li>
@@ -127,36 +129,24 @@
         </a>
       </li>
       <li>
-        <a data-toggle="tab" class="list-menu" href="#todo">To Do
-          @if ($todo)
-            <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$todo}}</div>
-          @endif
+        <a data-toggle="tab" class="list-menu" href="#todo">Assign
+          {{-- <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div> --}}
         </a>
       </li>
     </ul>
     <div class="tab-content">
       <div id="home" class="tab-pane fade in active">
         <div id="formulir">
-          <div class="wrapper-tab bg-white text-center">
-            <div style="width:300px;" class="mx-auto mt-5">
-            <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
-              <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
-                  <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
-              </div>
-              <div class="bottom-formulir d-inline-block mr-5 mt-5 align-middle pointer" onclick="where_open('draf')">DRAFT</div>
-              <div class="bottom-formulir d-inline-block mt-5 align-middle pointer" onclick="where_open('tracking')">TRACKING</div>
-            </div>
-          </div>
-        </div>
-        <div id="tracking">
-          <table id="table_tracking" class="row-border">
+          <table id="incoming_formulir" class="row-border">
             <thead>
                 <tr>
-                    <th class="color-th">Tracking Formulir</th>
+                    <th class="color-th">Incoming Formulir</th>
                     <th class="color-th">Status</th>
                     <th class="color-th">Insert date</th>
+                    <th class="color-th" style="width: 80px !important;"></th>
                     <th class="color-th">Type of work</th>
-                    <th class="color-th">Assigned By</th>
+                    <th class="color-th">Request By</th>
+                    <th class="color-th">Challenge</th>
                 </tr>
             </thead>
             <tbody>
@@ -178,8 +168,72 @@
                     @endif
                   </td>
                   <td class="row-color">{{$row->created_at}}</td>
+                  <td class="row-color">
+                    @if ($row->status == '5')
+                        <span class="bg-status-1">
+                            <a class="text-dark" href="/lembur/request/{{$row->id}}">Follow up</a>
+                        </span>
+                    @elseif($row->status == '7')
+                        <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @elseif($row->status == '4')
+                        <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @else
+                        <span class="bg-status-inprogress">
+                            <a class="text-dark pointer" onclick="where_open('tracking')">In progress</a>
+                        </span>
+                    @endif
+                  </td>
                   <td class="row-color">{{$row->jobs_name}}</td>
                   <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                  <td class="row-color">{{$row->duration}} Extra Hours</td>
+                </tr>
+              @endif
+            @endforeach
+            </tbody>
+          </table>
+        </div>
+        <div id="tracking">
+          <table id="table_tracking" class="row-border">
+            <thead>
+                <tr>
+                    <th class="color-th">Tracking Aktivitas</th>
+                    <th class="color-th">Status</th>
+                    <th class="color-th" style="width: 150px;"></th>
+                    <th class="color-th">Insert date</th>
+                    <th class="color-th">Type of work</th>
+                    <th class="color-th">Challenge</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach ($lembur as $row)
+              @if ($row->type == '1' && $row->status == '3')
+                <tr>
+                  <td class="row-color">{{$row->description}}</td>
+                  <td class="row-color">
+                    @if ($row->status == '5')
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @elseif($row->status == '3')
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @elseif($row->status == '7')
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @elseif($row->status == '4')
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @elseif($row->status == '1')
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @endif
+                  </td>
+                  @if ($row->time_from < date("Y-m-d H:i:s"))
+                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->updated_at}}" data-duration="{{$row->duration}}">
+                      <p>Sisa waktu <span id="timer-{{$row->id}}"></span></p>
+                    </td>
+                  @else
+                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0">
+                      <p>Mulai dalam <span id="timer-{{$row->id}}"></span></p>
+                    </td>
+                  @endif
+                  <td class="row-color">{{$row->created_at}}</td>
+                  <td class="row-color">{{$row->jobs_name}}</td>
+                  <td class="row-color">{{$row->duration}} Extra hours</td>
                 </tr>
               @endif
             @endforeach
@@ -256,11 +310,11 @@
         <table id="table_todo" class="row-border">
           <thead>
               <tr>
-                  <th class="color-th">Aktivitas</th>
-                  <th class="color-th">Superiors</th>
+                  <th class="color-th">Tracking Aktivitas</th>
                   <th class="color-th">Status</th>
-                  <th class="color-th" style="width:150px;">Waktu</th>
-                  <th class="color-th">Challenge</th>
+                  <th class="color-th">Insert date</th>
+                  <th class="color-th">Type of work</th>
+                  <th class="color-th">Assigned by</th>
               </tr>
           </thead>
           <tbody>
@@ -269,11 +323,8 @@
               <tr>
                 <td class="row-color">{{$row->description}}</td>
                 <td class="row-color">
-                  {{$row->username}} <b>({{$row->code_jabatan}})</b>
-                </td>
-                <td class="row-color">
                   @if ($row->status == '5')
-                    <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @elseif($row->status == '3')
                     <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @elseif($row->status == '7')
@@ -281,23 +332,12 @@
                   @elseif($row->status == '4')
                     <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @elseif($row->status == '1')
-                    <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @endif
                 </td>
-                @if ($row->status == '3')
-                  @if ($row->time_from < date("Y-m-d H:i:s"))
-                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->updated_at}}" data-duration="{{$row->duration}}">
-                      <p>Sisa waktu <span id="timer-{{$row->id}}"></span></p>
-                    </td>
-                  @else
-                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0">
-                      <p>Mulai dalam <span id="timer-{{$row->id}}"></span></p>
-                    </td>
-                  @endif
-                @else
-                  <td class="row-color">{{$row->label}}</td>
-                @endif
-                <td class="row-color">{{$row->duration}} Extra hours</td>
+                <td class="row-color">{{$row->created_at}}</td>
+                <td class="row-color">{{$row->jobs_name}}</td>
+                <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
               </tr>
             @endif
           @endforeach
@@ -317,24 +357,10 @@
         duration = $(el).attr('data-duration');
         countdownTimeStart(row_id, app_time, duration);
       });
+
       var content = {!! json_encode($content) !!}
       activaTab(content);
-      $('#table_riwayat').DataTable({
-        "searching": false,
-        "paging":   false,
-      });
-
-      $('#table_tracking').DataTable({
-        "searching": false,
-        "paging":   false,
-      });
-
-      $('#table_draf').DataTable({
-        "searching": false,
-        "paging":   false,
-      });
-
-      $('#table_todo').DataTable({
+      $('#table_tracking, #table_draf, #table_todo, #incoming_formulir, #table_riwayat').DataTable({
         "searching": false,
         "paging":   false,
       });
@@ -359,6 +385,7 @@
     function activaTab(tab) {
       $('.nav-tabs a[href="#' + tab + '"]').tab('show');
     };
+
 function countdownTimeStart(row_id, app_time, duration){
     var countDownDate = new Date(app_time).getTime();
     var duration = duration;
@@ -368,6 +395,7 @@ function countdownTimeStart(row_id, app_time, duration){
     if(duration == '0') {
       feature = countDownDate;
     }
+    //var countDownDate = new Date("Sep 25, 2025 15:00:00").getTime();
     // Update the count down every 1 second
     var x = setInterval(function() {
 
