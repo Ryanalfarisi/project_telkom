@@ -386,7 +386,7 @@ function countdownTimeStart(row_id, app_time, duration){
     // If the count down is over, write some text
     if (distance < 0) {
         clearInterval(x);
-        document.getElementById("timer-"+row_id).innerHTML = "EXPIRED";
+        document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah selesai";
     }
 }, 1000);
 }
