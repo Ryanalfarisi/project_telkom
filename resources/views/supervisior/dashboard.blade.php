@@ -17,7 +17,7 @@
   border-top-right-radius: 15px;
   margin: 0px;
 }
-.list-menu {
+.list-menu .list-extra-riwayat{
   padding: 7px 25px !important;
   color: black;
   font-weight:bold;
@@ -119,14 +119,19 @@
             <li class="py-1">Extra</li>
             <li class="py-1 grey-list" onclick="where_open('formulir')">Incoming formulir</li>
             <li class="py-1 grey-list" onclick="where_open('tracking')">Tracking</li>
-            {{-- <li class="py-1 grey-list" onclick="where_open('draf')">Assign</li> --}}
           </ul>
         </div>
       </li>
-      <li>
-        <a data-toggle="tab" class="list-menu" href="#riwayat">Riwayat
-          {{-- <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div> --}}
-        </a>
+      <li class="position-relative">
+        <a data-toggle="tab" class="list-menu" href="#riwayat">Riwayat</a>
+        <div class="extra-menu position-absolute">
+          <ul class="list-menu-extra px-0 list-none py-4 text-center">
+            <li class="py-1">Staff</li>
+            @foreach ($staff as $item)
+              <li class="py-1 grey-list"><a href="#riwayat" data-toggle="tab">{{$item->username}}</a></li>
+            @endforeach
+          </ul>
+        </div>
       </li>
       <li>
         <a data-toggle="tab" class="list-menu" href="#todo">Assign

@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $todo = $riwayat = $assign = [];
+        $todo = $riwayat = $assign = $staff = $staffId = [];
         $notif = DB::table('notifications')
                 ->where('to_user_id', $user->id)
                 ->where('read', 0)
@@ -42,12 +42,18 @@ class HomeController extends Controller
                     ->leftJoin('users', 'lembur.user_id', '=', 'users.id')
                     ->where("approved_id",$user->id)
                     ->select('lembur.*','users.id as app_id','users.username as username', 'users.code_jabatan', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label')->get();
+            foreach ($lembur as $key => $v) {
+                if(in_array($v->user_id, $staffId)) continue;
+                array_push($staffId, $v->user_id);
+                array_push($staff, $v);
+            }
             return view('supervisior.dashboard', [
                     'lembur' => $lembur,
                     'content' => $content,
                     'todo' => count($todo),
                     'riwayat' => count($riwayat),
-                    'assign' => count($assign)
+                    'assign' => count($assign),
+                    'staff'=> $staff
                 ]);
         } else {
             foreach ($notif as $key => $value) {

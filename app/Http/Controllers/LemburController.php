@@ -26,7 +26,9 @@ class LemburController extends Controller
     {
         $assigned = DB::table('users')
                     ->leftJoin('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
-                    ->whereIn('users.grade', ['I', 'II', 'III'])->get();
+                    ->whereIn('users.grade', ['I', 'II', 'III'])
+                    ->select('users.*','jabatan.jabatan as jabatan','jabatan.code_jabatan as code_jabatan', 'jabatan.grade as grade')
+                    ->get();
         $jobs = DB::table('jobs_extra')->get();
         return view('lembur.request', ['assigned' => $assigned, 'jobs' => $jobs]);
     }
@@ -81,7 +83,8 @@ class LemburController extends Controller
         $lembur = DB::table('lembur')->find($id);
         $assigned = DB::table('users')
                     ->leftJoin('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
-                    ->whereIn('users.grade', ['I', 'II', 'III'])->get();
+                    ->whereIn('users.grade', ['I', 'II', 'III'])
+                    ->select('users.*','jabatan.jabatan as jabatan','jabatan.code_jabatan as code_jabatan', 'jabatan.grade as grade')->get();
         $jobs = DB::table('jobs_extra')->get();
         return view('lembur.edit', ['assigned' => $assigned, 'jobs' => $jobs, 'lembur' => $lembur,  'super' => $super]);
 
