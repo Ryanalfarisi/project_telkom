@@ -134,7 +134,7 @@
         </div>
       </li>
       <li>
-        <a data-toggle="tab" class="list-menu" href="#todo">Assign
+        <a data-toggle="tab" class="list-menu" href="#todo">Request
           {{-- <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div> --}}
         </a>
       </li>
@@ -156,7 +156,7 @@
             </thead>
             <tbody>
             @foreach ($lembur as $row)
-              @if ($row->type == '1')
+              @if ($row->type == '1' && $row->status != '3')
                 <tr>
                   <td class="row-color">{{$row->description}}</td>
                   <td class="row-color">
@@ -252,7 +252,7 @@
                     <th class="color-th">Draft formulir</th>
                     <th class="color-th">Status</th>
                     <th class="color-th">Type of work</th>
-                    <th class="color-th">Assigned by</th>
+                    <th class="color-th">Request by</th>
                 </tr>
             </thead>
             <tbody>

@@ -32,11 +32,11 @@
         <div class="card card-login card-hidden mb-3">
           <div class="card-body row px-0 py-0 mx-0"  style="height:715px;">
             <div class="col-md-7 wrapper-login">
-              <h2 class="font-weight-bold mb-4">Berkerja Extra</h2>
-              <h2 class="font-weight-bold mb-4"> Aperesiasi Pasti</h2>
+              <h2 class="font-weight-bold mb-4">Bekerja Extra</h2>
+              <h2 class="font-weight-bold mb-4"> Apresiasi Pasti</h2>
               <h2 class="font-weight-bold mb-4">Terjamin Nyaman</h2>
               <div style="border-left: 3px solid black;" class="pl-3">
-                <p class="font-weight-bold mt-5" style="font-size: 16px;">Apresisasi dan kompensasi yang terkelola dengan baik dan sistematis akan selalu hadir berperan menciptakan budaya Fun, Productive, Blessed</p>
+                <p class="font-weight-bold mt-5" style="font-size: 16px;">Apresiasi dan kompensasi yang terkelola dengan baik dan sistematis akan selalu hadir berperan menciptakan budaya Fun, Productive, Blessed</p>
               </div>
             </div>
             <div class="col-md-5 text-center">

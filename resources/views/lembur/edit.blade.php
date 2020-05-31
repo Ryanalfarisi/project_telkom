@@ -221,6 +221,7 @@
         <div class="form-group row">
           <label for="startTime" class="col-sm-4 col-form-label font-weight-bold">Start Time <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-2 pr-0 my-auto">
+            <input type="hidden" value="{{$lembur->time_from}}" name="startTimeFull">
             <div class='input-group date' id='startTime'>
                 <input type='text' value="{{Carbon\Carbon::parse($lembur->time_from)->format('H:i:s')}}" name="startTime" class="form-control" placeholder="00:00" required />
               <span class="input-group-addon">
@@ -324,9 +325,10 @@
       {{-- End reject --}}
 
       <div class="col-md-12" style="margin-top:125px;">
-        <button type="button" data-toggle="modal" data-target="#modalDraft"
+        <button type="button" data-toggle="modal" data-target="#modalSubmit"
           style="border-radius:20px;"
-          class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Edit</button>
+          class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Edit</button><br>
+          <span class="fs-12"><i>* Edit untuk merubah sebelum melakukan approve, return dan reject</i></span>
       </div>
     </div>
   </div>
@@ -339,7 +341,7 @@
   <script>
     $(document).ready(function() {
 
-      var shadow = '';
+      var shadow = 'shadowSubmit';
       $("#form_lembur").submit(function(e) {
         $("#"+shadow).click();
         event.preventDefault();
@@ -386,7 +388,22 @@
 
       $("#to_approve").click(function() {
         $("#status_lembur").val("3");
-        $("#form_lembur").submit();
+        var start_full_time = $('[name=startTimeFull]').val();
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        var hh = String(today.getHours()).padStart(2, '0');
+        var mi = String(today.getMinutes()).padStart(2, '0');
+        var ss = String(today.getSeconds()).padStart(2, '0');
+
+        today = yyyy + '-' + mm + '-' + dd +' '+ hh + ':' + mi + ':' + ss;
+
+        if(start_full_time > today) {
+          $("#form_lembur").submit();
+        } else {
+          alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+start_full_time)
+        }
       });
 
       $("#to_return").click(function() {
