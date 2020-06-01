@@ -8,8 +8,17 @@
     min-height: 400px;
     height:auto;
   }
-  .border-green {
-    border: 4px solid #08C384;
+  .cl-border-green {
+    border: 2px solid #08C384;
+    background: white;
+  }
+  .cl-border-yellow {
+    border: 2px solid #F3AF00;
+    background: white;
+  }
+  .cl-border-red {
+    border: 2px solid #FD0101;
+    background: white;
   }
   .input-staff {
     border-bottom: 1px solid rgba(0, 0, 0, 0.29);
@@ -25,13 +34,6 @@
   }
   .fs-style {
     color: #8E7E7E;
-  }
-  .input-time {
-    width: 15px;
-    height:20px;
-    outline: none;
-    border: 1px solid grey;
-    border-radius: 2px;
   }
   .select2-selection {
     border: none !important;

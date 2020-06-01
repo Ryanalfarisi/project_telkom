@@ -55,7 +55,7 @@
               <div class="form-group{{ $errors->has('nik') ? ' has-danger' : '' }}">
                 <div class="text-left">
                   <label for="nik" class="font-weight-bold input-basic">NIK</label>
-                  <input type="text" name="nik" class="input-custome pl-3" placeholder="{{ __('NIK') }}" value="{{ old('nik') }}" maxlength="6" required>
+                  <input type="text" name="nik" id="nik" class="input-custome pl-3" placeholder="{{ __('NIK') }}" value="{{ old('nik') }}" maxlength="6" required>
                 </div>
                 @if ($errors->has('name'))
                   <div id="name-error" class="error text-danger pl-3" for="name" style="display: block;">
@@ -123,3 +123,29 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+  $(document).ready(function() {
+      $("#nik").inputFilter(function(value) {
+        return /^\d*$/.test(value);    // Allow digits only, using a RegExp
+      });
+  });
+  (function($) {
+  $.fn.inputFilter = function(inputFilter) {
+    return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+      if (inputFilter(this.value)) {
+        this.oldValue = this.value;
+        this.oldSelectionStart = this.selectionStart;
+        this.oldSelectionEnd = this.selectionEnd;
+      } else if (this.hasOwnProperty("oldValue")) {
+        this.value = this.oldValue;
+        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+      } else {
+        this.value = "";
+      }
+    });
+  };
+}(jQuery));
+</script>
+@endpush

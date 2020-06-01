@@ -2,15 +2,6 @@
 
 @section('content')
 <style>
-.border-top-rl-radius {
-  border-top-left-radius: 15px !important;
-  border-top-right-radius: 15px !important;
-}
-.link-primary {
-  border-color: #31EAAB #31EAAB #fff !important;
-  color:black;
-  padding: .5rem 2rem !important;
-}
 .nav-tabs>li>a {
   border: 1px solid #32EAAC;
   border-top-left-radius: 15px;
@@ -103,7 +94,42 @@
 #draf {
   display: none;
 }
-
+.bg-status-1 {
+  background: #F3AF00;
+  padding: 4px 5px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.bg-status-3 {
+  background: #31EAAB;
+  padding: 4px 5px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.bg-status-4 {
+  background: #D80000;
+  padding: 4px 5px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.bg-status-5 {
+  background: #0023D8;
+  padding: 4px 5px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.bg-status-7 {
+  background: #FF7E07;
+  padding: 4px 5px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.bg-status-inprogress {
+  background: rgba(255, 0, 0, 0.5);
+  padding: 4px 5px;
+  border-radius: 6px;
+  font-size: 14px;
+}
 </style>
   @include('layouts.partials.head', array('extra'=> false, 'super' => true))
   <div class="col-md-12 mt-4 pl-5">
