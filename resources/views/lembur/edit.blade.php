@@ -34,6 +34,7 @@
   }
   .fs-style {
     color: #8E7E7E;
+    border-bottom: 1px solid #8E7E7E;
   }
   .select2-selection {
     border: none !important;
@@ -137,6 +138,9 @@
       <li class="active fs-20">Formulir baru</li>
     </ol>
   @endif
+  @if (session('success'))
+    <div class="fs-14 px-5 error text-success">{{ session('success') }}</div>
+  @endif
   <div class="wrapper-staff py-5 px-5">
       <form id="form_lembur" method="POST" action="{{ route('lembur.doedit') }}">
         <div id="modalApp" class="modal fade" role="dialog">
@@ -215,7 +219,7 @@
           <select name="job" class="form-control-plaintext fs-style fs-14" id="job" required>
               <option value="">Pilih kategori Aktivitas</option>
               @foreach ($jobs as $job)
-                    <option value="{{$job->id}}" selected="{{$lembur->job == $job->id ? true : false}}">{{$job->jobs_name}}</option>
+                    <option value="{{$job->id}}" {{$lembur->job == $job->id ? 'selected' : ''}}>{{$job->jobs_name}}</option>
               @endforeach
           </select>
           </div>
@@ -290,9 +294,6 @@
   </div>
   @if (!$super)
     <div class="col-md-12 text-center">
-      {{-- <button type="button" data-toggle="modal" data-target="#modalDraft" class="btn-send mx-5">Save</button>
-      <button type="button" data-toggle="modal" data-target="#modalSubmit" class="btn-send mx-5">Submit</button>
-      <button type="button" data-toggle="modal" data-target="#modalCancel" class="btn-send mx-5">Cancel</button> --}}
       <button type="submit" id="checkSubmitDraft" class="btn-send mx-5">Save</button>
       <button type="submit" id="checkSubmitSave" class="btn-send mx-5">Submit</button>
       <button id="shadowDraft" type="button" style="display: none;" data-toggle="modal" data-target="#modalDraft">Submit_shadow</button>

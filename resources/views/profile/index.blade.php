@@ -98,11 +98,6 @@
   <div class="col-md-12 py-5" id="content_edit" style="border-top: 1px solid #76ebac;">
     <p class="fs-20 font-weight-bold">Edit Profile</p>
     <small><i> Silahkan ganti profile anda.</i></small>
-    {{-- @if ($errors->any())
-      @foreach ($errors->all() as $error)
-          <div class="fs-12 error text-danger">{{$error}}</div>
-      @endforeach
-    @endif --}}
       <form class="form" method="POST" action="{{ route('my-profile.editprofile') }}">
         @csrf
         <div class="form-group row mt-5">
@@ -112,21 +107,13 @@
           </div>
           <div class="col-md-3 text-left">
             <label for="username" class="font-weight-bold input-basic fs-14">NIK</label>
-            <input value="{{$user->nik}}" type="text" name="nik" id="nik" class="input-custome pl-3" placeholder="NIK.." required>
+            <input value="{{$user->nik}}" readonly type="text" name="nik" id="nik" class="input-custome pl-3" placeholder="NIK.." required>
           </div>
         </div>
         <div class="form-group row mt-3">
           <div class="col-md-4 text-left">
             <label for="jabatan" class="font-weight-bold input-basic">Jabatan</label>
-            <select class="form-control" name="jabatan">
-              @foreach ($jabatan as $item)
-                <option value="{{$item->code_jabatan}}"
-                  @if ($item->code_jabatan == $user->code_jabatan)
-                      selected="selected"
-                  @endif
-                >{{ $item->jabatan}}</option>
-              @endforeach
-            </select>
+            <input value="{{$user->jabatan}}" type="text" name="jabatan" id="jabatan" class="input-custome pl-3" placeholder="Jabatan..." required>
           </div>
           <div class="col-md-3 text-left">
             <label for="email" class="font-weight-bold input-basic">Band</label>
@@ -144,11 +131,11 @@
         <div class="form-group row mt-3">
           <div class="col-md-4 text-left">
             <label for="lokasi" class="font-weight-bold input-basic">Lokasi</label>
-          <input value="{{$user->lokasi}}" type="text" name="lokasi" id="lokasi" class="input-custome pl-3" placeholder="Lokasi.." required>
+          <input value="{{$user->lokasi}}" type="text" name="lokasi" id="lokasi" class="input-custome pl-3" placeholder="Lokasi.." >
           </div>
           <div class="col-md-3 text-left">
             <label for="unit" class="font-weight-bold input-basic">Unit</label>
-            <input value="{{$user->unit}}" type="text" name="unit" id="unit" class="input-custome pl-3" placeholder="Unit.." required>
+            <input value="{{$user->unit}}" type="text" name="unit" id="unit" class="input-custome pl-3" placeholder="Unit.." >
           </div>
         </div>
         <input type="hidden" name="userId" value="{{$user->id}}">

@@ -152,6 +152,9 @@ class LemburController extends Controller
                 DB::table('lembur')->insert($payload);
             }
         }
+        if($body['super_user']) {
+            return \Redirect::route('lembur.edit', $body['lembur_id'])->with('success', 'Data berhasil di edit');
+        }
         return redirect('home');
     }
     public function sendNotifications($from_id, $to_id, $desc, $lastId, $status)

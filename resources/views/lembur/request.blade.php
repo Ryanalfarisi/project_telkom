@@ -25,6 +25,7 @@
   }
   .fs-style {
     color: #8E7E7E;
+    border-bottom: 1px solid #8E7E7E;
   }
   .input-time {
     width: 15px;
