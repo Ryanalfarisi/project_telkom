@@ -21,6 +21,7 @@ class MyProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $super = in_array($user->grade, config('global.grade_manager')) ? true : false;
         $jabatan = DB::table('jabatan')->get();
         $grade = [
             "I" =>"I",
@@ -34,10 +35,9 @@ class MyProfileController extends Controller
         $user = DB::table('users')
             ->join('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
             ->where('users.id', $user->id)
-            ->select('users.*', 'jabatan.jabatan')
+            ->select('users.*', 'jabatan.jabatan as status_jabatan')
             ->get()->toArray();
-
-        return view('profile.index', ["user" => $user[0], "jabatan" => $jabatan, "grade" => $grade]);
+        return view('profile.index', ["user" => $user[0], "jabatan" => $jabatan, "grade" => $grade, "super" =>$super]);
     }
 
     public function reset()
@@ -54,7 +54,7 @@ class MyProfileController extends Controller
               ->where('id', $input['userId'])
               ->update([
                   'nik' => $input['nik'],
-                  'code_jabatan' => $input['jabatan'],
+                  'jabatan' => $input['jabatan'],
                   'grade' => $input['grade'],
                   'lokasi' => $input['lokasi'],
                   'unit' => $input['unit'],
