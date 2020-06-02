@@ -264,6 +264,7 @@
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
              </div>
+             <small id="alert_date" class="text-danger fs-12"></small>
           </div>
         </div>
         <div class="form-group row">
@@ -343,7 +344,23 @@
 @push('js')
   <script>
     $(document).ready(function() {
+      var timeStart = $("input[name='startTimeFull']").val();
+      var dateNow = formatYMD();
+      if(timeStart < dateNow) {
+        $("#alert_date").append('Waktu tidak valid, waktu mulai lembur telah terlewati ' +timeStart)
+      }
+      function formatYMD() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        var hh = String(today.getHours()).padStart(2, '0');
+        var mi = String(today.getMinutes()).padStart(2, '0');
+        var ss = String(today.getSeconds()).padStart(2, '0');
 
+        today = yyyy + '-' + mm + '-' + dd +' '+ hh + ':' + mi + ':' + ss;
+        return today;
+      }
       var shadow = 'shadowSubmit';
       $("#form_lembur").submit(function(e) {
         $("#"+shadow).click();
@@ -381,8 +398,11 @@
         $("#is_draft").val('1');
         if($("#duration").val() == '00:00') {
           alert("Duration tidak valid");
+        } else if(timeStart < dateNow) {
+          alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+timeStart)
         } else {
           $("#form_lembur").submit();
+
         }
       });
       $("#to_cancel").click(function() {
@@ -391,18 +411,7 @@
 
       $("#to_approve").click(function() {
         $("#status_lembur").val("3");
-        var start_full_time = $('[name=startTimeFull]').val();
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0');
-        var yyyy = today.getFullYear();
-        var hh = String(today.getHours()).padStart(2, '0');
-        var mi = String(today.getMinutes()).padStart(2, '0');
-        var ss = String(today.getSeconds()).padStart(2, '0');
-
-        today = yyyy + '-' + mm + '-' + dd +' '+ hh + ':' + mi + ':' + ss;
-
-        if(start_full_time > today) {
+        if(timeStart < dateNow) {
           $("#form_lembur").submit();
         } else {
           alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+start_full_time)
