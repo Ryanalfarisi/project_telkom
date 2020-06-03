@@ -100,7 +100,7 @@
   border-radius: 6px;
   font-size: 14px;
 }
-.bg-status-3 {
+.bg-status-3, .bg-status-6 {
   background: #31EAAB;
   padding: 4px 5px;
   border-radius: 6px;
@@ -117,6 +117,7 @@
   padding: 4px 5px;
   border-radius: 6px;
   font-size: 14px;
+  color:white;
 }
 .bg-status-7 {
   background: #FF7E07;
@@ -262,14 +263,14 @@
               <tr>
                 <td class="row-color">{{$row->description}}</td>
                 <td class="row-color">
+                  @for ($i = 0; $i < $row->achievement; $i++)
                     <div class="bullet-process mr-3"></div>
-                    <div class="bullet-process mr-3"></div>
-                    <div class="bullet-process mr-3"></div>
+                  @endfor
                 </td>
                 <td class="row-color">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  @for ($i = 0; $i < $row->rating; $i++)
+                    <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  @endfor
                 </td>
                 <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
               </tr>
@@ -307,6 +308,8 @@
                   @elseif($row->status == '4')
                     <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @elseif($row->status == '1')
+                    <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                  @elseif ($row->status == '6')
                     <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @endif
                 </td>

@@ -259,7 +259,7 @@
           <label for="date" class="col-sm-4 col-form-label font-weight-bold">Date  <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-8">
             <div class='input-group date' id='datetimepicker2'>
-                <input type='text' name="insert_date" value="{{$lembur->insert_date}}" class="form-control" placeholder="Pilih tanggal" required/>
+                <input type='text' name="insert_date" id="currentData" value="{{$lembur->insert_date}}" class="form-control" placeholder="Pilih tanggal" required/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -395,10 +395,11 @@
         }
       });
       $("#to_submit").click(function() {
+        currentData = $('#currentData').val();
         $("#is_draft").val('1');
         if($("#duration").val() == '00:00') {
           alert("Duration tidak valid");
-        } else if(timeStart < dateNow) {
+        } else if(currentData < dateNow) {
           alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+timeStart)
         } else {
           $("#form_lembur").submit();
@@ -412,9 +413,10 @@
       $("#to_approve").click(function() {
         $("#status_lembur").val("3");
         if(timeStart < dateNow) {
-          $("#form_lembur").submit();
+          alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+timeStart)
         } else {
-          alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+start_full_time)
+          $("#form_lembur").submit();
+
         }
       });
 

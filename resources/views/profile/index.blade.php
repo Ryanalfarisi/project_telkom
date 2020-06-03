@@ -50,6 +50,12 @@
         <td class="font-weight-bold fs-16">Lokasi Dinas / Unit</td>
       <td class="fs-15">{{$user->lokasi ?:'-'}} / {{$user->unit ?: '-'}}</td>
       </tr>
+      @if (!$super)
+      <tr>
+        <td class="font-weight-bold fs-16">Points</td>
+        <td class="fs-15">{{$user->poin}}</td>
+      </tr>
+      @endif
     </table>
   </div>
   <div class="col-md-4">
