@@ -95,7 +95,7 @@ class LemburController extends Controller
         $user = Auth::user();
         $body = $request->input();
         $dateNow = date("Y-m-d H:i:s");
-        if(isset($body['status_lembur']) && $body['super_user']) {
+        if(isset($body['status_lembur']) && isset($body['super_user'])) {
             DB::table('lembur')->where('id' , $body['lembur_id'])->update([
                 'status' => $body['status_lembur'],
                 'updated_at' => $dateNow
@@ -152,7 +152,7 @@ class LemburController extends Controller
                 DB::table('lembur')->insert($payload);
             }
         }
-        if($body['super_user']) {
+        if(isset($body['super_user'])) {
             return \Redirect::route('lembur.edit', $body['lembur_id'])->with('success', 'Data berhasil di edit');
         }
         return redirect('home');

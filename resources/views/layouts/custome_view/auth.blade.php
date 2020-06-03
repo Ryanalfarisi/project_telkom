@@ -157,7 +157,7 @@ top: 10px;
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
                 <li>
-                <a href="#" class="font-weight-bold">Home</a>
+                <a href="{{route('home')}}" class="font-weight-bold">Home</a>
                 </li>
                 <li class="pl-4">
                     {{-- <div class="bullet-notif d-inline-block align-middle"></div> --}}

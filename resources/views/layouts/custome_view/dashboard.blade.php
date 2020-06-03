@@ -255,6 +255,7 @@
                   <th class="color-th">Status</th>
                   <th class="color-th">Review</th>
                   <th class="color-th">Superiors</th>
+                  <th class="color-th">Points</th>
               </tr>
           </thead>
           <tbody>
@@ -271,8 +272,10 @@
                   @for ($i = 0; $i < $row->rating; $i++)
                     <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
                   @endfor
+                  <p class="fs-14">{{$row->feedback}}</p>
                 </td>
                 <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                <td class="row-color">{{$row->duration}} Extra hours <b>({{$row->poin}} point)</b></td>
               </tr>
             @endif
           @endforeach
