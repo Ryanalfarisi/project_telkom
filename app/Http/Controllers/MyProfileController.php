@@ -21,7 +21,12 @@ class MyProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $super = in_array($user->grade, config('global.grade_manager')) ? true : false;
+        if($user->grade == 'I' || $user->grade == 'II' || $user->grade == 'III') {
+            $super = true;
+        } else {
+            $super = false;
+        }
+
         $jabatan = DB::table('jabatan')->get();
         $grade = [
             "I" =>"I",
@@ -31,7 +36,6 @@ class MyProfileController extends Controller
             "V" => "V",
             "VI" => "VI"
         ];
-
         $user = DB::table('users')
             ->join('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
             ->where('users.id', $user->id)

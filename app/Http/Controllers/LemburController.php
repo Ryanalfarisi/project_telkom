@@ -79,7 +79,11 @@ class LemburController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $super = in_array($user->grade, config('global.grade_manager')) ? true : false;
+        if($user->grade == 'I' || $user->grade == 'II' || $user->grade == 'III') {
+            $super = true;
+        } else {
+            $super = false;
+        }
         $lembur = DB::table('lembur')->find($id);
         $assigned = DB::table('users')
                     ->leftJoin('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')

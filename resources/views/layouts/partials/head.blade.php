@@ -53,13 +53,15 @@
     @endif
   </div>
   <div class="col-md-6 pr-5" style="height:auto; padding:20px;">
-    <div class="wrapper-img pointer float-right position-relative">
+    <div class="wrapper-img pointer float-right position-relative text-center">
       @if ($super ?? '')
-        <img src="{{ asset('material') }}/img/kasali.jpeg" alt="">
+        {{-- <img src="{{ asset('material') }}/img/kasali.jpeg" alt=""> --}}
+        <h1>SM</h1>
       @else
-        <img src="{{ asset('material') }}/img/bagus.jpeg" alt="">
+        <h1>OF</h1>
+        {{-- <img src="{{ asset('material') }}/img/bagus.jpeg" alt=""> --}}
       @endif
-      <ul class="position-absolute profile-hover">
+      <ul class="position-absolute profile-hover text-left">
         <li><a style="color:white !important;" href="{{ route('home.my_profile') }}">Profile</a></li>
         <li>Change Password</li>
         <li>Switch Account</li>

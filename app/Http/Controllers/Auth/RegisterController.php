@@ -80,8 +80,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $grade_staff = config('global.grade_staff');
-        $grade_manager = config('global.grade_manager');
         $trimJawaban = strtolower($data['jawaban']);
         $code_jabatan = '';
         $realJawaban = preg_replace('/\s+/', '', $trimJawaban);

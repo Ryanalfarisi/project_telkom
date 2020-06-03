@@ -161,6 +161,17 @@
           </div>
         </div>
         <div class="form-group row">
+          <label for="date" class="col-sm-4 col-form-label font-weight-bold">Date  <span class="cl-orange float-right">*</span></label>
+          <div class="col-sm-8">
+            <div class='input-group date' id='datetimepicker2'>
+                <input type='text' name="insert_date" class="form-control" placeholder="Pilih tanggal" required/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+             </div>
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="startTime" class="col-sm-4 col-form-label font-weight-bold">Start Time <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-2 pr-0 my-auto">
             <div class='input-group date' id='startTime'>
@@ -190,17 +201,6 @@
             <input type="text" readonly name="duration" class="form-control input-staff" style="height:30px;" id="duration" value="" required>
           </div>
           <span style="line-height: 30px; color:#8E7E7E;" class="fs-12"><i>* Hour/Jam</i></span>
-        </div>
-        <div class="form-group row">
-          <label for="date" class="col-sm-4 col-form-label font-weight-bold">Date  <span class="cl-orange float-right">*</span></label>
-          <div class="col-sm-8">
-            <div class='input-group date' id='datetimepicker2'>
-                <input type='text' name="insert_date" class="form-control" placeholder="Pilih tanggal" required/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-             </div>
-          </div>
         </div>
         <div class="form-group row">
           <label for="location" class="col-sm-4 col-form-label font-weight-bold">Location</label>

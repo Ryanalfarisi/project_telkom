@@ -229,6 +229,18 @@
           </div>
         </div>
         <div class="form-group row">
+          <label for="date" class="col-sm-4 col-form-label font-weight-bold">Date  <span class="cl-orange float-right">*</span></label>
+          <div class="col-sm-8">
+            <div class='input-group date' id='datetimepicker2'>
+                <input type='text' name="insert_date" id="currentData" value="{{$lembur->insert_date}}" class="form-control" placeholder="Pilih tanggal" required/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+             </div>
+             <small id="alert_date" class="text-danger fs-12"></small>
+          </div>
+        </div>
+        <div class="form-group row">
           <label for="startTime" class="col-sm-4 col-form-label font-weight-bold">Start Time <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-2 pr-0 my-auto">
             <input type="hidden" value="{{$lembur->time_from}}" name="startTimeFull">
@@ -260,18 +272,6 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="date" class="col-sm-4 col-form-label font-weight-bold">Date  <span class="cl-orange float-right">*</span></label>
-          <div class="col-sm-8">
-            <div class='input-group date' id='datetimepicker2'>
-                <input type='text' name="insert_date" id="currentData" value="{{$lembur->insert_date}}" class="form-control" placeholder="Pilih tanggal" required/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-             </div>
-             <small id="alert_date" class="text-danger fs-12"></small>
-          </div>
-        </div>
-        <div class="form-group row">
           <label for="location" class="col-sm-4 col-form-label font-weight-bold">Location</label>
           <div class="col-sm-8 position-relative">
             <img class="position-absolute pointer" onclick="openGoogleMap()" style="width: 27px;right: 15px;" src="{{ asset('material') }}/img/map.png" alt="">
@@ -287,9 +287,10 @@
         <div class="form-group row">
           <label for="kpi" class="col-sm-4 col-form-label font-weight-bold">KPI</label>
           <div class="col-sm-8">
-            <input type="checkbox" id="kpi_checkbox">
-            <label for="kpi_checkbox" class="fs-12 cl-grey pointer" checked="{{$lembur->kpi ? true : false}}" style="font-weight: normal;">Minimum</label>
-            <input type="text" value="{{$lembur->kpi}}" disabled name="kpi" id="kpi" class="form-control d-inline-block" style="width:80px; height:30px; border-radius:10px;">
+            <input type="checkbox" id="kpi_checkbox" checked="{{$lembur->kpi ? true : false}}">
+            <label for="kpi_checkbox" class="fs-12 cl-grey pointer" style="font-weight: normal;">Minimum</label>
+            <input type="text" value="{{$lembur->kpi}}" name="kpi" id="kpi" class="form-control d-inline-block" style="width:80px; height:30px; border-radius:10px;" maxlength="3">
+            <span>%</span>
           </div>
         </div>
         <input type="hidden" name="draft" id="is_draft" value="1">
@@ -348,6 +349,10 @@
 @push('js')
   <script>
     $(document).ready(function() {
+      $("#kpi").inputFilter(function(value) {
+        return /^\d*$/.test(value);    // Allow digits only, using a RegExp
+      });
+
       var timeStart = $("input[name='startTimeFull']").val();
       var dateNow = formatYMD();
       if(timeStart < dateNow) {
@@ -408,7 +413,6 @@
           alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+timeStart)
         } else {
           $("#form_lembur").submit();
-
         }
       });
       $("#to_cancel").click(function() {
@@ -435,9 +439,10 @@
 
       $('#kpi_checkbox').change(function () {
         if($(this).prop("checked")) {
-          $("#kpi").prop("disabled", false);
+          $("#kpi").prop("readonly", false);
         } else {
-          $("#kpi").prop("disabled", true);
+          $("#kpi").prop("readonly", true);
+          $("#kpi").val(0);
         }
       });
       $('#startTime, #endTime').on('dp.change', function(e) {
@@ -480,5 +485,22 @@
     {
       newWindow = window.open("/googlemaps", "gmaps", "status=0,scrollbars=1,width=800,height=500,left=200,top=100", 0)
     }
+
+    (function($) {
+    $.fn.inputFilter = function(inputFilter) {
+      return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+        if (inputFilter(this.value)) {
+          this.oldValue = this.value;
+          this.oldSelectionStart = this.selectionStart;
+          this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+          this.value = this.oldValue;
+          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+          this.value = "";
+        }
+      });
+    };
+  }(jQuery));
   </script>
 @endpush

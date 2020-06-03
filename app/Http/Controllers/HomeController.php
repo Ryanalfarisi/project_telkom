@@ -30,7 +30,7 @@ class HomeController extends Controller
                 ->where('to_user_id', $user->id)
                 ->where('read', 0)
                 ->get();
-        if(in_array($user->grade, config('global.grade_manager'))) {
+        if($user->grade == 'I' || $user->grade == 'II' || $user->grade == 'III') {
             foreach ($notif as $key => $value) {
                 if($value->status == 5) {
                     array_push($todo, $value);
