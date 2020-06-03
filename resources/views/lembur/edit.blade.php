@@ -210,7 +210,11 @@
           <label for="activity" class="col-sm-4 col-form-label font-weight-bold">Detail Activity <span class="cl-orange float-right">*</span></label>
           <div class="col-sm-8 position-relative" id="activity_counter">
             <input type="text" name="activity[0]" class="form-control-plaintext input-staff" value="{{$lembur->description}}" placeholder="Deskripsi tugas secara singkat dan padat" required>
-            <span class="fs-26 position-absolute text-secondary add-act pointer" onclick="addRow()">+</span>
+            @if ($super)
+              <span class="fs-26 position-absolute text-secondary add-act pointer">+</span>
+            @else
+              <span class="fs-26 position-absolute text-secondary add-act pointer" onclick="addRow()">+</span>
+            @endif
           </div>
         </div>
         <div class="form-group row">
@@ -416,7 +420,6 @@
           alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+timeStart)
         } else {
           $("#form_lembur").submit();
-
         }
       });
 

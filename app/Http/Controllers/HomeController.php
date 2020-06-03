@@ -55,13 +55,16 @@ class HomeController extends Controller
                     'todo' => count($todo),
                     'riwayat' => count($riwayat),
                     'assign' => count($assign),
-                    'staff'=> $staff
+                    'staff'=> $staff,
+                    'user' => $user
                 ]);
         } else {
             foreach ($notif as $key => $value) {
-                // if($value->status ) {
+                if($value->status == '6') {
+                    array_push($riwayat, $value);
+                } else {
                     array_push($todo, $value);
-                //}
+                }
             }
             $content = isset($_GET['content']) ? $_GET['content'] : '';
             $lembur = DB::table('lembur')
@@ -76,7 +79,8 @@ class HomeController extends Controller
                     'super' => false,
                     'todo' => count($todo),
                     'riwayat' => count($riwayat),
-                    'assign' => count($assign)
+                    'assign' => count($assign),
+                    'user' => $user
                 ]);
         }
     }

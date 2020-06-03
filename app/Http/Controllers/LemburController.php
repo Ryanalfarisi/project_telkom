@@ -115,7 +115,6 @@ class LemburController extends Controller
             if($key == 0) {
                 $payload = [
                     'username' => $user->username,
-                    'user_id' => $user->id,
                     'time_from' => $time_from,
                     'time_until' => $time_until,
                     'description' => $activity,
@@ -171,5 +170,18 @@ class LemburController extends Controller
                 "created_at" => date("Y-m-d H:i:s")
             ]
         );
+    }
+
+    public function notification(Request $request)
+    {
+        $body = $request->input();
+        $dateNow = date("Y-m-d H:i:s");
+        DB::table('notifications')
+            ->where('to_user_id' , $body['to_user_id'])
+            ->update([
+            'read' => 1,
+            'updated_at' => $dateNow
+        ]);
+        return response()->json(['status' => 200, 'message' => 'berhasil'], 200);
     }
 }

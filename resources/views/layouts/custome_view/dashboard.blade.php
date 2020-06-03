@@ -149,14 +149,16 @@
         </div>
       </li>
       <li>
-        <a data-toggle="tab" class="list-menu" href="#riwayat">Riwayat
-          {{-- <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div> --}}
+        <a data-toggle="tab" class="list-menu" onclick="openNotif({{$user->id}}, 'notif_riwayat')" href="#riwayat">Riwayat
+          @if ($riwayat)
+            <div id="notif_riwayat" class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$riwayat}}</div>
+          @endif
         </a>
       </li>
       <li>
-        <a data-toggle="tab" class="list-menu" href="#todo">To Do
+        <a data-toggle="tab" class="list-menu" onclick="openNotif({{$user->id}}, 'notif_todo')" href="#todo">To Do
           @if ($todo)
-            <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$todo}}</div>
+            <div id="notif_todo" class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$todo}}</div>
           @endif
         </a>
       </li>
@@ -201,6 +203,8 @@
                     @elseif($row->status == '4')
                       <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                     @elseif($row->status == '1')
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @elseif($row->status == '6')
                       <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                     @endif
                   </td>
@@ -391,36 +395,52 @@
     function activaTab(tab) {
       $('.nav-tabs a[href="#' + tab + '"]').tab('show');
     };
-function countdownTimeStart(row_id, app_time, duration){
-    var countDownDate = new Date(app_time).getTime();
-    var duration = duration;
-    var timeParts = duration.split(":");
-    var getDuration = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000);
-    var feature = countDownDate+getDuration;
-    if(duration == '0') {
-      feature = countDownDate;
-    }
-    // Update the count down every 1 second
-    var x = setInterval(function() {
+    function countdownTimeStart(row_id, app_time, duration) {
+        var countDownDate = new Date(app_time).getTime();
+        var duration = duration;
+        var timeParts = duration.split(":");
+        var getDuration = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000);
+        var feature = countDownDate+getDuration;
+        if(duration == '0') {
+          feature = countDownDate;
+        }
+        // Update the count down every 1 second
+        var x = setInterval(function() {
 
-    // Get todays date and time
-    var now = new Date().getTime();
-    // Find the distance between now an the count down date
-    //var distance = countDownDate - now;
-    var distance = feature - now;
-    // Time calculations for days, hours, minutes and seconds
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    // Output the result in an element with id="demo"
-    document.getElementById("timer-"+row_id).innerHTML = hours + ":"
-    + minutes + ":" + seconds + "";
-    // If the count down is over, write some text
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah selesai";
+          // Get todays date and time
+          var now = new Date().getTime();
+          // Find the distance between now an the count down date
+          //var distance = countDownDate - now;
+          var distance = feature - now;
+          // Time calculations for days, hours, minutes and seconds
+          var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          // Output the result in an element with id="demo"
+          document.getElementById("timer-"+row_id).innerHTML = hours + ":"
+          + minutes + ":" + seconds + "";
+          // If the count down is over, write some text
+          if (distance < 0) {
+              clearInterval(x);
+              document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah selesai";
+          }
+        }, 1000);
     }
-}, 1000);
-}
+
+    function openNotif(id, tabs) {
+      var crsf = {!! json_encode(csrf_token()) !!}
+      $.ajax({
+        method: "POST",
+        url: "/lembur/notification",
+        data: {
+          to_user_id: id,
+          _token: crsf,
+          }
+      }).done(function( res ) {
+        if(res.status == 200) {
+          $("#"+tabs).attr("style", "display: none !important");
+        }
+      });
+    }
   </script>
 @endpush

@@ -346,10 +346,10 @@ border-radius: 4px;
   </div>
   <div class="col-md-12 mt-4 pl-5">
     <ul class="nav nav-tabs">
-      <li class="active position-relative">
-        <a data-toggle="tab" class="list-menu" href="#home">To do
+      <li class="active position-relative pointer">
+        <a data-toggle="tab" onclick="openNotif({{$user->id}},'notif_todo')" class="list-menu" href="#home">To do
           @if ($todo)
-            <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$todo}}</div>
+            <div id="notif_todo" class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$todo}}</div>
           @endif
         </a>
         <div class="extra-menu position-absolute">
@@ -755,6 +755,22 @@ border-radius: 4px;
             document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah Selesai";
         }
       }, 1000);
+    }
+
+    function openNotif(id, tabs) {
+      var crsf = {!! json_encode(csrf_token()) !!}
+      $.ajax({
+        method: "POST",
+        url: "/lembur/notification",
+        data: {
+          to_user_id: id,
+          _token: crsf,
+          }
+      }).done(function( res ) {
+        if(res.status == 200) {
+          $("#"+tabs).attr("style", "display: none !important");
+        }
+      });
     }
   </script>
 @endpush
