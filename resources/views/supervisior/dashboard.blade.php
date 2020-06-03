@@ -2,6 +2,144 @@
 
 @section('content')
 <style>
+* {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+
+*:before, *:after {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+
+.clearfix {
+  clear:both;
+}
+
+.text-center {text-align:center;}
+
+/* a {
+  color: tomato;
+  text-decoration: none;
+} */
+
+a:hover {
+  color: #2196f3;
+}
+
+pre {
+display: block;
+padding: 9.5px;
+margin: 0 0 10px;
+font-size: 13px;
+line-height: 1.42857143;
+color: #333;
+word-break: break-all;
+word-wrap: break-word;
+background-color: #F5F5F5;
+border: 1px solid #CCC;
+border-radius: 4px;
+}
+
+.header {
+  padding:20px 0;
+  position:relative;
+  margin-bottom:10px;
+}
+
+.header:after {
+  content:"";
+  display:block;
+  height:1px;
+  background:#eee;
+  position:absolute;
+  left:30%; right:30%;
+}
+
+.header h2 {
+  font-size:3em;
+  font-weight:300;
+  margin-bottom:0.2em;
+}
+
+.header p {
+  font-size:14px;
+}
+
+
+
+#a-footer {
+  margin: 20px 0;
+}
+
+.new-react-version {
+  padding: 20px 20px;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.new-react-version .react-svg-logo {
+  text-align: center;
+  max-width: 60px;
+  margin: 20px auto;
+  margin-top: 0;
+}
+
+.success-box {
+  margin:20px 0;
+  padding:10px 10px;
+  border:1px solid #eee;
+  background:#f9f9f9;
+  display: none;
+}
+
+.success-box img {
+  margin-right:10px;
+  display:inline-block;
+  vertical-align:top;
+}
+
+.success-box > div {
+  vertical-align:top;
+  display:inline-block;
+  color:#888;
+}
+
+
+
+/* Rating Star Widgets Style */
+.rating-stars ul {
+  list-style-type:none;
+  padding:0;
+  -moz-user-select:none;
+  -webkit-user-select:none;
+}
+.rating-stars ul > li.star {
+  display:inline-block;
+}
+
+/* Idle State of the stars */
+.rating-stars ul > li.star > i.fa {
+  font-size:2.5em; /* Change the size of the stars */
+  color:#ccc; /* Color on idle state */
+}
+
+/* Hover state of the stars */
+.rating-stars ul > li.star.hover > i.fa {
+  color:#FFCC36;
+}
+
+/* Selected state of the stars */
+.rating-stars ul > li.star.selected > i.fa {
+  color:#FF912C;
+}
+
 .nav-tabs>li>a {
   border: 1px solid #32EAAC;
   border-top-left-radius: 15px;
@@ -49,22 +187,6 @@
   background: #C4C4C4;
   border-radius:50%;
 }
-.sign-btn-add {
-  font-size: 40px;
-  position: absolute;
-  top: 6px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  color:black;
-}
-.bottom-formulir {
-  width: 128.21px;
-  height: 28px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  line-height:25px;
-}
 .list-menu-extra >li:nth-child(1) {
   border-bottom: 1px solid rgba(30, 250, 237, 0.2);
   font-weight:bold;
@@ -100,11 +222,12 @@
   border-radius: 6px;
   font-size: 14px;
 }
-.bg-status-3 {
+.bg-status-3, .bg-status-6 {
   background: #31EAAB;
   padding: 4px 5px;
   border-radius: 6px;
   font-size: 14px;
+  border: none;
 }
 .bg-status-4 {
   background: #D80000;
@@ -117,6 +240,7 @@
   padding: 4px 5px;
   border-radius: 6px;
   font-size: 14px;
+  color: white;
 }
 .bg-status-7 {
   background: #FF7E07;
@@ -130,8 +254,96 @@
   border-radius: 6px;
   font-size: 14px;
 }
+#table_riwayat_filter {
+  display: none !important;
+}
 </style>
   @include('layouts.partials.head', array('extra'=> false, 'super' => true))
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form class="form" method="POST" action="{{ route('home.rating') }}">
+          @csrf
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Rating & Feedback</h4>
+          </div>
+          <div class="modal-body">
+            <header class='header text-center'>
+              <h2>Rating & Feedback</h2>
+              <p>Berikan penilaian anda atas kinerja staff <span id="staff_name"></span>
+            </header>
+              <section class='rating-widget'>
+              <!-- Rating Stars Box -->
+              <div class='rating-stars text-center'>
+                <p>Rating</p>
+                <ul id='stars'>
+                  <li class='star' title='Poor' data-value='1'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                  <li class='star' title='Fair' data-value='2'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                  <li class='star' title='Good' data-value='3'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                  <li class='star' title='Excellent' data-value='4'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                  <li class='star' title='WOW!!!' data-value='5'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                </ul>
+              </div>
+              <div class='rating-stars text-center'>
+                <p>Achievement</p>
+                <ul id='achievement'>
+                  <li class='star' title='Poor' data-value='1'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                  <li class='star' title='Fair' data-value='2'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                  <li class='star' title='Good' data-value='3'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                  <li class='star' title='Excellent' data-value='4'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                  <li class='star' title='WOW!!!' data-value='5'>
+                    <i class='fa fa-star fa-fw'></i>
+                  </li>
+                </ul>
+              </div>
+              <div class="text-center">
+                <textarea name="feedback" style="height:70px; width:300px; margin:auto;" class="form-control" id="rating" cols="10" rows="5" placeholder="Give your feedback" required></textarea>
+                <button type="submit" style="margin-top: 40px; width: 100px;height: 35px;color: white;font-size: 16px;" class="bg-status-3 text-white">Sumbit</button>
+              </div>
+              <div class='success-box'>
+                <div class='clearfix'></div>
+                <div>
+                  <img alt='tick image' width='32' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0MjYuNjY3IDQyNi42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQyNi42NjcgNDI2LjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCI+CjxwYXRoIHN0eWxlPSJmaWxsOiM2QUMyNTk7IiBkPSJNMjEzLjMzMywwQzk1LjUxOCwwLDAsOTUuNTE0LDAsMjEzLjMzM3M5NS41MTgsMjEzLjMzMywyMTMuMzMzLDIxMy4zMzMgIGMxMTcuODI4LDAsMjEzLjMzMy05NS41MTQsMjEzLjMzMy0yMTMuMzMzUzMzMS4xNTcsMCwyMTMuMzMzLDB6IE0xNzQuMTk5LDMyMi45MThsLTkzLjkzNS05My45MzFsMzEuMzA5LTMxLjMwOWw2Mi42MjYsNjIuNjIyICBsMTQwLjg5NC0xNDAuODk4bDMxLjMwOSwzMS4zMDlMMTc0LjE5OSwzMjIuOTE4eiIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K'/>
+                </div>
+                <div>
+                  <div class='text-message'></div>
+                  <div class='text-message-ach'></div>
+                </div>
+                <div class='clearfix'></div>
+              </div>
+              </section>
+          </div>
+          <input type="hidden" name="rating" value="">
+          <input type="hidden" name="achievement" value="">
+          <input type="hidden" name="points" id="duration" value="">
+          <input type="hidden" name="id" id="lembur_id" value="">
+        </form>
+      </div>
+
+    </div>
+  </div>
   <div class="col-md-12 mt-4 pl-5">
     <ul class="nav nav-tabs">
       <li class="active position-relative">
@@ -182,7 +394,8 @@
             </thead>
             <tbody>
             @foreach ($lembur as $row)
-              @if ($row->type == '1' && $row->status != '3')
+              {{-- @if ($row->type == '1' && $row->status != '3' ) --}}
+              @if ($row->type == '1' && $row->status == '5' )
                 <tr>
                   <td class="row-color">{{$row->description}}</td>
                   <td class="row-color">
@@ -233,6 +446,7 @@
                     <th class="color-th">Insert date</th>
                     <th class="color-th">Type of work</th>
                     <th class="color-th">Challenge</th>
+                    <th class="color-th">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -265,6 +479,11 @@
                   <td class="row-color">{{$row->created_at}}</td>
                   <td class="row-color">{{$row->jobs_name}}</td>
                   <td class="row-color">{{$row->duration}} Extra hours</td>
+                  <th class="row-color">
+                    @if ($row->time_from)
+                      <span onclick="rating('{{$row->username}}', '{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span>
+                    @endif
+                  </th>
                 </tr>
               @endif
             @endforeach
@@ -310,27 +529,29 @@
           <thead>
               <tr>
                   <th class="color-th">Aktivitas</th>
-                  <th class="color-th">Status</th>
+                  <th class="color-th">Achivement</th>
                   <th class="color-th">Review</th>
-                  <th class="color-th">Superiors</th>
+                  <th class="color-th">Requester</th>
+                  <th class="color-th"></th>
               </tr>
           </thead>
           <tbody>
           @foreach ($lembur as $row)
-            @if ($row->status == '6')
+            @if ($row->status == '6' && $row->rating && $row->feedback)
               <tr>
                 <td class="row-color">{{$row->description}}</td>
                 <td class="row-color">
+                  @for ($i = 0; $i < $row->achievement; $i++)
                     <div class="bullet-process mr-3"></div>
-                    <div class="bullet-process mr-3"></div>
-                    <div class="bullet-process mr-3"></div>
+                  @endfor
                 </td>
                 <td class="row-color">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
-                <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  @for ($i = 0; $i < $row->rating; $i++)
+                    <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+                  @endfor
                 </td>
                 <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                <td class="row-color fs-16">{{$row->feedback}}</td>
               </tr>
             @endif
           @endforeach
@@ -363,7 +584,9 @@
                   @elseif($row->status == '4')
                     <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @elseif($row->status == '1')
-                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                  @elseif ($row->status == '6')
+                    <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @endif
                 </td>
                 <td class="row-color">{{$row->created_at}}</td>
@@ -391,9 +614,78 @@
 
       var content = {!! json_encode($content) !!}
       activaTab(content);
-      $('#table_tracking, #table_draf, #table_todo, #incoming_formulir, #table_riwayat').DataTable({
+      $('#table_tracking, #table_draf, #table_todo, #incoming_formulir').DataTable({
         "searching": false,
         "paging":   false,
+      });
+      $('#table_riwayat').DataTable({
+        "paging":   false,
+      });
+
+       /* 1. Visualizing things on Hover - See next part for action on click */
+      $('#stars li').on('mouseover', function(){
+        var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+        // Now highlight all the stars that's not after the current hovered star
+        $(this).parent().children('li.star').each(function(e){
+          if (e < onStar) {
+            $(this).addClass('hover');
+          }
+          else {
+            $(this).removeClass('hover');
+          }
+        });
+      }).on('mouseout', function(){
+        $(this).parent().children('li.star').each(function(e){
+          $(this).removeClass('hover');
+        });
+      });
+      /* 2. Action to perform on click */
+      $('#stars li').on('click', function(){
+        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+        var stars = $(this).parent().children('li.star');
+
+        for (i = 0; i < stars.length; i++) {
+          $(stars[i]).removeClass('selected');
+        }
+        for (i = 0; i < onStar; i++) {
+          $(stars[i]).addClass('selected');
+        }
+        // JUST RESPONSE (Not needed)
+        var ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+        var msg = "";
+        if (ratingValue > 1) {
+            $("input[name='rating']").val(ratingValue);
+            msg = "Thanks! You rated this " + ratingValue + " stars.";
+        }
+        else {
+            msg = "We will improve ourselves. You rated this " + ratingValue + " stars.";
+        }
+        responseMessage(msg, 'rating');
+      });
+
+      $('#achievement li').on('click', function(){
+        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+        var stars = $(this).parent().children('li.star');
+
+        for (i = 0; i < stars.length; i++) {
+          $(stars[i]).removeClass('selected');
+        }
+
+        for (i = 0; i < onStar; i++) {
+          $(stars[i]).addClass('selected');
+        }
+
+        // JUST RESPONSE (Not needed)
+        var ratingValue = parseInt($('#achievement li.selected').last().data('value'), 10);
+        var msg = "";
+        if (ratingValue > 1) {
+            $("input[name='achievement']").val(ratingValue);
+            msg = "Thanks! You give " + ratingValue + " achievement  for this task.";
+        }
+        else {
+            msg = "We will improve ourselves. You rated this " + ratingValue + " stars.";
+        }
+        responseMessage(msg, 'ach');
       });
     });
     function where_open(id) {
@@ -413,41 +705,56 @@
     function toEditDraft(id) {
       window.location.href = '/lembur/request/'+id;
     }
+    function rating(username, duration, id) {
+      var filter = duration.replace(":", ".");
+      duration = parseFloat(filter)
+      $("#staff_name").append("<b>"+username+"</b>");
+      $("#duration").val(duration);
+      $("#lembur_id").val(id);
+    }
     function activaTab(tab) {
       $('.nav-tabs a[href="#' + tab + '"]').tab('show');
     };
+    function responseMessage(msg, type) {
+      $('.success-box').css('display', 'block');
+      if(type == 'ach') {
+        $('.success-box div.text-message-ach').html("<span>" + msg + "</span>");
 
-function countdownTimeStart(row_id, app_time, duration){
-    var countDownDate = new Date(app_time).getTime();
-    var duration = duration;
-    var timeParts = duration.split(":");
-    var getDuration = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000);
-    var feature = countDownDate+getDuration;
-    if(duration == '0') {
-      feature = countDownDate;
+      }
+      if(type == 'rating') {
+        $('.success-box div.text-message').html("<span>" + msg + "</span>");
+      }
     }
-    //var countDownDate = new Date("Sep 25, 2025 15:00:00").getTime();
-    // Update the count down every 1 second
-    var x = setInterval(function() {
+    function countdownTimeStart(row_id, app_time, duration) {
+        var countDownDate = new Date(app_time).getTime();
+        var duration = duration;
+        var timeParts = duration.split(":");
+        var getDuration = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000);
+        var feature = countDownDate+getDuration;
+        if(duration == '0') {
+          feature = countDownDate;
+        }
+        // Update the count down every 1 second
+        var x = setInterval(function() {
 
-    // Get todays date and time
-    var now = new Date().getTime();
-    // Find the distance between now an the count down date
-    //var distance = countDownDate - now;
-    var distance = feature - now;
-    // Time calculations for days, hours, minutes and seconds
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    // Output the result in an element with id="demo"
-    document.getElementById("timer-"+row_id).innerHTML = hours + ":"
-    + minutes + ":" + seconds + "";
-    // If the count down is over, write some text
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah Selesai";
+        // Get todays date and time
+        var now = new Date().getTime();
+        // Find the distance between now an the count down date
+        //var distance = countDownDate - now;
+        var distance = feature - now;
+        // Time calculations for days, hours, minutes and seconds
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Output the result in an element with id="demo"
+        document.getElementById("timer-"+row_id).innerHTML = hours + ":"
+        + minutes + ":" + seconds + "";
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah Selesai";
+        }
+      }, 1000);
     }
-}, 1000);
-}
   </script>
 @endpush

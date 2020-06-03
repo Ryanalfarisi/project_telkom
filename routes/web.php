@@ -26,6 +26,7 @@ Route::get('/googlemaps', 'GoogleMapsController@index')->name('google_maps');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+Route::post('home/rating', ['as' => 'home.rating', 'uses' => 'HomeController@feedbackrating'])->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('lembur', 'LemburController@index')->name('lembur')->middleware('auth');
