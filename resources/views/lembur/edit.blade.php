@@ -400,10 +400,11 @@
       });
       $("#to_submit").click(function() {
         currentData = $('#currentData').val();
+        var start_timing = $("input[name='startTime']").val();
         $("#is_draft").val('1');
         if($("#duration").val() == '00:00') {
           alert("Duration tidak valid");
-        } else if(currentData < dateNow) {
+        } else if( (timeStart < dateNow) && (currentData+' '+start_timing < dateNow) ) {
           alert("Waktu tidak valid, waktu mulai lembur telah terlewati "+timeStart)
         } else {
           $("#form_lembur").submit();
