@@ -478,7 +478,7 @@ border-radius: 4px;
                   <td class="row-color">{{$row->jobs_name}}</td>
                   <td class="row-color">{{$row->duration}} Extra hours</td>
                   <th class="row-color">
-                    @if ($row->time_from  && $row->time_from < date("Y-m-d H:i:s"))
+                    @if ($row->time_until < date("Y-m-d H:i:s"))
                       <span onclick="rating('{{$row->username}}', '{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span>
                     @endif
                   </th>
