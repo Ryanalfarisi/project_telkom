@@ -354,7 +354,11 @@
 @push('js')
   <script>
     $(document).ready(function() {
-      $('#form_lembur input').attr('readonly', 'readonly');
+      var super_user = {!! json_encode($super) !!}
+      if(super_user) {
+        $('#form_lembur input').attr('readonly', 'readonly');
+
+      }
       $("#kpi").inputFilter(function(value) {
         return /^\d*$/.test(value);    // Allow digits only, using a RegExp
       });
