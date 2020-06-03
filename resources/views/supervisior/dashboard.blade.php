@@ -346,7 +346,7 @@ border-radius: 4px;
   </div>
   <div class="col-md-12 mt-4 pl-5">
     <ul class="nav nav-tabs">
-      <li class="active position-relative pointer">
+      <li class="active position-relative pointer" id="home_list">
         <a data-toggle="tab" onclick="openNotif({{$user->id}},'notif_todo')" class="list-menu" href="#home">To do
           @if ($todo)
             <div id="notif_todo" class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$todo}}</div>
@@ -360,7 +360,7 @@ border-radius: 4px;
           </ul>
         </div>
       </li>
-      <li class="position-relative">
+      <li class="position-relative" id="riwayat_list">
         <a data-toggle="tab" class="list-menu" href="#riwayat">Riwayat</a>
         <div class="extra-menu position-absolute">
           <ul class="list-menu-extra px-0 list-none py-4 text-center">
@@ -373,7 +373,6 @@ border-radius: 4px;
       </li>
       <li>
         <a data-toggle="tab" class="list-menu" href="#todo">Request
-          {{-- <div class="bullet-notif rounded-black d-inline-block align-middle ml-2">3</div> --}}
         </a>
       </li>
     </ul>
@@ -394,7 +393,6 @@ border-radius: 4px;
             </thead>
             <tbody>
             @foreach ($lembur as $row)
-              {{-- @if ($row->type == '1' && $row->status != '3' ) --}}
               @if ($row->type == '1' && $row->status == '5' )
                 <tr>
                   <td class="row-color">{{$row->description}}</td>
@@ -558,7 +556,7 @@ border-radius: 4px;
           </tbody>
         </table>
       </div>
-      <div id="todo" class="tab-pane fade">
+      {{-- <div id="todo" class="tab-pane fade">
         <table id="table_todo" class="row-border">
           <thead>
               <tr>
@@ -597,7 +595,7 @@ border-radius: 4px;
           @endforeach
           </tbody>
         </table>
-      </div>
+      </div> --}}
     </div>
   </div>
 @endsection
@@ -690,7 +688,9 @@ border-radius: 4px;
     });
     function where_open(id) {
         $("#home").addClass("in active");
+        $("#home_list").addClass("active");
         $("#riwayat, #todo").removeClass( "in active" );
+        $("#riwayat_list").removeClass( "active" );
         if(id == 'formulir') {
           $("#"+id).css('display', 'block');
           $("#tracking, #draf").css('display', 'none');
@@ -708,6 +708,7 @@ border-radius: 4px;
     function rating(username, duration, id) {
       var filter = duration.replace(":", ".");
       duration = parseFloat(filter)
+      $("#staff_name").empty();
       $("#staff_name").append("<b>"+username+"</b>");
       $("#duration").val(duration);
       $("#lembur_id").val(id);

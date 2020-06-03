@@ -334,10 +334,15 @@
       {{-- End reject --}}
 
       <div class="col-md-12" style="margin-top:125px;">
-        <button type="button" data-toggle="modal" data-target="#modalSubmit"
-          style="border-radius:20px;"
-          class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Edit</button><br>
+        <div style="display: block" id="wrapper_edit">
+            <button type="button" onclick="cancelBlock()" style="border-radius:20px;" class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Edit</button>
+          <br>
           <span class="fs-12"><i>* Edit untuk merubah sebelum melakukan approve, return dan reject</i></span>
+        </div>
+        <div style="display: none;" id="wrapper_save">
+          <button type="button" data-toggle="modal" data-target="#modalSubmit" style="border-radius:20px;background: #19E9DC;margin-right:20px;" class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Save</button>
+          <button type="button" onclick="cancelNone()" style="border-radius:20px;background: white; border: 2px solid rgba(0, 0, 0, 0.25);" class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Cancel</button>
+        </div>
       </div>
     </div>
   </div>
@@ -349,6 +354,7 @@
 @push('js')
   <script>
     $(document).ready(function() {
+      $('#form_lembur input').attr('readonly', 'readonly');
       $("#kpi").inputFilter(function(value) {
         return /^\d*$/.test(value);    // Allow digits only, using a RegExp
       });
@@ -485,7 +491,18 @@
     {
       newWindow = window.open("/googlemaps", "gmaps", "status=0,scrollbars=1,width=800,height=500,left=200,top=100", 0)
     }
-
+    function cancelNone()
+    {
+      $('#form_lembur input').attr('readonly', 'readonly');
+      $("#wrapper_edit").css('display', 'block');
+      $("#wrapper_save").css('display', 'none');
+    }
+    function cancelBlock()
+    {
+      $('#form_lembur input').attr('readonly', false);
+      $("#wrapper_edit").css('display', 'none');
+      $("#wrapper_save").css('display', 'block');
+    }
     (function($) {
     $.fn.inputFilter = function(inputFilter) {
       return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
