@@ -83,11 +83,12 @@ class RegisterController extends Controller
         $grade_staff = config('global.grade_staff');
         $grade_manager = config('global.grade_manager');
         $trimJawaban = strtolower($data['jawaban']);
+        $code_jabatan = '';
         $realJawaban = preg_replace('/\s+/', '', $trimJawaban);
-        if(in_array($data['grade'], $grade_staff)) {
-            $code_jabatan = "OFF_1";
-        } elseif(in_array($data['grade'], $grade_manager)) {
+        if($data['grade'] == 'III' || $data['grade'] == 'I' || $data['grade'] == 'II') {
             $code_jabatan = "SM";
+        } else  {
+            $code_jabatan = "OFF_1";
         }
         $created = [
             'username' => $data['username'],
