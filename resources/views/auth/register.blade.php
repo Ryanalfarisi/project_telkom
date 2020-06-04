@@ -56,9 +56,12 @@
                 <div class="text-left">
                   <label for="nik" class="font-weight-bold input-basic">NIK</label>
                   <input type="text" name="nik" id="nik" class="input-custome pl-3" placeholder="{{ __('NIK') }}" value="{{ old('nik') }}" maxlength="6" required>
+                  @if (session('status'))
+                    <div class="fs-12 error text-danger">{{ session('status') }}</div>
+                  @endif
                 </div>
-                @if ($errors->has('name'))
-                  <div id="name-error" class="error text-danger pl-3" for="name" style="display: block;">
+                @if ($errors->has('nik'))
+                  <div id="nik-error" class="error text-danger pl-3" for="nik" style="display: block;">
                     <strong>{{ $errors->first('nik') }}</strong>
                   </div>
                 @endif

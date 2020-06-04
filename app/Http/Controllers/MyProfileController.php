@@ -63,7 +63,7 @@ class MyProfileController extends Controller
                   'lokasi' => $input['lokasi'],
                   'unit' => $input['unit'],
                 ]);
-        return redirect()->route('home.my_profile')->with('status', 'Profile has been updated');;
+        return redirect()->route('home.my_profile')->with('status', 'Profile has been updated');
     }
 
     public function changePass(Request $request)
