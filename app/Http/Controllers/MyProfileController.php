@@ -65,12 +65,18 @@ class MyProfileController extends Controller
     public function editProfile(Request $request)
     {
         $input = $request->input();
+        if($input['grade'] == 'I' || $input['grade'] == 'II' || $input['grade'] == 'III') {
+            $code_jabatan = 'SM';
+        } else {
+            $code_jabatan = 'OFF_1';
+        }
         DB::table('users')
               ->where('username', $input['username'])
               ->where('id', $input['userId'])
               ->update([
                   'nik' => $input['nik'],
                   'jabatan' => $input['jabatan'],
+                  'code_jabatan' => $code_jabatan,
                   'grade' => $input['grade'],
                   'lokasi' => $input['lokasi'],
                   'unit' => $input['unit'],
