@@ -28,6 +28,12 @@ class MyProfileController extends Controller
         }
 
         $jabatan = DB::table('jabatan')->get();
+        $lembur = DB::table('lembur')
+                ->where('lembur.poin','!=', 0)
+                ->join('jobs_extra', 'lembur.job', '=', 'jobs_extra.id')
+                ->join('users', 'lembur.approved_id', '=', 'users.id')
+                ->select('lembur.*', 'jobs_extra.jobs_name as jobname', 'users.username as app_name')
+                ->where('lembur.user_id', $user->id)->get();
         $grade = [
             "I" =>"I",
             "II" => "II",
@@ -41,7 +47,13 @@ class MyProfileController extends Controller
             ->where('users.id', $user->id)
             ->select('users.*', 'jabatan.jabatan as status_jabatan')
             ->get()->toArray();
-        return view('profile.index', ["user" => $user[0], "jabatan" => $jabatan, "grade" => $grade, "super" =>$super]);
+        return view('profile.index',[
+            "user" => $user[0],
+            "jabatan" => $jabatan,
+            "grade" => $grade,
+            "super" => $super,
+            "lembur" => $lembur
+        ]);
     }
 
     public function reset()

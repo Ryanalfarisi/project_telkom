@@ -7,6 +7,11 @@
     width:290px;
     padding:10px 0px;
   }
+  .color-th {
+    background: #D7D6FF;
+    font-size:18px;
+    font-weight: bold;
+  }
   .btn-profile {
     background: #000000;
     border: 2px solid #000000;
@@ -52,7 +57,7 @@
       </tr>
       @if (!$super)
       <tr>
-        <td class="font-weight-bold fs-16">Points</td>
+        <td class="font-weight-bold fs-16">Total Points</td>
         <td class="fs-15">{{$user->poin}}</td>
       </tr>
       @endif
@@ -66,6 +71,33 @@
       Change password
     </div>
   </div>
+  @if(!$super)
+  <div class="col-md-12" style="margin-top:30px;">
+    <h3>Table Akumulasi Points</h3>
+    <table id="table_point" class="row-border">
+      <thead>
+          <tr>
+              <th class="color-th">Lembur</th>
+              <th class="color-th">Insert date</th>
+              <th class="color-th">Type of work</th>
+              <th class="color-th">Assigned By</th>
+              <th class="color-th">Point</th>
+          </tr>
+      </thead>
+      <tbody>
+      @foreach ($lembur as $row)
+        <tr>
+          <td class="row-color">{{$row->description}}</td>
+          <td class="row-color">{{$row->insert_date}}</td>
+          <td class="row-color">{{$row->jobname}}</td>
+          <td class="row-color">{{$row->app_name}}</td>
+          <td class="row-color">{{$row->duration}} ({{$row->poin}})</td>
+        </tr>
+      @endforeach
+      </tbody>
+    </table>
+  </div>
+  @endif
   <div class="col-md-12 py-5" id="content_change" style="border-top: 1px solid #76ebac;">
     <p class="fs-20 font-weight-bold">Change password</p>
     <small><i> Harap ingat password pengganti.</i></small>
@@ -156,6 +188,10 @@
 @push('js')
   <script>
     $(document).ready(function() {
+      $('#table_point').DataTable({
+        "searching": false,
+        "paging":   false,
+      });
       $("#changePass").click(function() {
           $("#content_change").css('display', 'block');
           $("#content_edit").css('display', 'none');

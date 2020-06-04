@@ -190,7 +190,7 @@
             </thead>
             <tbody>
             @foreach ($lembur as $row)
-              @if ($row->type == '1')
+              @if ($row->type == '1' && $row->status != '6' && $row->time_until > date("Y-m-d H:i:s"))
                 <tr>
                   <td class="row-color">{{$row->description}}</td>
                   <td class="row-color">
@@ -299,7 +299,7 @@
           </thead>
           <tbody>
           @foreach ($lembur as $row)
-            @if ($row->type == '1')
+            @if ($row->type == '1' && $row->status != '6' && $row->time_until > date("Y-m-d H:i:s") && $row->status == '3')
               <tr>
                 <td class="row-color">{{$row->description}}</td>
                 <td class="row-color">
@@ -322,7 +322,7 @@
                 </td>
                 @if ($row->status == '3')
                   @if ($row->time_from < date("Y-m-d H:i:s"))
-                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->updated_at}}" data-duration="{{$row->duration}}">
+                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="{{$row->duration}}">
                       <p>Sisa waktu <span id="timer-{{$row->id}}"></span></p>
                     </td>
                   @else
@@ -355,22 +355,7 @@
       });
       var content = {!! json_encode($content) !!}
       activaTab(content);
-      $('#table_riwayat').DataTable({
-        "searching": false,
-        "paging":   false,
-      });
-
-      $('#table_tracking').DataTable({
-        "searching": false,
-        "paging":   false,
-      });
-
-      $('#table_draf').DataTable({
-        "searching": false,
-        "paging":   false,
-      });
-
-      $('#table_todo').DataTable({
+      $('#table_riwayat, #table_tracking, #table_draf, #table_todo').DataTable({
         "searching": false,
         "paging":   false,
       });

@@ -320,7 +320,7 @@ border-radius: 4px;
               </div>
               <div class="text-center">
                 <textarea name="feedback" style="height:70px; width:300px; margin:auto;" class="form-control" id="rating" cols="10" rows="5" placeholder="Give your feedback" required></textarea>
-                <button type="submit" style="margin-top: 40px; width: 100px;height: 35px;color: white;font-size: 16px;" class="bg-status-3 text-white">Sumbit</button>
+                <button type="submit" style="margin-top: 40px; width: 100px;height: 35px;color: white;font-size: 16px;" class="bg-status-3 text-white">Submit</button>
               </div>
               <div class='success-box'>
                 <div class='clearfix'></div>
@@ -386,6 +386,7 @@ border-radius: 4px;
                     <th class="color-th">Status</th>
                     <th class="color-th">Insert date</th>
                     <th class="color-th" style="width: 80px !important;"></th>
+                    <th class="color-th"></th>
                     <th class="color-th">Type of work</th>
                     <th class="color-th">Request By</th>
                     <th class="color-th">Challenge</th>
@@ -393,7 +394,12 @@ border-radius: 4px;
             </thead>
             <tbody>
             @foreach ($lembur as $row)
-              @if ($row->type == '1' && $row->status == '5' )
+              @if (
+                  $row->type == '1' &&
+                  (
+                    $row->status == '3' && $row->time_until > date("Y-m-d H:i:s") || $row->status == '5'
+                  )
+                  )
                 <tr>
                   <td class="row-color">{{$row->description}}</td>
                   <td class="row-color">
@@ -419,12 +425,31 @@ border-radius: 4px;
                         <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                     @elseif($row->status == '4')
                         <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
-                    @else
+                    @elseif($row->status == '3' && $row->time_from > date("Y-m-d H:i:s"))
+                        <span class="bg-status-1">
+                            <a class="text-dark pointer" onclick="where_open('tracking')">Queue</a>
+                        </span>
+                    @elseif($row->status == '3' && $row->time_until < date("Y-m-d H:i:s"))
+                        <span class="bg-status-3">
+                          <a class="text-dark pointer" onclick="where_open('tracking')">Finished</a>
+                        </span>
+                    @elseif($row->status == '3' && $row->time_until > date("Y-m-d H:i:s"))
                         <span class="bg-status-inprogress">
-                            <a class="text-dark pointer" onclick="where_open('tracking')">In progress</a>
+                          <a class="text-dark pointer" onclick="where_open('tracking')">In progress</a>
                         </span>
                     @endif
                   </td>
+                  @if ($row->status == '3' && $row->time_from < date("Y-m-d H:i:s"))
+                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="{{$row->duration}}">
+                      <p>Sisa waktu <span id="timer-{{$row->id}}"></span></p>
+                    </td>
+                  @elseif($row->status == '3' && $row->time_from > date("Y-m-d H:i:s"))
+                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0">
+                      <p>Mulai dalam <span id="timer-{{$row->id}}"></span></p>
+                    </td>
+                  @else
+                    <td class="row-color">-</td>
+                  @endif
                   <td class="row-color">{{$row->jobs_name}}</td>
                   <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
                   <td class="row-color">{{$row->duration}} Extra Hours</td>
@@ -440,16 +465,17 @@ border-radius: 4px;
                 <tr>
                     <th class="color-th">Tracking Aktivitas</th>
                     <th class="color-th">Status</th>
-                    <th class="color-th" style="width: 150px;"></th>
+                    {{-- <th class="color-th" style="width: 150px;"></th> --}}
                     <th class="color-th">Insert date</th>
                     <th class="color-th">Type of work</th>
+                    <th class="color-th">Request By</th>
                     <th class="color-th">Challenge</th>
                     <th class="color-th">Action</th>
                 </tr>
             </thead>
             <tbody>
             @foreach ($lembur as $row)
-              @if ($row->type == '1' && $row->status == '3')
+              @if ($row->type == '1' && $row->status == '3' && $row->time_until < date("Y-m-d H:i:s") && !$row->feedback)
                 <tr>
                   <td class="row-color">{{$row->description}}</td>
                   <td class="row-color">
@@ -463,9 +489,11 @@ border-radius: 4px;
                       <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                     @elseif($row->status == '1')
                       <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
+                    @elseif ($row->status == '6')
+                      <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}<b> (Done)</b></span>
                     @endif
                   </td>
-                  @if ($row->time_from < date("Y-m-d H:i:s"))
+                  {{-- @if ($row->time_from < date("Y-m-d H:i:s"))
                     <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->updated_at}}" data-duration="{{$row->duration}}">
                       <p>Sisa waktu <span id="timer-{{$row->id}}"></span></p>
                     </td>
@@ -473,12 +501,13 @@ border-radius: 4px;
                     <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0">
                       <p>Mulai dalam <span id="timer-{{$row->id}}"></span></p>
                     </td>
-                  @endif
+                  @endif --}}
                   <td class="row-color">{{$row->created_at}}</td>
                   <td class="row-color">{{$row->jobs_name}}</td>
+                  <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
                   <td class="row-color">{{$row->duration}} Extra hours</td>
                   <th class="row-color">
-                    @if ($row->time_until < date("Y-m-d H:i:s"))
+                    @if ($row->time_until < date("Y-m-d H:i:s") && !$row->feedback)
                       <span onclick="rating('{{$row->username}}', '{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span>
                     @endif
                   </th>
@@ -728,11 +757,11 @@ border-radius: 4px;
     }
     function countdownTimeStart(row_id, app_time, duration) {
         var countDownDate = new Date(app_time).getTime();
-        var duration = duration;
+        var duration_time = duration;
         var timeParts = duration.split(":");
         var getDuration = (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000);
         var feature = countDownDate+getDuration;
-        if(duration == '0') {
+        if(duration_time == '0') {
           feature = countDownDate;
         }
         // Update the count down every 1 second

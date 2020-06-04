@@ -300,7 +300,7 @@
   </div>
   @if (!$super)
     <div class="col-md-12 text-center">
-      <button type="submit" id="checkSubmitDraft" class="btn-send mx-5">Save</button>
+      <button type="submit" id="checkSubmitDraft" class="btn-send mx-5 checkSubmitDraft">Save</button>
       <button type="submit" id="checkSubmitSave" class="btn-send mx-5">Submit</button>
       <button id="shadowDraft" type="button" style="display: none;" data-toggle="modal" data-target="#modalDraft">Submit_shadow</button>
       <button id="shadowSubmit" type="button" style="display: none;" data-toggle="modal" data-target="#modalSubmit">Submit_shadow</button>
@@ -340,7 +340,7 @@
           <span class="fs-12"><i>* Edit untuk merubah sebelum melakukan approve, return dan reject</i></span>
         </div>
         <div style="display: none;" id="wrapper_save">
-          <button type="button" data-toggle="modal" data-target="#modalSubmit" style="border-radius:20px;background: #19E9DC;margin-right:20px;" class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Save</button>
+          <button type="button" data-toggle="modal" data-target="#modalSubmit" style="border-radius:20px;background: #19E9DC;margin-right:20px;" class="bg-status-1 edit-btn px-5 font-weight-bold fs-16 checkSubmitDraft">Save</button>
           <button type="button" onclick="cancelNone()" style="border-radius:20px;background: white; border: 2px solid rgba(0, 0, 0, 0.25);" class="bg-status-1 edit-btn px-5 font-weight-bold fs-16">Cancel</button>
         </div>
       </div>
@@ -385,7 +385,8 @@
         $("#"+shadow).click();
         event.preventDefault();
       });
-      $("#checkSubmitDraft").click(function() {
+      $(".checkSubmitDraft").click(function() {
+        console.log("masuk draff")
           shadow = 'shadowDraft';
       });
       $("#checkSubmitSave").click(function() {
