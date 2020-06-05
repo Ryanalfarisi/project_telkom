@@ -39,8 +39,10 @@ class MyProfileController extends Controller
             $ach += $value->achievement;
             $rating += $value->rating;
         }
-        $ach = $ach / count($lembur);
-        $rating = $rating / count($lembur);
+        if(count($lembur) > 0) {
+            $ach = $ach / count($lembur);
+            $rating = $rating / count($lembur);
+        }
 
         $grade = [
             "I" =>"I",
