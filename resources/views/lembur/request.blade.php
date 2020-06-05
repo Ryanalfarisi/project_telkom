@@ -220,7 +220,8 @@
           <div class="col-sm-8">
             <input type="checkbox" id="kpi_checkbox">
             <label for="kpi_checkbox" class="fs-12 cl-grey pointer" style="font-weight: normal;">Minimum</label>
-            <input type="text" disabled name="kpi" id="kpi" class="form-control d-inline-block" style="width:80px; height:30px; border-radius:10px;">
+            <input type="text" disabled name="kpi" id="kpi" class="form-control d-inline-block" style="width:80px; height:30px; border-radius:10px;" maxlength="3">
+            <span>%</span>
           </div>
         </div>
         <input type="hidden" name="draft" id="is_draft" value="1">
@@ -305,6 +306,9 @@
         placeholder: "Cari nama atasan",
         allowClear: true
       });
+      $("#kpi").inputFilter(function(value) {
+        return /^\d*$/.test(value);    // Allow digits only, using a RegExp
+      });
     });
     function addRow() {
       var counter = $("#activity_counter").find(':input');
@@ -315,5 +319,21 @@
     {
       newWindow = window.open("/googlemaps", "gmaps", "status=0,scrollbars=1,width=800,height=500,left=200,top=100", 0)
     }
+    (function($) {
+    $.fn.inputFilter = function(inputFilter) {
+      return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+        if (inputFilter(this.value)) {
+          this.oldValue = this.value;
+          this.oldSelectionStart = this.selectionStart;
+          this.oldSelectionEnd = this.selectionEnd;
+        } else if (this.hasOwnProperty("oldValue")) {
+          this.value = this.oldValue;
+          this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        } else {
+          this.value = "";
+        }
+      });
+    };
+  }(jQuery));
   </script>
 @endpush
