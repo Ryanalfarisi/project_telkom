@@ -30,6 +30,13 @@
   #content_edit {
     display: none;
   }
+  .bullet-process {
+  width:10px;
+  height:10px;
+  display:inline-block;
+  background: #35339D;
+  border-radius:50%;
+}
 </style>
 <div class="col-md-12">
   <ol class="breadcrumb d-inline-block">
@@ -60,6 +67,24 @@
         <td class="font-weight-bold fs-16">Total Points</td>
         <td class="fs-15">{{$user->poin}}</td>
       </tr>
+      <tr>
+        <td class="font-weight-bold fs-16">Achievement</td>
+        <td class="fs-15">
+          @for ($i = 0; $i < round($ach); $i++)
+            <div class="bullet-process mr-3"></div>
+          @endfor
+          <b>({{$ach}})</b>
+        </td>
+      </tr>
+      <tr>
+        <td class="font-weight-bold fs-16">Rating</td>
+        <td class="fs-15">
+          @for ($i = 0; $i < round($rating); $i++)
+            <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
+          @endfor
+          <b>({{$rating}})</b>
+        </td>
+      </tr>
       @endif
     </table>
   </div>
@@ -71,7 +96,7 @@
       Change password
     </div>
   </div>
-  @if(!$super)
+  {{-- @if(!$super)
   <div class="col-md-12" style="margin-top:30px;">
     <h3>Table Akumulasi Points</h3>
     <table id="table_point" class="row-border">
@@ -97,7 +122,7 @@
       </tbody>
     </table>
   </div>
-  @endif
+  @endif --}}
   <div class="col-md-12 py-5" id="content_change" style="border-top: 1px solid #76ebac;">
     <p class="fs-20 font-weight-bold">Change password</p>
     <small><i> Harap ingat password pengganti.</i></small>

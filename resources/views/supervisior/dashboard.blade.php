@@ -277,10 +277,9 @@ border-radius: 4px;
               <p>Berikan penilaian anda atas kinerja staff <span id="staff_name"></span>
             </header>
               <section class='rating-widget'>
-              <!-- Rating Stars Box -->
               <div class='rating-stars text-center'>
-                <p>Rating</p>
-                <ul id='stars'>
+                <p>Achievement</p>
+                <ul id='achievement'>
                   <li class='star' title='Poor' data-value='1'>
                     <i class='fa fa-star fa-fw'></i>
                   </li>
@@ -298,9 +297,10 @@ border-radius: 4px;
                   </li>
                 </ul>
               </div>
+              <!-- Rating Stars Box -->
               <div class='rating-stars text-center'>
-                <p>Achievement</p>
-                <ul id='achievement'>
+                <p>Rating</p>
+                <ul id='stars'>
                   <li class='star' title='Poor' data-value='1'>
                     <i class='fa fa-star fa-fw'></i>
                   </li>

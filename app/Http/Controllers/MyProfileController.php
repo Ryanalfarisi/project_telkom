@@ -26,7 +26,7 @@ class MyProfileController extends Controller
         } else {
             $super = false;
         }
-
+        $ach = $rating = 0;
         $jabatan = DB::table('jabatan')->get();
         $lembur = DB::table('lembur')
                 ->where('lembur.poin','!=', 0)
@@ -34,6 +34,14 @@ class MyProfileController extends Controller
                 ->join('users', 'lembur.approved_id', '=', 'users.id')
                 ->select('lembur.*', 'jobs_extra.jobs_name as jobname', 'users.username as app_name')
                 ->where('lembur.user_id', $user->id)->get();
+
+        foreach ($lembur as $key => $value) {
+            $ach += $value->achievement;
+            $rating += $value->rating;
+        }
+        $ach = $ach / count($lembur);
+        $rating = $rating / count($lembur);
+
         $grade = [
             "I" =>"I",
             "II" => "II",
@@ -47,12 +55,15 @@ class MyProfileController extends Controller
             ->where('users.id', $user->id)
             ->select('users.*', 'jabatan.jabatan as status_jabatan')
             ->get()->toArray();
+
         return view('profile.index',[
             "user" => $user[0],
             "jabatan" => $jabatan,
             "grade" => $grade,
             "super" => $super,
-            "lembur" => $lembur
+            "lembur" => $lembur,
+            "ach" => $ach,
+            "rating" => $rating
         ]);
     }
 
