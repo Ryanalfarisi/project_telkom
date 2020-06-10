@@ -96,6 +96,7 @@ class RegisterController extends Controller
             'code_jabatan' => $code_jabatan,
             'jabatan' => $data['jabatan'],
             'grade' => $data['grade'],
+            'full_name' => $data['full_name'],
             'password' => Hash::make($data['password']),
         ];
         return User::create($created);

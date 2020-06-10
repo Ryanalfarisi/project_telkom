@@ -289,7 +289,7 @@
           <div class="col-sm-8">
             <input type="checkbox" id="kpi_checkbox" checked="{{$lembur->kpi ? true : false}}">
             <label for="kpi_checkbox" class="fs-12 cl-grey pointer" style="font-weight: normal;">Minimum</label>
-            <input type="text" value="{{$lembur->kpi}}" name="kpi" id="kpi" class="form-control d-inline-block" style="width:80px; height:30px; border-radius:10px;" maxlength="3">
+            <input type="text" value="{{$lembur->kpi}}" name="kpi" id="kpi" class="form-control d-inline-block" onkeyup="handleChange(this);" style="width:80px; height:30px; border-radius:10px;" maxlength="3">
             <span>%</span>
           </div>
         </div>
@@ -408,8 +408,12 @@
 
       $("#to_draft").click(function() {
         $("#is_draft").val('0');
+        var start_lembur_date = $("input[name='insert_date']").val()+ ' '+ $("input[name='startTime']").val();
+        var date_now = moment().format("YYYY-MM-DD HH:mm");
         if($("#duration").val() == '00:00') {
           alert("Duration tidak valid");
+        } else if(start_lembur_date <= date_now) {
+          alert("Waktu tidak valid, Waktu lembur telah terlewati");
         } else {
           $("#form_lembur").submit();
         }
@@ -471,7 +475,7 @@
       })
       $('#datetimepicker2').datetimepicker({
         format: 'YYYY-MM-DD',
-        minDate:new Date(new Date().getTime() - 86400000),
+        minDate:new Date(),
       });
       $('#startTime').datetimepicker({
         format: 'HH:mm'
@@ -507,6 +511,13 @@
       $('#form_lembur input').attr('readonly', false);
       $("#wrapper_edit").css('display', 'none');
       $("#wrapper_save").css('display', 'block');
+    }
+    function handleChange(input) {
+      if (input.value < 0) input.value = 0;
+      if (input.value > 100) {
+        alert("Maximal nilai KPI 100%")
+        input.value = 100;
+      }
     }
     (function($) {
     $.fn.inputFilter = function(inputFilter) {

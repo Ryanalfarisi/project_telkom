@@ -132,7 +132,7 @@
   font-size: 14px;
 }
 </style>
-  @include('layouts.partials.head', array('extra'=> false, 'super'=> false))
+  @include('layouts.partials.head', array('extra'=> false, 'super'=> false, 'jabatan' => $user->jabatan))
   <div class="col-md-12 mt-4 pl-5">
     <ul class="nav nav-tabs">
       <li class="active position-relative">

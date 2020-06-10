@@ -42,7 +42,7 @@ class HomeController extends Controller
                     ->leftJoin('jobs_extra', 'lembur.job', '=', 'jobs_extra.id')
                     ->leftJoin('status_task', 'lembur.status', '=', 'status_task.id')
                     ->where("lembur.approved_id",$user->id)
-                    ->select('lembur.*','lembur.approved_id as approver_id', 'users.id as app_id','users.username as username', 'users.code_jabatan', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label')
+                    ->select('lembur.*','lembur.approved_id as approver_id', 'users.id as app_id','users.full_name as username', 'users.code_jabatan', 'users.nik as user_nik', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label')
                     ->get();
             foreach ($lembur as $key => $v) {
                 if(in_array($v->user_id, $staffId) || $v->user_id == $user->id) continue;

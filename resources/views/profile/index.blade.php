@@ -1,7 +1,7 @@
 @extends('layouts.app', ['activePage' => 'request-lembur', 'titlePage' => __('Request Overtime')])
 
 @section('content')
-@include('layouts.partials.head', array('extra'=> false, 'super' => $super))
+@include('layouts.partials.head', array('extra'=> false, 'super' => $super, 'jabatan' => $user->jabatan))
 <style>
   .table-profile > tbody > tr >td {
     width:290px;
@@ -52,7 +52,7 @@
     <table class="table-profile">
       <tr>
         <td class="font-weight-bold fs-16">Nama / NIK</td>
-      <td class="fs-15">{{$user->username}} / {{$user->nik}}</td>
+      <td class="fs-15">{{$user->full_name}} / {{$user->nik}}</td>
       </tr>
       <tr>
         <td class="font-weight-bold fs-16">Jabatan / Band Posisi</td>
@@ -165,8 +165,8 @@
         @csrf
         <div class="form-group row mt-5">
           <div class="col-md-4 text-left">
-            <label for="username" class="font-weight-bold input-basic fs-14">Username</label>
-            <input value="{{$user->username}}" readonly type="text" name="username" id="username" class="input-custome pl-3" placeholder="Username.." required>
+            <label for="username" class="font-weight-bold input-basic fs-14">Full name</label>
+            <input value="{{$user->full_name}}" type="text" name="full_name" id="full_name" class="input-custome pl-3" placeholder="full name .." required>
           </div>
           <div class="col-md-3 text-left">
             <label for="username" class="font-weight-bold input-basic fs-14">NIK</label>

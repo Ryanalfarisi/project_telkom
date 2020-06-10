@@ -88,6 +88,7 @@ class MyProfileController extends Controller
               ->where('id', $input['userId'])
               ->update([
                   'nik' => $input['nik'],
+                  'full_name' => $input['full_name'],
                   'jabatan' => $input['jabatan'],
                   'code_jabatan' => $code_jabatan,
                   'grade' => $input['grade'],

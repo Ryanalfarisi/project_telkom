@@ -4,6 +4,10 @@
   width:90px;
   border: 2px solid #8E7E7E;
   border-radius:50%;
+  padding: 20px 8px;
+  /* white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 }
 .wrapper-img img {
   width: 100%;
@@ -54,13 +58,9 @@
   </div>
   <div class="col-md-6 pr-5" style="height:auto; padding:20px;">
     <div class="wrapper-img pointer float-right position-relative text-center">
-      @if ($super ?? '')
-        {{-- <img src="{{ asset('material') }}/img/kasali.jpeg" alt=""> --}}
-        <h1>SM</h1>
-      @else
-        <h1>OF</h1>
-        {{-- <img src="{{ asset('material') }}/img/bagus.jpeg" alt=""> --}}
-      @endif
+      <div style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
+        <span>{{$jabatan ?? ''}}</span>
+      </div>
       <ul class="position-absolute profile-hover text-left">
         <li><a style="color:white !important;" href="{{ route('home.my_profile') }}">Profile</a></li>
         <li>Change Password</li>

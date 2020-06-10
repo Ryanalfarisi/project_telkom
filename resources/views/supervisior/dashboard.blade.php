@@ -258,7 +258,7 @@ border-radius: 4px;
   display: none !important;
 }
 </style>
-  @include('layouts.partials.head', array('extra'=> false, 'super' => true))
+  @include('layouts.partials.head', array('extra'=> false, 'super' => true, 'jabatan'=> $user->jabatan))
   <!-- Modal -->
   <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -451,7 +451,7 @@ border-radius: 4px;
                     <td class="row-color">-</td>
                   @endif
                   <td class="row-color">{{$row->jobs_name}}</td>
-                  <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                  <td class="row-color">{{$row->username}} <b>({{$row->user_nik}})</b></td>
                   <td class="row-color">{{$row->duration}} Extra Hours</td>
                 </tr>
               @endif

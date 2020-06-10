@@ -66,6 +66,20 @@
                   </div>
                 @endif
               </div>
+              <div class="form-group{{ $errors->has('full_name') ? ' has-danger' : '' }}">
+                <div class="text-left">
+                  <label for="full_name" class="font-weight-bold input-basic">Full name</label>
+                  <input type="text" name="full_name" id="full_name" class="input-custome pl-3" placeholder="Full name" value="" required>
+                  @if (session('status'))
+                    <div class="fs-12 error text-danger">{{ session('status') }}</div>
+                  @endif
+                </div>
+                {{-- @if ($errors->has('nik'))
+                  <div id="nik-error" class="error text-danger pl-3" for="nik" style="display: block;">
+                    <strong>{{ $errors->first('full_name') }}</strong>
+                  </div>
+                @endif --}}
+              </div>
               <div class="form-group row">
                 <div class="col-md-8 text-left">
                   <label for="email" class="font-weight-bold input-basic">Pertanyaan Keamanan</label>
