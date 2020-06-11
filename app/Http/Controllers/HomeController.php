@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $todo = $riwayat = $assign = $staff = $staffId = [];
+        $todo = $extra = $riwayat = $assign = $staff = $staffId = [];
         $notif = DB::table('notifications')
                 ->where('to_user_id', $user->id)
                 ->where('read', 0)
@@ -62,8 +62,11 @@ class HomeController extends Controller
             foreach ($notif as $key => $value) {
                 if($value->status == '6') {
                     array_push($riwayat, $value);
+                } else if($value->status == '7') {
+                    array_push($extra, $value);
                 } else {
                     array_push($todo, $value);
+
                 }
             }
             $content = isset($_GET['content']) ? $_GET['content'] : '';
@@ -80,6 +83,7 @@ class HomeController extends Controller
                     'todo' => count($todo),
                     'riwayat' => count($riwayat),
                     'assign' => count($assign),
+                    'extra' => count($extra),
                     'user' => $user
                 ]);
         }

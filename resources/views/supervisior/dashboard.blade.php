@@ -444,7 +444,7 @@ border-radius: 4px;
                       <p>Sisa waktu <span id="timer-{{$row->id}}"></span></p>
                     </td>
                   @elseif($row->status == '3' && $row->time_from > date("Y-m-d H:i:s"))
-                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0">
+                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0" data-duration-helper="{{$row->duration}}">
                       <p>Mulai dalam <span id="timer-{{$row->id}}"></span></p>
                     </td>
                   @else
@@ -636,7 +636,8 @@ border-radius: 4px;
         row_id = $(el).attr('data-id');
         app_time = $(el).attr('data-app-time');
         duration = $(el).attr('data-duration');
-        countdownTimeStart(row_id, app_time, duration);
+        duration_helper = $(el).attr('data-duration-helper');
+        countdownTimeStart(row_id, app_time, duration, duration_helper);
       });
 
       var content = {!! json_encode($content) !!}
@@ -755,7 +756,7 @@ border-radius: 4px;
         $('.success-box div.text-message').html("<span>" + msg + "</span>");
       }
     }
-    function countdownTimeStart(row_id, app_time, duration) {
+    function countdownTimeStart(row_id, app_time, duration, duration_helper = 0) {
         var countDownDate = new Date(app_time).getTime();
         var duration_time = duration;
         var timeParts = duration.split(":");
@@ -766,7 +767,6 @@ border-radius: 4px;
         }
         // Update the count down every 1 second
         var x = setInterval(function() {
-
         // Get todays date and time
         var now = new Date().getTime();
         // Find the distance between now an the count down date
@@ -782,7 +782,11 @@ border-radius: 4px;
         // If the count down is over, write some text
         if (distance < 0) {
             clearInterval(x);
-            document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah Selesai";
+            if(duration == 0) {
+              countdownTimeStart(row_id, app_time, duration_helper);
+            } else {
+              document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah Selesai";
+            }
         }
       }, 1000);
     }

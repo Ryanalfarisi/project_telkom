@@ -100,11 +100,19 @@ class LemburController extends Controller
         $body = $request->input();
         $dateNow = date("Y-m-d H:i:s");
         if(isset($body['status_lembur']) && isset($body['super_user'])) {
+
             DB::table('lembur')->where('id' , $body['lembur_id'])->update([
                 'status' => $body['status_lembur'],
+                'reason' => isset($body['reason']) && $body['status_lembur'] =='7' ? $body['reason'] : null,
                 'updated_at' => $dateNow
             ]);
-            $desc = "Lembur telah di approved";
+            if($body['status_lembur'] == '3') {
+                $desc = "Lembur telah di approved";
+            } else if($body['status_lembur'] == '7') {
+                $desc = $body['reason'];
+            } else {
+                $desc = "tidak teridentifikasi";
+            }
             $this->sendNotifications($user->id, $body['user_id'], $desc, $body['lembur_id'], $body['status_lembur']);
             return redirect('home');
         }
@@ -134,6 +142,9 @@ class LemburController extends Controller
                     'approved_id' => $body['assigned'],
                 ];
                 DB::table('lembur')->where('id' , $body['lembur_id'])->update($payload);
+                if($body['draft'] == 1) {
+                    $this->sendNotifications($user->id, $body['assigned'], "Pengajuan lembur", $body['lembur_id'], '5');
+                }
             } else {
                 $payload = [
                     'username' => $user->username,
@@ -152,7 +163,10 @@ class LemburController extends Controller
                     'duration' => $body['duration'],
                     'approved_id' => $body['assigned'],
                 ];
-                DB::table('lembur')->insert($payload);
+                $lastId = DB::table('lembur')->insertGetId($payload);
+                if($body['draft'] == 1) {
+                    $this->sendNotifications($payload['user_id'], $payload['approved_id'], "Pengajuan lemburt", $lastId, '5');
+                }
             }
         }
         if(isset($body['super_user'])) {

@@ -137,7 +137,9 @@
     <ul class="nav nav-tabs">
       <li class="active position-relative">
         <a data-toggle="tab" class="list-menu" href="#home">Extra
-          {{-- <div class="bullet-notif rounded-black d-inline-block align-middle ml-2"></div> --}}
+          @if ($extra)
+            <div id="notif_return" onclick="openNotif({{$user->id}}, 'notif_return')" class="bullet-notif rounded-black d-inline-block align-middle ml-2">{{$extra}}</div>
+          @endif
         </a>
         <div class="extra-menu position-absolute">
           <ul class="list-menu-extra px-0 list-none py-4 text-center">
@@ -183,6 +185,7 @@
                 <tr>
                     <th class="color-th">Tracking Formulir</th>
                     <th class="color-th">Status</th>
+                    <th class="color-th">Reason</th>
                     <th class="color-th">Insert date</th>
                     <th class="color-th">Type of work</th>
                     <th class="color-th">Assigned By</th>
@@ -191,7 +194,11 @@
             <tbody>
             @foreach ($lembur as $row)
               @if ($row->type == '1' && $row->status != '6' && $row->time_until > date("Y-m-d H:i:s"))
-                <tr>
+                @if ($row->status == '7' )
+                  <tr onclick="toEditDraft({{$row->id}})" class="pointer">
+                @else
+                  <tr>
+                @endif
                   <td class="row-color">{{$row->description}}</td>
                   <td class="row-color">
                     @if ($row->status == '5')
@@ -208,6 +215,7 @@
                       <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                     @endif
                   </td>
+                  <td class="row-color">{{$row->reason ?: "-"}}</td>
                   <td class="row-color">{{$row->created_at}}</td>
                   <td class="row-color">{{$row->jobs_name}}</td>
                   <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
@@ -326,7 +334,7 @@
                       <p>Sisa waktu <span id="timer-{{$row->id}}"></span></p>
                     </td>
                   @else
-                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0">
+                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0" data-duration-helper="{{$row->duration}}">
                       <p>Mulai dalam <span id="timer-{{$row->id}}"></span></p>
                     </td>
                   @endif
@@ -351,7 +359,8 @@
         row_id = $(el).attr('data-id');
         app_time = $(el).attr('data-app-time');
         duration = $(el).attr('data-duration');
-        countdownTimeStart(row_id, app_time, duration);
+        duration_helper = $(el).attr('data-duration-helper');
+        countdownTimeStart(row_id, app_time, duration, duration_helper);
       });
       var content = {!! json_encode($content) !!}
       activaTab(content);
@@ -369,6 +378,8 @@
         } else if(id == 'tracking') {
           $("#"+id).css('display', 'block');
           $("#formulir, #draf").css('display', 'none');
+          var user_id = {!! json_encode($user->id) !!}
+          openNotif(user_id, "notif_return")
         } else if(id == 'draf') {
           $("#"+id).css('display', 'block');
           $("#formulir, #tracking").css('display', 'none');
@@ -380,7 +391,7 @@
     function activaTab(tab) {
       $('.nav-tabs a[href="#' + tab + '"]').tab('show');
     };
-    function countdownTimeStart(row_id, app_time, duration) {
+    function countdownTimeStart(row_id, app_time, duration, duration_helper = 0) {
         var countDownDate = new Date(app_time).getTime();
         var duration = duration;
         var timeParts = duration.split(":");
@@ -407,12 +418,17 @@
           // If the count down is over, write some text
           if (distance < 0) {
               clearInterval(x);
-              document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah selesai";
+              if(duration == 0) {
+                countdownTimeStart(row_id, app_time, duration_helper);
+              } else {
+                document.getElementById("timer-"+row_id).innerHTML = "Lembur Telah selesai";
+              }
           }
         }, 1000);
     }
 
     function openNotif(id, tabs) {
+      console.log(tabs)
       var crsf = {!! json_encode(csrf_token()) !!}
       $.ajax({
         method: "POST",

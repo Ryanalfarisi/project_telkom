@@ -166,7 +166,10 @@
             <div class="modal-content">
               <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title fs-14 font-weight-bold">Apakah anda sudah yakin?</h4>
+                <h4 class="modal-title fs-14 font-weight-bold">Apakah anda sudah yakin?
+                    Tuliskan alasan anda
+                </h4>
+                <textarea name="reason" id="reason_return" cols="30" rows="5" class="form-control"></textarea>
               </div>
               <div class="modal-body pt-0">
                 <div class="wrapper-choosen pt-2">
@@ -386,7 +389,6 @@
         event.preventDefault();
       });
       $(".checkSubmitDraft").click(function() {
-        console.log("masuk draff")
           shadow = 'shadowDraft';
       });
       $("#checkSubmitSave").click(function() {
@@ -445,7 +447,12 @@
 
       $("#to_return").click(function() {
         $("#status_lembur").val("7");
-        $("#form_lembur").submit();
+        var reason_return = $("#reason_return").val();
+        if(reason_return.trim() != '' ) {
+          $("#form_lembur").submit();
+        } else {
+          alert("alasan tidak boleh kosong")
+        }
       });
       $("#to_reject").click(function() {
         $("#status_lembur").val("4");
