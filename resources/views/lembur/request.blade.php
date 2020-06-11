@@ -266,8 +266,12 @@
       });
       $("#to_submit").click(function() {
         $("#is_draft").val('1');
+        var start_lembur_date = $("input[name='insert_date']").val()+ ' '+ $("input[name='startTime']").val();
+        var date_now = moment().format("YYYY-MM-DD HH:mm");
         if($("#duration").val() == '00:00') {
           alert("Duration tidak valid");
+        } else if(start_lembur_date <= date_now) {
+          alert("Waktu start lembur tidak valid");
         } else {
           $("#form_lembur").submit();
         }
