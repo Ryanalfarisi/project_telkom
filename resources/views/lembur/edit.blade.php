@@ -1,7 +1,7 @@
 @extends('layouts.app', ['activePage' => 'request-lembur', 'titlePage' => __('Request Overtime')])
 
 @section('content')
-@include('layouts.partials.head', array('extra'=> true, 'super'=> $super))
+@include('layouts.partials.head', array('extra'=> true, 'super'=> $super, 'jabatan' => $user->jabatan, 'all_notif' => $all_notif))
 <style>
   .wrapper-staff {
     width: 100%;

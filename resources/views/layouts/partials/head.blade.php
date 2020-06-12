@@ -58,6 +58,9 @@
   </div>
   <div class="col-md-6 pr-5" style="height:auto; padding:20px;">
     <div class="wrapper-img pointer float-right position-relative text-center">
+      @if ($all_notif)
+          <div class="position-absolute rounded-red bullet-notif" style="left: -15px;top: 0;">{{$all_notif}}</div>
+      @endif
       <div style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
         <span>{{$jabatan ?? ''}}</span>
       </div>

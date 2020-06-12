@@ -56,7 +56,8 @@ class HomeController extends Controller
                     'riwayat' => count($riwayat),
                     'assign' => count($assign),
                     'staff'=> $staff,
-                    'user' => $user
+                    'user' => $user,
+                    'all_notif' => count($notif)
                 ]);
         } else {
             foreach ($notif as $key => $value) {
@@ -66,7 +67,6 @@ class HomeController extends Controller
                     array_push($extra, $value);
                 } else {
                     array_push($todo, $value);
-
                 }
             }
             $content = isset($_GET['content']) ? $_GET['content'] : '';
@@ -84,7 +84,8 @@ class HomeController extends Controller
                     'riwayat' => count($riwayat),
                     'assign' => count($assign),
                     'extra' => count($extra),
-                    'user' => $user
+                    'user' => $user,
+                    'all_notif' => count($notif)
                 ]);
         }
     }

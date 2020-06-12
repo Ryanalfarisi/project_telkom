@@ -258,7 +258,7 @@ border-radius: 4px;
   display: none !important;
 }
 </style>
-  @include('layouts.partials.head', array('extra'=> false, 'super' => true, 'jabatan'=> $user->jabatan))
+  @include('layouts.partials.head', array('extra'=> false, 'super' => true, 'jabatan'=> $user->jabatan, 'all_notif' => $all_notif))
   <!-- Modal -->
   <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">

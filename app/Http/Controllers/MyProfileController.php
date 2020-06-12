@@ -52,12 +52,15 @@ class MyProfileController extends Controller
             "V" => "V",
             "VI" => "VI"
         ];
+        $notif = DB::table('notifications')
+            ->where('to_user_id', $user->id)
+            ->where('read', 0)
+            ->get();
         $user = DB::table('users')
             ->join('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
             ->where('users.id', $user->id)
             ->select('users.*', 'jabatan.jabatan as status_jabatan')
             ->get()->toArray();
-
         return view('profile.index',[
             "user" => $user[0],
             "jabatan" => $jabatan,
@@ -65,7 +68,8 @@ class MyProfileController extends Controller
             "super" => $super,
             "lembur" => $lembur,
             "ach" => $ach,
-            "rating" => $rating
+            "rating" => $rating,
+            "all_notif" => count($notif)
         ]);
     }
 

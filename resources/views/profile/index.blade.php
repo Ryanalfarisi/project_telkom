@@ -1,7 +1,7 @@
 @extends('layouts.app', ['activePage' => 'request-lembur', 'titlePage' => __('Request Overtime')])
 
 @section('content')
-@include('layouts.partials.head', array('extra'=> false, 'super' => $super, 'jabatan' => $user->jabatan))
+@include('layouts.partials.head', array('extra'=> false, 'super' => $super, 'jabatan' => $user->jabatan, 'all_notif'=> $all_notif))
 <style>
   .table-profile > tbody > tr >td {
     width:290px;

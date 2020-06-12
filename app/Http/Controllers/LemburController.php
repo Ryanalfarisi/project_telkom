@@ -24,13 +24,24 @@ class LemburController extends Controller
 
     public function request()
     {
+        $user = Auth::user();
         $assigned = DB::table('users')
                     ->leftJoin('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
                     ->whereIn('users.grade', ['I', 'II', 'III'])
                     ->select('users.*','users.jabatan as jabatan','jabatan.code_jabatan as code_jabatan', 'jabatan.grade as grade')
                     ->get();
         $jobs = DB::table('jobs_extra')->get();
-        return view('lembur.request', ['assigned' => $assigned, 'jobs' => $jobs]);
+
+        $notif = DB::table('notifications')
+        ->where('to_user_id', $user->id)
+        ->where('read', 0)
+        ->get();
+        return view('lembur.request', [
+            'assigned' => $assigned,
+            'jobs' => $jobs,
+            'user' => $user,
+            'all_notif' => count($notif)
+        ]);
     }
     public function history()
     {
@@ -90,7 +101,11 @@ class LemburController extends Controller
                     ->whereIn('users.grade', ['I', 'II', 'III'])
                     ->select('users.*','users.jabatan as jabatan','jabatan.code_jabatan as code_jabatan', 'jabatan.grade as grade')->get();
         $jobs = DB::table('jobs_extra')->get();
-        return view('lembur.edit', ['assigned' => $assigned, 'jobs' => $jobs, 'lembur' => $lembur,  'super' => $super]);
+        $notif = DB::table('notifications')
+        ->where('to_user_id', $user->id)
+        ->where('read', 0)
+        ->get();
+        return view('lembur.edit', ['assigned' => $assigned, 'jobs' => $jobs, 'lembur' => $lembur,  'super' => $super, 'user' => $user, 'all_notif' => count($notif)]);
 
     }
 
