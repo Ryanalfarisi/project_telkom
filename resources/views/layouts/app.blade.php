@@ -87,6 +87,11 @@
         {{-- <script src="{{ asset('material') }}/demo/demo.js"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
         <!-- <script src="{{ asset('material') }}/js/settings.js"></script> -->
+        <script>
+            $(document).ready(function() {
+                    $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
         @stack('js')
     </body>
 </html>

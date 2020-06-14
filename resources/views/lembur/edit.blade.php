@@ -485,10 +485,12 @@
         minDate:new Date(),
       });
       $('#startTime').datetimepicker({
-        format: 'HH:mm'
+        format: 'HH:mm',
+        enabledHours:[1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
       $('#endTime').datetimepicker({
-        format: 'HH:mm'
+        format: 'HH:mm',
+        enabledHours:[1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
 
       var approveId = {!! json_encode($lembur->approved_id) !!}

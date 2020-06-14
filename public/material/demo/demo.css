@@ -244,12 +244,7 @@ text.dark {
   color:white;
   text-align:center;
 }
-.rounded-red {
-  border-radius:50%;
-  background: #FD0101;
-  color:white;
-  text-align:center;
-}
+
 
 .extra-menu {
   width: 156px;

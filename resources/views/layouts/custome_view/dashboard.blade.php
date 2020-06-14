@@ -131,6 +131,12 @@
   border-radius: 6px;
   font-size: 14px;
 }
+.rounded-red {
+  border-radius:50%;
+  background: #FD0101;
+  color:white;
+  text-align:center;
+}
 </style>
   @include('layouts.partials.head', array('extra'=> false, 'super'=> false, 'jabatan' => $user->jabatan, 'all_notif' => $all_notif))
   <div class="col-md-12 mt-4 pl-5">
@@ -171,7 +177,7 @@
           <div class="wrapper-tab bg-white text-center">
             <div style="width:300px;" class="mx-auto mt-5">
             <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
-              <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
+              <div data-toggle="tooltip" title="klik button untuk melakukan pengisian form" class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
                   <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
               </div>
               <div class="bottom-formulir d-inline-block mr-5 mt-5 align-middle pointer" onclick="where_open('draf')">DRAFT</div>
@@ -428,7 +434,6 @@
     }
 
     function openNotif(id, tabs) {
-      console.log(tabs)
       var crsf = {!! json_encode(csrf_token()) !!}
       $.ajax({
         method: "POST",

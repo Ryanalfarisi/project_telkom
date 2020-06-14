@@ -137,7 +137,7 @@
           <select name="assigned" class="form-control-plaintext fs-style assigned" required>
             <option></option>
             @foreach ($assigned as $item)
-              <option value="{{$item->id}}">{{$item->username}} <b>({{$item->jabatan}})</b></option>
+              <option value="{{$item->id}}">{{$item->full_name ?: '-'}} <b>({{$item->jabatan}})</b></option>
             @endforeach
           </select>
         </div>
@@ -212,15 +212,15 @@
         <div class="form-group row">
           <label for="result" class="col-sm-4 col-form-label font-weight-bold">Result</label>
           <div class="col-sm-8">
-            <input type="text" name="result" placeholder="Sebutkan target (opsional)" class="form-control-plaintext input-staff" style="height:30px;" value="">
+            <input type="text" data-toggle="tooltip" title="Hasil yang harus terpenuhi sasaran utama (goal)" name="result" placeholder="Contoh : PPT produktivitas SF beserta evaluasi teritori manajemen" class="form-control-plaintext input-staff" style="height:30px;" value="">
           </div>
         </div>
         <div class="form-group row">
           <label for="kpi" class="col-sm-4 col-form-label font-weight-bold">KPI</label>
           <div class="col-sm-8">
             <input type="checkbox" id="kpi_checkbox">
-            <label for="kpi_checkbox" class="fs-12 cl-grey pointer" style="font-weight: normal;">Minimum</label>
-            <input type="text" disabled name="kpi" id="kpi" class="form-control d-inline-block" onkeyup="handleChange(this);" style="width:80px; height:30px; border-radius:10px;" maxlength="3">
+            <label data-toggle="tooltip" title="KPI (i) besaran threshold hasil akhir yang diharapkan dan disepakati oleh atasan dan bawahan, centang bila kurang dari 100 %"  for="kpi_checkbox" class="fs-12 cl-grey pointer" style="font-weight: normal;">Minimum</label>
+            <input type="text" data-toggle="tooltip" title="KPI (i) besaran threshold hasil akhir yang diharapkan dan disepakati oleh atasan dan bawahan, centang bila kurang dari 100 %" disabled name="kpi" id="kpi" class="form-control d-inline-block" onkeyup="handleChange(this);" style="width:80px; height:30px; border-radius:10px;" maxlength="3">
             <span>%</span>
           </div>
         </div>
@@ -305,10 +305,12 @@
         minDate:new Date()
       });
       $('#startTime').datetimepicker({
-        format: 'HH:mm'
+        format: 'HH:mm',
+        enabledHours:[1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
       $('#endTime').datetimepicker({
-        format: 'HH:mm'
+        format: 'HH:mm',
+        enabledHours:[1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
       $('.assigned').select2({
         placeholder: "Cari nama atasan",

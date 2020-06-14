@@ -257,6 +257,12 @@ border-radius: 4px;
 #table_riwayat_filter {
   display: none !important;
 }
+.rounded-red {
+  border-radius:50%;
+  background: #FD0101;
+  color:white;
+  text-align:center;
+}
 </style>
   @include('layouts.partials.head', array('extra'=> false, 'super' => true, 'jabatan'=> $user->jabatan, 'all_notif' => $all_notif))
   <!-- Modal -->
