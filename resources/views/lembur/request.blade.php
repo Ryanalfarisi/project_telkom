@@ -205,8 +205,13 @@
         <div class="form-group row">
           <label for="location" class="col-sm-4 col-form-label font-weight-bold">Location</label>
           <div class="col-sm-8 position-relative">
-            <img class="position-absolute pointer" onclick="openGoogleMap()" style="width: 27px;right: 15px;" src="{{ asset('material') }}/img/map.png" alt="">
-            <input type="text" name="location" placeholder="Pilih lokasi (opsional)" class="form-control-plaintext input-staff" id="location" value="">
+            <select name="location" class="form-control-plaintext fs-style fs-14 select-am" id="job" required>
+              <option value="">Pilih lokasi (opsional)</option>
+              <option value="Office">Off</option>
+              <option value="Home">Home</option>
+              <option value="Home">Site</option>
+              <option value="FWA">FWA</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -302,15 +307,16 @@
       })
       $('#datetimepicker2').datetimepicker({
         format: 'YYYY-MM-DD',
-        minDate:new Date()
+        // minDate:new Date()
+        minDate:new Date(new Date().getTime() - 86400000*7)
       });
       $('#startTime').datetimepicker({
         format: 'HH:mm',
-        enabledHours:[1,2,3,4,5,6,7,18,19,20,21,22,23]
+        enabledHours:[0,1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
       $('#endTime').datetimepicker({
         format: 'HH:mm',
-        enabledHours:[1,2,3,4,5,6,7,18,19,20,21,22,23]
+        enabledHours:[0,1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
       $('.assigned').select2({
         placeholder: "Cari nama atasan",

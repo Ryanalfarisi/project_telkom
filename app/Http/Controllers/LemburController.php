@@ -95,6 +95,9 @@ class LemburController extends Controller
         } else {
             $super = false;
         }
+        $locations = [
+            "Office", "Home", "Site", "FWA"
+        ];
         $lembur = DB::table('lembur')->find($id);
         $assigned = DB::table('users')
                     ->leftJoin('jabatan', 'users.code_jabatan', '=', 'jabatan.code_jabatan')
@@ -105,7 +108,7 @@ class LemburController extends Controller
         ->where('to_user_id', $user->id)
         ->where('read', 0)
         ->get();
-        return view('lembur.edit', ['assigned' => $assigned, 'jobs' => $jobs, 'lembur' => $lembur,  'super' => $super, 'user' => $user, 'all_notif' => count($notif)]);
+        return view('lembur.edit', ['assigned' => $assigned, 'jobs' => $jobs, 'lembur' => $lembur,  'super' => $super, 'user' => $user, 'all_notif' => count($notif), 'locations' =>$locations]);
 
     }
 

@@ -44,7 +44,7 @@
               <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
                 <div class="text-left">
                   <label for="username" class="font-weight-bold input-basic">Username</label>
-                  <input type="text" class="input-custome pl-3" name="username" id="username"  value="" required>
+                  <input type="text" class="input-custome pl-3" name="username" id="username" placeholder="Username" value="" required>
                 </div>
                 @if ($errors->has('username'))
                   <div id="email-error" class="error text-danger pl-3" for="name" style="display: block; position:absolute; font-size:10px;">
@@ -55,7 +55,7 @@
               <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }} mt-3">
                 <div class="text-left">
                   <label for="email" class="font-weight-bold input-basic">Password</label> 
-                  <input type="password" name="password" id="password" class="input-custome pl-3" value="" required>
+                  <input type="password" name="password" id="password" class="input-custome pl-3" value="" placeholder="Password" required>
                 </div>
                 @if ($errors->has('password'))
                   <div id="password-error" class="error text-danger pl-3" for="password" style="display: block; position:absolute; font-size:10px;">

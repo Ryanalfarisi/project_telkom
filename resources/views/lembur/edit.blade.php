@@ -277,8 +277,12 @@
         <div class="form-group row">
           <label for="location" class="col-sm-4 col-form-label font-weight-bold">Location</label>
           <div class="col-sm-8 position-relative">
-            <img class="position-absolute pointer" onclick="openGoogleMap()" style="width: 27px;right: 15px;" src="{{ asset('material') }}/img/map.png" alt="">
-            <input type="text" name="location" placeholder="Pilih lokasi (opsional)" class="form-control-plaintext input-staff" id="location" value="{{$lembur->location}}">
+            <select name="location" class="form-control-plaintext fs-style fs-14 select-am" id="job" required>
+              <option value="">Pilih lokasi (opsional)</option>
+              @foreach ($locations as $item)
+                <option value="{{$item}}" {{$lembur->location == $item ? 'selected' : ''}}>{{$item}}</option>
+              @endforeach
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -482,15 +486,16 @@
       })
       $('#datetimepicker2').datetimepicker({
         format: 'YYYY-MM-DD',
-        minDate:new Date(),
+        // minDate:new Date(),
+        minDate:new Date(new Date().getTime() - 86400000*7)
       });
       $('#startTime').datetimepicker({
         format: 'HH:mm',
-        enabledHours:[1,2,3,4,5,6,7,18,19,20,21,22,23]
+        enabledHours:[0,1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
       $('#endTime').datetimepicker({
         format: 'HH:mm',
-        enabledHours:[1,2,3,4,5,6,7,18,19,20,21,22,23]
+        enabledHours:[0,1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
 
       var approveId = {!! json_encode($lembur->approved_id) !!}
