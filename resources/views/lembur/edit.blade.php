@@ -471,19 +471,6 @@
           $("#kpi").val(0);
         }
       });
-      $('#startTime, #endTime').on('dp.change', function(e) {
-        var start = $("input[name='startTime']").val();
-        var end = $("input[name='endTime']").val();
-        if(start && end) {
-          var time = moment.utc(moment(end,"HH:mm").diff(moment(start,"HH:mm"))).format("HH:mm");
-          $("#duration").val(time);
-          if(end < start) {
-            $("#is_overtime").val("1");
-          } else {
-            $("#is_overtime").val("0");
-          }
-        }
-      })
       $('#datetimepicker2').datetimepicker({
         format: 'YYYY-MM-DD',
         // minDate:new Date(),
@@ -509,6 +496,21 @@
         allowClear: true
       });
     });
+    $('#startTime, #endTime').on('dp.change', function(e) {
+        var start = $("input[name='startTime']").val();
+        var end = $("input[name='endTime']").val();
+        if(start && end) {
+          convertUTC = moment(end).format('HH:mm');
+          end = convertUTC == "Invalid date" ? end : convertUTC;
+          var time = moment.utc(moment(end,"HH:mm").diff(moment(start,"HH:mm"))).format("HH:mm");
+          $("#duration").val(time);
+          if(end < start) {
+            $("#is_overtime").val("1");
+          } else {
+            $("#is_overtime").val("0");
+          }
+        }
+    })
     function addRow() {
       var counter = $("#activity_counter").find(':input');
       var html = `<input type="text" name="activity[`+counter.length+`]" class="form-control-plaintext input-staff" value="" placeholder="`+(counter.length +1) +`. . .">`;
