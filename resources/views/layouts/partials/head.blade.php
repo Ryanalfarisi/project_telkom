@@ -42,6 +42,12 @@
   font-style:normal;
   font-weight:bold;
 }
+.rounded-red {
+  border-radius:50%;
+  background: #FD0101;
+  color:white;
+  text-align:center;
+}
 /* .wrapper-img img:hover + .profile-hover {
   display: block !important;
 } */

@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('unit',200)->nullable();
             $table->string('code_jabatan', 5)->nullable();
             $table->string('grade', 5)->nullable();
+            $table->float('poin', 8,2)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

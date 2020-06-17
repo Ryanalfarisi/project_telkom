@@ -207,7 +207,7 @@
           <div class="col-sm-8 position-relative">
             <select name="location" class="form-control-plaintext fs-style fs-14 select-am" id="job" required>
               <option value="">Pilih lokasi (opsional)</option>
-              <option value="Office">Off</option>
+              <option value="Office">Office</option>
               <option value="Home">Home</option>
               <option value="Home">Site</option>
               <option value="FWA">FWA</option>

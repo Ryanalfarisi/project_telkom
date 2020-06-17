@@ -307,6 +307,7 @@
                   <th class="color-th">Aktivitas</th>
                   <th class="color-th">Superiors</th>
                   <th class="color-th">Status</th>
+                  <th class="color-th">Approved time</th>
                   <th class="color-th" style="width:150px;">Waktu</th>
                   <th class="color-th">Challenge</th>
               </tr>
@@ -334,6 +335,7 @@
                     <span class="text-dark bg-status-{{$row->status}}">{{$row->label}}</span>
                   @endif
                 </td>
+                <td class="row-color">{{$row->time_from}}</td>
                 @if ($row->status == '3')
                   @if ($row->time_from < date("Y-m-d H:i:s"))
                     <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="{{$row->duration}}">

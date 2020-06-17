@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 
 class LemburController extends Controller
 {
@@ -79,6 +80,11 @@ class LemburController extends Controller
                 'approved_id' => $body['assigned'],
             ];
             $lastId = DB::table('lembur')->insertGetId($payload);
+            if($lastId) {
+                $payload['log_id'] = $lastId;
+                $payload['user_edit'] = $user->id;
+                DB::table('lembur_log')->insert($payload);
+            }
             $desc = "Pengajuan lembur dari ". $user->username;
             if($body['draft'] == 1) {
                 $this->sendNotifications($payload['user_id'], $payload['approved_id'], $desc, $lastId, '5');
@@ -124,6 +130,12 @@ class LemburController extends Controller
                 'reason' => isset($body['reason']) && $body['status_lembur'] =='7' ? $body['reason'] : null,
                 'updated_at' => $dateNow
             ]);
+            $lembur = DB::table('lembur')->find($body['lembur_id']);
+            $lembur->log_id = $body['lembur_id'];
+            $lembur->user_edit = $user->id;
+            $lembur = (array)$lembur;
+            $lembur = Arr::except($lembur, ['id']);
+            DB::table("lembur_log")->insert($lembur);
             if($body['status_lembur'] == '3') {
                 $desc = "Lembur telah di approved";
             } else if($body['status_lembur'] == '7') {

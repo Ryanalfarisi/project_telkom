@@ -248,7 +248,7 @@
           <div class="col-sm-2 pr-0 my-auto">
             <input type="hidden" value="{{$lembur->time_from}}" name="startTimeFull">
             <div class='input-group date' id='startTime'>
-                <input type='text' value="{{Carbon\Carbon::parse($lembur->time_from)->format('H:i:s')}}" name="startTime" class="form-control" placeholder="00:00" required />
+                <input type='text' value="" name="startTime" class="form-control" placeholder="00:00" required />
               <span class="input-group-addon">
                   <span class="glyphicon glyphicon-time"></span>
               </span>
@@ -260,7 +260,7 @@
             </div>
             <div class="col-md-4 pl-0">
               <div class='input-group date' id='endTime'>
-                <input type='text' name="endTime" value="{{Carbon\Carbon::parse($lembur->time_until)->format('H:i:s')}}" class="form-control" placeholder="00:00" required/>
+                <input type='text' name="endTime" value="" class="form-control" placeholder="00:00" required/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-time"></span>
                 </span>
@@ -489,12 +489,16 @@
         // minDate:new Date(),
         minDate:new Date(new Date().getTime() - 86400000*7)
       });
+      var start_date_time = {!! json_encode($lembur->time_from) !!}
+      var to_date_time = {!! json_encode($lembur->time_until) !!}
       $('#startTime').datetimepicker({
         format: 'HH:mm',
+        date: start_date_time,
         enabledHours:[0,1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
       $('#endTime').datetimepicker({
         format: 'HH:mm',
+        date: to_date_time,
         enabledHours:[0,1,2,3,4,5,6,7,18,19,20,21,22,23]
       });
 
@@ -522,7 +526,7 @@
     }
     function cancelBlock()
     {
-      $('#form_lembur input').attr('readonly', false);
+      $('#form_lembur input:not(#duration)').attr('readonly', false);
       $("#wrapper_edit").css('display', 'none');
       $("#wrapper_save").css('display', 'block');
     }
