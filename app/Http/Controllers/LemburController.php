@@ -124,7 +124,6 @@ class LemburController extends Controller
         $body = $request->input();
         $dateNow = date("Y-m-d H:i:s");
         if(isset($body['status_lembur']) && isset($body['super_user'])) {
-
             DB::table('lembur')->where('id' , $body['lembur_id'])->update([
                 'status' => $body['status_lembur'],
                 'reason' => isset($body['reason']) && $body['status_lembur'] =='7' ? $body['reason'] : null,
@@ -156,7 +155,6 @@ class LemburController extends Controller
             $time_until = $newDate.' '.$body['endTime'];
             if($key == 0) {
                 $payload = [
-                    'username' => $user->username,
                     'time_from' => $time_from,
                     'time_until' => $time_until,
                     'description' => $activity,

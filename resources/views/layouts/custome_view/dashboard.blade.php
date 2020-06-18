@@ -199,7 +199,7 @@
             </thead>
             <tbody>
             @foreach ($lembur as $row)
-              @if ($row->type == '1' && $row->status != '6' && $row->time_until > date("Y-m-d H:i:s"))
+              @if ($row->type == '1' && $row->status != '6')
                 @if ($row->status == '7' )
                   <tr onclick="toEditDraft({{$row->id}})" class="pointer">
                 @else
@@ -447,6 +447,7 @@
       }).done(function( res ) {
         if(res.status == 200) {
           $("#"+tabs).attr("style", "display: none !important");
+          $("#notif_header").attr("style", "display: none !important");
         }
       });
     }

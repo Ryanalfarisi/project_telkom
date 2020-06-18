@@ -286,13 +286,13 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="result" class="col-sm-4 col-form-label font-weight-bold">Result</label>
+          <label for="result" data-toggle="tooltip" title="Hasil yang harus terpenuhi sasaran utama (goal)" class="col-sm-4 col-form-label font-weight-bold">Result<span class="glyphicon glyphicon-info-sign ml-1 pointer" style="vertical-align: top;" aria-hidden="true"></span></label>
           <div class="col-sm-8">
             <input type="text" name="result" placeholder="Sebutkan target (opsional)" class="form-control-plaintext input-staff" style="height:30px;" value="{{$lembur->result}}">
           </div>
         </div>
         <div class="form-group row">
-          <label for="kpi" class="col-sm-4 col-form-label font-weight-bold">KPI</label>
+          <label for="kpi" data-toggle="tooltip" title="KPI (i) besaran threshold hasil akhir yang diharapkan dan disepakati oleh atasan dan bawahan, centang bila kurang dari 100 %" class="col-sm-4 col-form-label font-weight-bold">KPI<span class="glyphicon glyphicon-info-sign ml-1 pointer" style="vertical-align: top;" aria-hidden="true"></span></label>
           <div class="col-sm-8">
             <input type="checkbox" id="kpi_checkbox" checked="{{$lembur->kpi ? true : false}}">
             <label for="kpi_checkbox" class="fs-12 cl-grey pointer" style="font-weight: normal;">Minimum</label>
@@ -516,10 +516,17 @@
       var html = `<input type="text" name="activity[`+counter.length+`]" class="form-control-plaintext input-staff" value="" placeholder="`+(counter.length +1) +`. . .">`;
       $("#activity_counter").append(html);
     }
-    function openGoogleMap()
-    {
-      newWindow = window.open("/googlemaps", "gmaps", "status=0,scrollbars=1,width=800,height=500,left=200,top=100", 0)
+    function removeRow() {
+      var counter = $("#activity_counter").find(':input');
+      var count_div = counter.length -1;
+      if(count_div >= 1) {
+        $("#activity_counter :last-child").remove();
+      }
     }
+    // function openGoogleMap()
+    // {
+    //   newWindow = window.open("/googlemaps", "gmaps", "status=0,scrollbars=1,width=800,height=500,left=200,top=100", 0)
+    // }
     function cancelNone()
     {
       $('#form_lembur input').attr('readonly', 'readonly');

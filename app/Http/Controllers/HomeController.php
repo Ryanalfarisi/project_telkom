@@ -93,6 +93,7 @@ class HomeController extends Controller
     public function feedbackrating(Request $request)
     {
         $body = $request->input();
+        $user = Auth::user();
         $dateNow = date("Y-m-d H:i:s");
         $data = DB::table('lembur')->find($body['id']);
         $data = DB::table('users')->find($data->user_id);
@@ -108,6 +109,23 @@ class HomeController extends Controller
         DB::table('users')->where('id' , $data->id)->update([
             'poin' => $body['points']+ $data->poin,
         ]);
+        $this->sendNotifications($user->id, $data->id, "Lembur telah di beri rating", $body['id'], '6');
         return redirect('home');
+    }
+
+    public function sendNotifications($from_id, $to_id, $desc, $lastId, $status)
+    {
+        DB::table('notifications')->insert(
+            [
+                "task_id" => $lastId,
+                "category" => 1,
+                "from_user_id" => $from_id,
+                "to_user_id" => $to_id,
+                "read" => "0",
+                "status" => $status,
+                "descriptions" => $desc,
+                "created_at" => date("Y-m-d H:i:s")
+            ]
+        );
     }
 }
