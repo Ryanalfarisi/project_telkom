@@ -176,8 +176,8 @@
         <div id="formulir">
           <div class="wrapper-tab bg-white text-center">
             <div style="width:300px;" class="mx-auto mt-5">
-            <p style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru</p>
-              <div data-toggle="tooltip" title="klik button untuk melakukan pengisian form" class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
+            <p data-toggle="tooltip" title="klik button untuk melakukan pengisian form" style="font-size:32px; color: rgba(19, 17, 17, 0.62);">Formulir baru <span class="fs-14 glyphicon glyphicon-info-sign ml-1 pointer" style="vertical-align: top;" aria-hidden="true"></span></p>
+              <div class="rounded-circle btn-add bg-green-primary text-center position-relative m-auto pointer">
                   <a href="{{ route('lembur.request') }}" class="sign-btn-add">+</a>
               </div>
               <div class="bottom-formulir d-inline-block mr-5 mt-5 align-middle pointer" onclick="where_open('draf')">DRAFT</div>
