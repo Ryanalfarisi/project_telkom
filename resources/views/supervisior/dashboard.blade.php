@@ -201,6 +201,13 @@ border-radius: 4px;
   display:none;
   z-index: 1;
 }
+.extra-menu {
+  width: 156px;
+  height: auto;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+}
 .extra-menu:hover {
   display: block;
 }
