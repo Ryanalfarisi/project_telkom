@@ -20,11 +20,6 @@ box-sizing: border-box;
 
 .text-center {text-align:center;}
 
-/* a {
-  color: tomato;
-  text-decoration: none;
-} */
-
 a:hover {
   color: #2196f3;
 }
@@ -68,8 +63,6 @@ border-radius: 4px;
   font-size:14px;
 }
 
-
-
 #a-footer {
   margin: 20px 0;
 }
@@ -110,8 +103,6 @@ border-radius: 4px;
   display:inline-block;
   color:#888;
 }
-
-
 
 /* Rating Star Widgets Style */
 .rating-stars ul {
@@ -379,7 +370,7 @@ border-radius: 4px;
           <ul class="list-menu-extra px-0 list-none py-4 text-center">
             <li class="py-1">Staff</li>
             @foreach ($staff as $item)
-              <li class="py-1 grey-list"><a href="#riwayat" data-toggle="tab">{{$item->username}}</a></li>
+              <li class="py-1 grey-list" onclick="open_staff('{{$item->username}}')"><a href="#riwayat" data-toggle="tab">{{$item->username}}</a></li>
             @endforeach
           </ul>
         </div>
@@ -517,7 +508,7 @@ border-radius: 4px;
                   @endif --}}
                   <td class="row-color">{{$row->created_at}}</td>
                   <td class="row-color">{{$row->jobs_name}}</td>
-                  <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                  <td class="row-color">{{$row->username}} <b>({{$row->jabatan_baru}})</b></td>
                   <td class="row-color">{{$row->duration}} Extra hours</td>
                   <th class="row-color">
                     @if ($row->time_until < date("Y-m-d H:i:s") && !$row->feedback)
@@ -556,7 +547,7 @@ border-radius: 4px;
                   <td class="row-color">
                       <p>{{$row->jobs_name}}</p>
                   </td>
-                  <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                  <td class="row-color">{{$row->username}} <b>({{$row->jabatan_baru}})</b></td>
               </tr>
               @endif
             @endforeach
@@ -590,7 +581,7 @@ border-radius: 4px;
                     <img src="{{ asset('material') }}/img/star.png" alt="" width="20px">
                   @endfor
                 </td>
-                <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                <td class="row-color fs-16">{{$row->username}} <b>({{$row->jabatan_baru}})</b></td>
                 <td class="row-color fs-16">{{$row->feedback}}</td>
               </tr>
             @endif
@@ -644,6 +635,9 @@ border-radius: 4px;
 
 @push('js')
   <script>
+     var table_riwayat = $('#table_riwayat').DataTable({
+        "paging":   false,
+      });
     $(document).ready(function() {
       $( ".timer" ).each(function( i, el ) {
         row_id = $(el).attr('data-id');
@@ -657,9 +651,6 @@ border-radius: 4px;
       activaTab(content);
       $('#table_tracking, #table_draf, #table_todo, #incoming_formulir').DataTable({
         "searching": false,
-        "paging":   false,
-      });
-      $('#table_riwayat').DataTable({
         "paging":   false,
       });
 
@@ -818,6 +809,12 @@ border-radius: 4px;
           $("#"+tabs).attr("style", "display: none !important");
         }
       });
+    }
+    function open_staff(username) {
+      table_riwayat
+        .columns( 3 )
+        .search( username )
+        .draw();
     }
   </script>
 @endpush
