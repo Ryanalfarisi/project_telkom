@@ -27,6 +27,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::post('home/rating', ['as' => 'home.rating', 'uses' => 'HomeController@feedbackrating'])->middleware('auth');
+Route::post('home/upload', ['as' => 'home.upload', 'uses' => 'HomeController@uploadfile'])->middleware('auth');
+Route::get('home/download/{id}', ['as' => 'home.download', 'uses' => 'HomeController@downloadfile'])->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('lembur', 'LemburController@index')->name('lembur')->middleware('auth');

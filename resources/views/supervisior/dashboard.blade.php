@@ -474,6 +474,7 @@ border-radius: 4px;
                     <th class="color-th">Type of work</th>
                     <th class="color-th">Request By</th>
                     <th class="color-th">Challenge</th>
+                    <th class="color-th">Attachments</th>
                     <th class="color-th">Action</th>
                 </tr>
             </thead>
@@ -510,9 +511,21 @@ border-radius: 4px;
                   <td class="row-color">{{$row->jobs_name}}</td>
                   <td class="row-color">{{$row->username}} <b>({{$row->jabatan_baru}})</b></td>
                   <td class="row-color">{{$row->duration}} Extra hours</td>
+                  <td class="row-color">
+                    @if ($row->path)
+                      <a href="{{ route('home.download', $row->file_id) }}" target="_blank">{{$row->path_name}}</a>
+                    @else
+                      -
+                    @endif
+                  </td>
                   <th class="row-color">
-                    @if ($row->time_until < date("Y-m-d H:i:s") && !$row->feedback)
+                    {{-- @if ($row->time_until < date("Y-m-d H:i:s") && !$row->feedback)
                       <span onclick="rating('{{$row->username}}', '{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span>
+                    @endif --}}
+                    @if ($row->path)
+                      <span onclick="rating('{{$row->username}}', '{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span>
+                    @else
+                    <span class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;background: grey !important;">Rating</span>
                     @endif
                   </th>
                 </tr>
@@ -563,6 +576,7 @@ border-radius: 4px;
                   <th class="color-th">Achivement</th>
                   <th class="color-th">Review</th>
                   <th class="color-th">Requester</th>
+                  <th class="color-th">Attachments</th>
                   <th class="color-th"></th>
               </tr>
           </thead>
@@ -582,6 +596,13 @@ border-radius: 4px;
                   @endfor
                 </td>
                 <td class="row-color fs-16">{{$row->username}} <b>({{$row->jabatan_baru}})</b></td>
+                <td class="row-color fs-16">
+                  @if ($row->path)
+                    <a href="{{ route('home.download', $row->file_id) }}" target="_blank">{{$row->path_name}}</a>
+                  @else
+                   -
+                  @endif
+                </td>
                 <td class="row-color fs-16">{{$row->feedback}}</td>
               </tr>
             @endif

@@ -146,6 +146,32 @@
 }
 </style>
   @include('layouts.partials.head', array('extra'=> false, 'super'=> false, 'jabatan' => $user->jabatan, 'all_notif' => $all_notif))
+  <div id="modalUpload" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content" style="width: 500px;">
+        <form class="form" id="form_upload" method="POST" action="{{ route('home.upload') }}" enctype="multipart/form-data">
+          @csrf
+          <div class="modal-body">
+            <header class='header'>
+              <h2>Upload file</h2>
+            </header>
+
+            <div class="form-group">
+              <b>File</b><br/>
+              <input type="file" name="file" id="file_id" required>
+            </div>
+            <div class="col-12">
+              <textarea name="comment" style="height:70px; width:300px;" class="form-control" id="rating" cols="10" rows="5" placeholder="write your.." required></textarea>
+              <button type="submit" style="margin-top: 40px; width: 100px;height: 35px;color: white;font-size: 16px;" class="bg-status-3 text-white">Submit</button>
+            </div>
+            <input id="lembur_idx" type="hidden" name="lembur_id">
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
   <div class="col-md-12 mt-4 pl-5">
     <ul class="nav nav-tabs">
       <li class="active position-relative">
@@ -280,6 +306,7 @@
                   <th class="color-th">Status</th>
                   <th class="color-th">Review</th>
                   <th class="color-th">Superiors</th>
+                  <th class="color-th">Attachments</th>
                   <th class="color-th">Points</th>
               </tr>
           </thead>
@@ -300,6 +327,13 @@
                   <p class="fs-14">{{$row->feedback}}</p>
                 </td>
                 <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                <td class="row-color fs-16">
+                  @if ($row->path)
+                    <a href="{{ route('home.download', $row->file_id) }}" target="_blank">{{$row->path_name}}</a>
+                  @else
+                    -
+                  @endif
+                </td>
                 <td class="row-color">{{$row->duration}} Extra hours <b>({{$row->poin}} point)</b></td>
               </tr>
             @endif
@@ -321,7 +355,8 @@
           </thead>
           <tbody>
           @foreach ($lembur as $row)
-            @if ($row->type == '1' && $row->status != '6' && $row->time_until > date("Y-m-d H:i:s") && $row->status == '3')
+            {{-- @if ($row->type == '1' && $row->status != '6' && $row->time_until > date("Y-m-d H:i:s") && $row->status == '3') --}}
+            @if ($row->type == '1' && $row->status != '6' && $row->status == '3')
               <tr>
                 <td class="row-color">{{$row->description}}</td>
                 <td class="row-color">
@@ -347,6 +382,11 @@
                   @if ($row->time_from < date("Y-m-d H:i:s"))
                     <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="{{$row->duration}}">
                       <p>Sisa waktu <span id="timer-{{$row->id}}"></span></p>
+                      @if ($row->path)
+                        <a href="{{ route('home.download', $row->file_id) }}" target="_blank">{{$row->path_name}}</a>
+                      @else
+                        <button onclick="uploadFile({{$row->id}})" type="button" class="fs-14" data-toggle="modal" data-target="#modalUpload">Upload file</button>
+                      @endif
                     </td>
                   @else
                     <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0" data-duration-helper="{{$row->duration}}">
@@ -441,7 +481,6 @@
           }
         }, 1000);
     }
-
     function openNotif(id, tabs) {
       var crsf = {!! json_encode(csrf_token()) !!}
       $.ajax({
@@ -457,6 +496,10 @@
           $("#notif_header").attr("style", "display: none !important");
         }
       });
+    }
+
+    function uploadFile(id) {
+      $("#lembur_idx").val(id);
     }
   </script>
 @endpush

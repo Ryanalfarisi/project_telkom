@@ -39,10 +39,11 @@ class HomeController extends Controller
             $content = isset($_GET['content']) ? $_GET['content'] : '';
             $lembur = DB::table('lembur')
                     ->leftJoin('users', 'lembur.user_id', '=', 'users.id')
+                    ->leftJoin('files', 'lembur.id', '=', 'files.lembur_id')
                     ->leftJoin('jobs_extra', 'lembur.job', '=', 'jobs_extra.id')
                     ->leftJoin('status_task', 'lembur.status', '=', 'status_task.id')
                     ->where("lembur.approved_id",$user->id)
-                    ->select('lembur.*','lembur.approved_id as approver_id', 'users.id as app_id','users.full_name as username', 'users.jabatan as jabatan_baru', 'users.nik as user_nik', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label')
+                    ->select('lembur.*','lembur.approved_id as approver_id', 'users.id as app_id','users.full_name as username', 'users.jabatan as jabatan_baru', 'users.nik as user_nik', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label', 'files.path as path', 'files.name as path_name', 'files.id as file_id')
                     ->get();
             foreach ($lembur as $key => $v) {
                 if(in_array($v->user_id, $staffId) || $v->user_id == $user->id || $v->status != 6) continue;
@@ -72,10 +73,11 @@ class HomeController extends Controller
             $content = isset($_GET['content']) ? $_GET['content'] : '';
             $lembur = DB::table('lembur')
                     ->leftJoin('jobs_extra', 'lembur.job', '=', 'jobs_extra.id')
+                    ->leftJoin('files', 'lembur.id', '=', 'files.lembur_id')
                     ->leftJoin('status_task', 'lembur.status', '=', 'status_task.id')
                     ->leftJoin('users', 'lembur.approved_id', '=', 'users.id')
                     ->where("user_id",$user->id)
-                    ->select('lembur.*','users.id as app_id','users.username as username', 'users.code_jabatan', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label')->get();
+                    ->select('lembur.*','users.id as app_id','users.username as username', 'users.code_jabatan', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label', 'files.path as path', 'files.name as path_name', 'files.id as file_id')->get();
             return view('layouts.custome_view.dashboard', [
                     'lembur' => $lembur,
                     'content' => $content,
@@ -127,5 +129,49 @@ class HomeController extends Controller
                 "created_at" => date("Y-m-d H:i:s")
             ]
         );
+    }
+
+    public function uploadfile(Request $request) {
+        // menyimpan data file yang diupload ke variabel $file
+        $file = $request->file('file');
+        $body = $request->input();
+        echo 'File Name: '.$file->getClientOriginalName();
+        echo '<br>';
+
+                // ekstensi file
+        echo 'File Extension: '.$file->getClientOriginalExtension();
+        echo '<br>';
+
+        // real path
+        echo 'File Real Path: '.$file->getRealPath();
+        echo '<br>';
+
+                // ukuran file
+        echo 'File Size: '.$file->getSize();
+        echo '<br>';
+
+        $mime = $file->getMimeType();
+        $path_folder = env('FOLDER_PATH');
+        $name = $body['lembur_id'].'-'.$file->getClientOriginalName();
+        $path = $path_folder.'/'.$name;
+        // upload file
+        $file->move($path_folder, $name);
+        DB::table('files')->insert(
+            [
+                "lembur_id" => $body['lembur_id'],
+                "path" => $path,
+                "name" => $name,
+                "mime" => $mime,
+                "comment" => $body['comment'],
+                "created_at" => date("Y-m-d H:i:s")
+            ]
+        );
+        return redirect('home');
+    }
+
+    public function downloadfile($fileId) {
+        $data = DB::table('files')->find($fileId);
+        return response()->download($data->path, $data
+                    ->name, ['Content-Type' => $data->mime]);
     }
 }
