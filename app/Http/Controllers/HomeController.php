@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -132,6 +133,9 @@ class HomeController extends Controller
     }
 
     public function uploadfile(Request $request) {
+        $this->validate($request, [
+			'file' => 'max:500000'
+		]);
         // menyimpan data file yang diupload ke variabel $file
         $file = $request->file('file');
         $body = $request->input();
@@ -156,7 +160,7 @@ class HomeController extends Controller
         $path = $path_folder.'/'.$name;
         // upload file
         $file->move($path_folder, $name);
-        DB::table('files')->insert(
+        $lastId = DB::table('files')->insertGetId(
             [
                 "lembur_id" => $body['lembur_id'],
                 "path" => $path,
@@ -166,7 +170,8 @@ class HomeController extends Controller
                 "created_at" => date("Y-m-d H:i:s")
             ]
         );
-        return redirect('home');
+        return \Redirect::route('home')->with('success', 'File berhasil di Upload'); 
+        //return redirect('home');
     }
 
     public function downloadfile($fileId) {

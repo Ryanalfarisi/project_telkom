@@ -181,4 +181,35 @@ class MyProfileController extends Controller
 
         return back()->withStatusPassword(__('Password successfully updated.'));
     }
+    public function help()
+    {
+        $user = Auth::user();
+        if($user->grade == 'I' || $user->grade == 'II' || $user->grade == 'III') {
+            $super = true;
+        } else {
+            $super = false;
+        }
+        $notif = DB::table('notifications')
+            ->where('to_user_id', $user->id)
+            ->where('read', 0)
+            ->get();
+        return view('profile.help', [
+            "user" => $user,
+            "super" => $super,
+            "all_notif" => count($notif)
+        ]);
+    }
+    public function savehelp(Request $request)
+    {
+        $input = $request->input();
+        DB::table('ticket')->insert(
+            [
+                "user_id" => $input['userId'],
+                "type" => $input['type'],
+                "desc" => $input['comment'],
+                "created_at" => date("Y-m-d H:i:s")
+            ]
+        );
+        return redirect('home');
+    }
 }

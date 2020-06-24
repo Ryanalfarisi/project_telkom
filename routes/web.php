@@ -39,15 +39,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('lembur/edit', ['as' => 'lembur.doedit', 'uses' => 'LemburController@doEdit']);
 	Route::get('lembur/history', ['as' => 'lembur.history', 'uses' => 'LemburController@history']);
 
-	Route::get('home/my-profile', ['as' => 'home.my_profile', 'uses' => 'MyProfileController@index']);
+Route::get('home/my-profile', ['as' => 'home.my_profile', 'uses' => 'MyProfileController@index']);
 	Route::post('my-profile/change-password', ['as' => 'my-profile.changepass', 'uses' => 'MyProfileController@changePass']);
 	Route::post('my-profile/edit-profile', ['as' => 'my-profile.editprofile', 'uses' => 'MyProfileController@editProfile']);
+	Route::get('my-profile/help', ['as' => 'my-profile.help', 'uses' => 'MyProfileController@help']);
+	Route::post('my-profile/save', ['as' => 'my-profile.savehelp', 'uses' => 'MyProfileController@savehelp']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);	
 });
 

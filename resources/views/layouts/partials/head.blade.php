@@ -74,8 +74,16 @@
         <li><a style="color:white !important;" href="{{ route('home.my_profile') }}">Profile</a></li>
         <li>Change Password</li>
         <li>Switch Account</li>
-        <li>Help</li>
-        <li> <a href="{{ route('logout') }}" style="color:black;" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Keluar') }}</a></li>
+        <li>
+          @if ($super)
+            <a href="{{ route('my-profile.help') }}" style="color:white;">Help</a>
+          @else
+            <span style="color:white;">Help</span>
+          @endif
+        </li>
+        <li>
+          <a href="{{ route('logout') }}" style="color:black;" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Keluar') }}</a>
+        </li>
     </ul>
     </div>
   </div>

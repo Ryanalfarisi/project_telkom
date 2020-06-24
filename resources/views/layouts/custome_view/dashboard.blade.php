@@ -156,23 +156,32 @@
             <header class='header'>
               <h2>Upload file</h2>
             </header>
-
             <div class="form-group">
               <b>File</b><br/>
               <input type="file" name="file" id="file_id" required>
+              <small style="color:red;"><i>* Max size 3MB</i></small>
             </div>
             <div class="col-12">
-              <textarea name="comment" style="height:70px; width:300px;" class="form-control" id="rating" cols="10" rows="5" placeholder="write your.." required></textarea>
+              <textarea name="comment" style="height:70px; width:300px;" class="form-control" id="rating" cols="10" rows="5" placeholder="write your comment.." required></textarea>
               <button type="submit" style="margin-top: 40px; width: 100px;height: 35px;color: white;font-size: 16px;" class="bg-status-3 text-white">Submit</button>
             </div>
             <input id="lembur_idx" type="hidden" name="lembur_id">
           </div>
         </form>
       </div>
-
     </div>
   </div>
   <div class="col-md-12 mt-4 pl-5">
+    @if(count($errors) > 0)
+      <div class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+        {{ $error }} <br/>
+        @endforeach
+      </div>
+    @endif
+    @if (session('success'))
+      <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
     <ul class="nav nav-tabs">
       <li class="active position-relative">
         <a data-toggle="tab" class="list-menu" href="#home">Extra
