@@ -75,11 +75,7 @@
         <li>Change Password</li>
         <li>Switch Account</li>
         <li>
-          @if ($super)
-            <a href="{{ route('my-profile.help') }}" style="color:white;">Help</a>
-          @else
-            <span style="color:white;">Help</span>
-          @endif
+          <a href="{{ route('my-profile.help') }}" style="color:white;">Help</a>
         </li>
         <li>
           <a href="{{ route('logout') }}" style="color:black;" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Keluar') }}</a>
