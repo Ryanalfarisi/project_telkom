@@ -96,9 +96,11 @@ class HomeController extends Controller
     public function feedbackrating(Request $request)
     {
         $body = $request->input();
+        var_dump($body);
         $user = Auth::user();
         $dateNow = date("Y-m-d H:i:s");
         $data = DB::table('lembur')->find($body['id']);
+        var_dum($data);exit;
         $data = DB::table('users')->find($data->user_id);
         DB::table('lembur')->where('id' , $body['id'])->update([
             'feedback' => $body['feedback'],
