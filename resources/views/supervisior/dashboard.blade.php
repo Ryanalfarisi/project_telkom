@@ -519,13 +519,11 @@ border-radius: 4px;
                     @endif
                   </td>
                   <th class="row-color">
-                    {{-- @if ($row->time_until < date("Y-m-d H:i:s") && !$row->feedback)
-                      <span onclick="rating('{{$row->username}}', '{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span>
-                    @endif --}}
                     @if ($row->path)
-                      <span onclick="rating('{{$row->username}}', '{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span>
+                    <span onclick="rating('{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span>
+                      {{-- <span onclick="rating('{{$row->username}}', '{{$row->duration}}', '{{$row->id}}')" class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;" data-toggle="modal" data-target="#myModal">Rating</span> --}}
                     @else
-                    <span class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;background: grey !important;">Rating</span>
+                      <span class="bg-status-1 pointer text-white" style="color: white;font-weight: normal;background: grey !important;">Rating</span>
                     @endif
                   </th>
                 </tr>
@@ -764,7 +762,7 @@ border-radius: 4px;
       var filter = duration.replace(":", ".");
       duration = parseFloat(filter)
       $("#staff_name").empty();
-      $("#staff_name").append("<b>"+username+"</b>");
+      // $("#staff_name").append("<b>"+username+"</b>");
       $("#duration").val(duration);
       $("#lembur_id").val(id);
     }
