@@ -163,7 +163,7 @@
             </div>
             <div class="col-12">
               <textarea name="comment" style="height:70px; width:300px;" class="form-control" id="rating" cols="10" rows="5" placeholder="write your comment.." required></textarea>
-              <button type="submit" style="margin-top: 40px; width: 100px;height: 35px;color: white;font-size: 16px;" class="bg-status-3 text-white">Submit</button>
+              <button type="submit" style="margin-top: 40px; width: 100px;height: 35px;color: white;font-size: 16px;border:none;" class="bg-status-3 text-white">Upload</button>
             </div>
             <input id="lembur_idx" type="hidden" name="lembur_id">
           </div>
@@ -266,7 +266,7 @@
                   <td class="row-color">{{$row->reason ?: "-"}}</td>
                   <td class="row-color">{{$row->created_at}}</td>
                   <td class="row-color">{{$row->jobs_name}}</td>
-                  <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                  <td class="row-color">{{$row->username}} <b>({{$row->jabatan_baru}})</b></td>
                 </tr>
               @endif
             @endforeach
@@ -299,7 +299,7 @@
                   <td class="row-color">
                       <p>{{$row->jobs_name}}</p>
                   </td>
-                  <td class="row-color">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                  <td class="row-color">{{$row->username}} <b>({{$row->jabatan_baru}})</b></td>
               </tr>
               @endif
             @endforeach
@@ -312,7 +312,7 @@
           <thead>
               <tr>
                   <th class="color-th">Aktivitas</th>
-                  <th class="color-th">Status</th>
+                  <th class="color-th" style="width: 130px;">Status</th>
                   <th class="color-th">Review</th>
                   <th class="color-th">Superiors</th>
                   <th class="color-th">Attachments</th>
@@ -335,7 +335,7 @@
                   @endfor
                   <p class="fs-14">{{$row->feedback}}</p>
                 </td>
-                <td class="row-color fs-16">{{$row->username}} <b>({{$row->code_jabatan}})</b></td>
+                <td class="row-color fs-16">{{$row->username}} <b>({{$row->jabatan_baru}})</b></td>
                 <td class="row-color fs-16">
                   @if ($row->path)
                     <a href="{{ route('home.download', $row->file_id) }}" target="_blank">{{$row->path_name}}</a>
@@ -369,7 +369,7 @@
               <tr>
                 <td class="row-color">{{$row->description}}</td>
                 <td class="row-color">
-                  {{$row->username}} <b>({{$row->code_jabatan}})</b>
+                  {{$row->username}} <b>({{$row->jabatan_baru}})</b>
                 </td>
                 <td class="row-color">
                   @if ($row->status == '5')
@@ -398,9 +398,19 @@
                       @endif
                     </td>
                   @else
-                    <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0" data-duration-helper="{{$row->duration}}">
-                      <p>Mulai dalam <span id="timer-{{$row->id}}"></span></p>
-                    </td>
+                    @if ($row->path)
+                      <td class="row-color">
+                        <p>Lembur selesai lebih awal</p>
+                        <a href="{{ route('home.download', $row->file_id) }}" target="_blank">{{$row->path_name}}</a>
+                      </td>
+                    @else
+                      <td class="row-color timer" data-id="{{$row->id}}" data-app-time="{{$row->time_from}}" data-duration="0" data-duration-helper="{{$row->duration}}">
+                        <p>Mulai dalam <span id="timer-{{$row->id}}"></span></p>
+                        <div data-toggle="tooltip" title="Laporkan pekerjaan selesai lebih awal">
+                          <button onclick="uploadFile({{$row->id}})" class="bg-status-1" style="border:none;color:white" type="button" class="fs-14" data-toggle="modal" data-target="#modalUpload">Report Done</button><span class="glyphicon glyphicon-info-sign ml-1 pointer" style="vertical-align: top;" aria-hidden="true">
+                        </div>
+                      </td>
+                    @endif
                   @endif
                 @else
                   <td class="row-color">{{$row->label}}</td>

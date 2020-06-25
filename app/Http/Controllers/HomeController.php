@@ -78,7 +78,7 @@ class HomeController extends Controller
                     ->leftJoin('status_task', 'lembur.status', '=', 'status_task.id')
                     ->leftJoin('users', 'lembur.approved_id', '=', 'users.id')
                     ->where("user_id",$user->id)
-                    ->select('lembur.*','users.id as app_id','users.username as username', 'users.code_jabatan', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label', 'files.path as path', 'files.name as path_name', 'files.id as file_id')->get();
+                    ->select('lembur.*','users.id as app_id','users.username as username', 'users.code_jabatan','users.jabatan as jabatan_baru', 'jobs_extra.jobs_name as jobs_name', 'jobs_extra.id as job_id', 'status_task.id as status_id', 'status_task.label as label', 'files.path as path', 'files.name as path_name', 'files.id as file_id')->get();
             return view('layouts.custome_view.dashboard', [
                     'lembur' => $lembur,
                     'content' => $content,

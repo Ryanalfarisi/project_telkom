@@ -826,6 +826,7 @@ border-radius: 4px;
       }).done(function( res ) {
         if(res.status == 200) {
           $("#"+tabs).attr("style", "display: none !important");
+          $("#notif_header").attr("style", "display: none !important");
         }
       });
     }
