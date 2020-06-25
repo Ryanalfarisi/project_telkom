@@ -758,13 +758,13 @@ border-radius: 4px;
     function toEditDraft(id) {
       window.location.href = '/lembur/request/'+id;
     }
-    function rating(username, duration, id) {
+    function rating(duration, id) {
+      $("#lembur_id").val(id);
       var filter = duration.replace(":", ".");
       duration = parseFloat(filter)
-      $("#staff_name").empty();
+      //$("#staff_name").empty();
       // $("#staff_name").append("<b>"+username+"</b>");
       $("#duration").val(duration);
-      $("#lembur_id").val(id);
     }
     function activaTab(tab) {
       $('.nav-tabs a[href="#' + tab + '"]').tab('show');
